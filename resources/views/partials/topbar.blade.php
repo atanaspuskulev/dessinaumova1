@@ -4,7 +4,15 @@
     </button>
     <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown no-arrow">
-            @livewire('admin.logout')
+            <a
+                class="nav-link dropdown-toggle"
+                href="{{ route('admin.logout') }}"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+            >
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Logout</span>
+            </a>
         </li>
     </ul>
 </nav>

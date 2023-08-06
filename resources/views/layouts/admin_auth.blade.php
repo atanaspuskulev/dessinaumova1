@@ -26,7 +26,7 @@
 
     <!-- Outer Row -->
     <div class="row justify-content-center">
-        {{ $slot }}
+        @yield('content')
     </div>
 </div>
 <!-- Bootstrap core JavaScript-->

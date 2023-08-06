@@ -1,4 +1,7 @@
-<div class="col-xl-10 col-lg-12 col-md-9">
+@extends('layouts.admin_auth')
+
+@section('content')
+    <div class="col-xl-10 col-lg-12 col-md-9">
     <div class="card o-hidden border-0 shadow-lg my-5">
         <div class="card-body p-0">
             <div class="row">
@@ -8,25 +11,25 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Login</h1>
                         </div>
-                        @if($errorMessage)
+                        @if($errors->any() && $errors->has('error'))
                             <div class="alert alert-danger" role="alert">
-                                {{ $errorMessage }}
+                                {{ $errors->first('error')  }}
                             </div>
                         @endif
-                        <form wire:submit="authenticate" class="user" method="post">
+                        <form action="{{ route('admin.login_user') }}" class="user" method="post">
                             @csrf
                             <div class="form-group">
                                 <input
                                     type="email"
                                     class="form-control form-control-user"
-                                    wire:model="form.email"
+                                    name="email"
                                     placeholder="Your Email">
                             </div>
                             <div class="form-group">
                                 <input
                                     type="password"
                                     class="form-control form-control-user"
-                                    wire:model="form.password"
+                                   name="password"
                                     placeholder="Your Password">
                             </div>
                             <div class="form-group">
@@ -36,7 +39,7 @@
                                         value="1"
                                         type="checkbox"
                                         class="custom-control-input"
-                                        wire:model="form.rememberme">
+                                        name="rememberme">
                                     <label class="custom-control-label" for="customCheck">
                                         Remember Me
                                     </label>
@@ -54,4 +57,4 @@
         </div>
     </div>
 </div>
-
+@endsection
