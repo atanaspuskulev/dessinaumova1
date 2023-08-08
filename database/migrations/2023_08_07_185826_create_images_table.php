@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('imageable_id');
             $table->string('imageable_type');
             $table->string('path');
+            $table->boolean('is_primary')->default(false)->index();
         });
     }
 
@@ -24,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('images', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('images');
     }
 };
