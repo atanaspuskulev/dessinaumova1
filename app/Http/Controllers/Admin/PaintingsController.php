@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Painting;
 use Illuminate\Http\Request;
 
 class PaintingsController extends Controller
@@ -12,7 +13,9 @@ class PaintingsController extends Controller
      */
     public function index()
     {
-        //
+        $paintings = Painting::get();
+
+        return view('admin.paintings.index');
     }
 
     /**
