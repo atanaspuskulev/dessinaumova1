@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('paintings', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable(false)->index();
+            $table->foreignId('category_id')->constrained();
+            $table->string('title')->unique();
+            $table->string('slug')->unique();
             $table->string('short_description')->nullable()->index();
             $table->text('description')->nullable(false)->fulltext();
             $table->string('material')->nullable()->index();
@@ -24,6 +26,9 @@ return new class extends Migration
             $table->char('currency',3)->nullable()->index();
             $table->text('delivery')->nullable();
             $table->boolean('sold')->default(false)->index();
+            $table->string('meta_title')->nullable();
+            $table->string('meta_keywords')->nullable();
+            $table->text('meta_description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -34,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('paintings');
+        Schema::dropIfExists('products');
     }
 };

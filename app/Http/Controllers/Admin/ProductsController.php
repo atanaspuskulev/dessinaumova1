@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
+use App\Models\Category;
 use App\Models\Painting;
+use App\Models\Product;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
-class PaintingsController extends Controller
+class ProductsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,23 +20,28 @@ class PaintingsController extends Controller
     {
         $paintings = Painting::get();
 
-        return view('admin.paintings.index');
+        return view('admin.products.index');
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        return view('admin.paintings.create');
+        $categories = Category::all();
+
+        return view('admin.products.create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request): RedirectResponse
     {
-        //
+        $product = Product::create($request->all());
+
+        return redirect()->route('products.show', ['product' => $product])
+            ->with('message', sprintf("Successfully created product %s", $product->title));
     }
 
     /**
