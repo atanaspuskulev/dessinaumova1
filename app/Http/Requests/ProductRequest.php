@@ -24,7 +24,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'category_id' => 'required',
-            'title' => 'required',
+            'title' => 'required|unique:products,title' . (request()->has('product_id') ? ',' . request()->product_id : ''),
             'short_description' => 'required',
             'description' =>'required',
             'price' =>'required',
@@ -44,7 +44,7 @@ class ProductRequest extends FormRequest
         return [
             'category_id.required' => 'Category is required',
             'title.required' => 'Title is required',
-            'short_description.required' => 'Short description is required',
+            'title.unique' => 'There is already a product with that name',            'short_description.required' => 'Short description is required',
             'description.required' => 'Description is required',
             'price.required' => 'Price is required',
             'material.required' => 'Material is required',

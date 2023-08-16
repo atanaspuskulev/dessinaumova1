@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1 class="h3 mb-12 text-gray-800">Add new painting</h1>
+    <h1 class="h3 mb-12 text-gray-800">Add new product</h1>
 
     <div class="row">
         <div class="col-lg col-md">
-            <div class="card shadow mb-12 ">
+            <div class="card shadow mb-12">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Painting Information</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Product Information</h6>
                 </div>
                 <div class="card-body">
                     @if($errors->any())

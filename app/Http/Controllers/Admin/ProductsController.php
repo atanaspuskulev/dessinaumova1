@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
+use App\Http\Traits\FileUploadTrait;
 use App\Models\Category;
-use App\Models\Painting;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,14 +15,16 @@ use Illuminate\View\View;
 
 class ProductsController extends Controller
 {
+    use FileUploadTrait;
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
-        $paintings = Painting::get();
+        $products = Product::get();
 
-        return view('admin.products.index');
+        return view('admin.products.index', compact('products'));
     }
 
     /**
@@ -40,6 +44,8 @@ class ProductsController extends Controller
     {
         $product = Product::create($request->all());
 
+        $this->uploadFiles($request, 'images', $product);
+
         return redirect()->route('products.show', ['product' => $product])
             ->with('message', sprintf("Successfully created product %s", $product->title));
     }
@@ -47,25 +53,28 @@ class ProductsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product): View
     {
-        //
+        dd($product);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Product $product): View
     {
-        //
+        $categories = Category::all();
+        $product->load('gallery');
+
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProductRequest $request, Product $product)
     {
-        //
+        dd($product);
     }
 
     /**
