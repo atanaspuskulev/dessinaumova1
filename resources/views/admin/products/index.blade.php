@@ -16,6 +16,7 @@
                                     <h6 class="m-0 font-weight-bold text-primary">{{ $product->title }}</h6>
                                 </div>
                                 <div class="card-body">
+                                    <img src="{{ displayImage($product->id, $product->thumbnail->first()->path, true) }}" alt="Thumbnail" class="mb-2">
                                     {{ $product->short_description }}
                                 </div>
                                 <div class="card-footer">

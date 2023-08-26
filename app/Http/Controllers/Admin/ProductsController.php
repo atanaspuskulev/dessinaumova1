@@ -9,6 +9,7 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Traits\FileUploadTrait;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -22,7 +23,7 @@ class ProductsController extends Controller
      */
     public function index(): View
     {
-        $products = Product::get();
+        $products = Product::with(['thumbnail'])->get();
 
         return view('admin.products.index', compact('products'));
     }
@@ -55,7 +56,7 @@ class ProductsController extends Controller
      */
     public function show(Product $product): View
     {
-        dd($product);
+        return view('admin.products.show', compact('product'));
     }
 
     /**
@@ -74,7 +75,18 @@ class ProductsController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
-        dd($product);
+        $data = $request->all();
+
+        if(!isset($data['sold'])) {
+            $data['sold'] = false;
+        }
+
+        $product->update($data);
+
+        $this->uploadFiles($request, 'images', $product);
+
+        return redirect()->route('products.show', ['product' => $product])
+            ->with('message', sprintf("Successfully updated product %s", $product->title));
     }
 
     /**

@@ -14,7 +14,24 @@ class Product extends Model
 
     use HasFactory, SoftDeletes;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'category_id',
+        'title',
+        'slug',
+        'short_description',
+        'description',
+        'material',
+        'dimentions1',
+        'dimentions2',
+        'dimentions3',
+        'price',
+        'currency',
+        'delivery',
+        'sold',
+        'meta_title',
+        'meta_description',
+        'meta_keywords'
+    ];
 
     public static function boot()
     {
@@ -26,12 +43,19 @@ class Product extends Model
         });
 
         static::updating(function ($item) {
-            $item->updating_at = now()->toDateString();
+            $item->updated_at = now()->toDateString();
         });
     }
 
     public function gallery(): MorphMany
     {
         return $this->morphMany(Images::class, 'imageable');
+    }
+
+    public function thumbnail(): MorphMany
+    {
+        return $this->morphMany(Images::class, 'imageable')
+            ->orderBy('order', 'asc')
+            ->take(1);
     }
 }
