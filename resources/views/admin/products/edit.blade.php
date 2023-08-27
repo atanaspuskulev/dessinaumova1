@@ -3,7 +3,7 @@
 @section('content')
     <h1 class="h3 mb-12 text-gray-800">Edit product "{{ $product->title }}"</h1>
 
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-lg col-md">
             <div class="card shadow mb-12">
                 <div class="card-header py-3">
@@ -15,7 +15,8 @@
                             {!! implode("<br>", $errors->all()) !!}
                         </div>
                     @endif
-                    <form method="post" action="{{ route('products.update', ['product' => $product]) }}" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('products.update', ['product' => $product]) }}"
+                          enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -26,42 +27,52 @@
                                     <select class="form-control" id="category_id" name="category_id">
                                         <option value="">Choose</option>
                                         @foreach($categories as $category)
-                                            <option value="{{$category->id}}" @selected(old('category_id', $product->category_id) == $category->id)>{{$category->title}}</option>
+                                            <option
+                                                value="{{$category->id}}" @selected(old('category_id', $product->category_id) == $category->id)>{{$category->title}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="title">Title</label>
-                                    <input type="text" class="form-control" id="title" name="title" value="{{ old('title', $product->title) }}">
+                                    <input type="text" class="form-control" id="title" name="title"
+                                           value="{{ old('title', $product->title) }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="short_description">Short description</label>
-                                    <textarea class="form-control" name="short_description" id="short_description" rows="3">{{ old('short_description', $product->short_description) }}</textarea>
+                                    <textarea class="form-control" name="short_description" id="short_description"
+                                              rows="3">{{ old('short_description', $product->short_description) }}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Description</label>
-                                    <textarea class="form-control" id="description" name="description" rows="6">{{ old('description', $product->description) }}</textarea>
+                                    <textarea class="form-control" id="description" name="description"
+                                              rows="6">{{ old('description', $product->description) }}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="material">Material description</label>
-                                    <input type="text" class="form-control" id="material" name="material" value="{{ old('material', $product->material) }}">
+                                    <input type="text" class="form-control" id="material" name="material"
+                                           value="{{ old('material', $product->material) }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="dimentions1">Size description</label>
-                                    <input type="text" class="form-control" name="dimentions1" id="dimentions1" value="{{ old('dimentions1', $product->dimentions1) }}">
+                                    <input type="text" class="form-control" name="dimentions1" id="dimentions1"
+                                           value="{{ old('dimentions1', $product->dimentions1) }}">
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="price">Price</label>
-                                    <input type="number" name="price" class="form-control" id="price" value="{{ old('price', $product->price) }}">
+                                    <input type="number" name="price" class="form-control" id="price"
+                                           value="{{ old('price', $product->price) }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="delivery">Delivery information</label>
-                                    <input type="text" class="form-control" id="delivery" name="delivery" placeholder="Delivery information" value="{{ old('delivery', $product->delivery) }}">
+                                    <input type="text" class="form-control" id="delivery" name="delivery"
+                                           placeholder="Delivery information"
+                                           value="{{ old('delivery', $product->delivery) }}">
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" name="sold" type="checkbox" value="1" id="sold" @checked(old('sold', $product->sold) == 1)>
+                                    <input class="form-check-input" name="sold" type="checkbox" value="1"
+                                           id="sold" @checked(old('sold', $product->sold) == 1)>
                                     <label class="form-check-label" for="sold">
                                         Sold
                                     </label>
@@ -69,15 +80,18 @@
                                 <hr>
                                 <div class="form-group">
                                     <label for="meta_title">Meta Title</label>
-                                    <input name="meta_title" type="text" class="form-control" id="meta_title" value="{{ old('meta_title', $product->meta_title) }}">
+                                    <input name="meta_title" type="text" class="form-control" id="meta_title"
+                                           value="{{ old('meta_title', $product->meta_title) }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="meta_keywords">Meta Keywords</label>
-                                    <input name="meta_keywords" type="text" class="form-control" id="meta_keywords" value="{{ old('meta_keywords', $product->meta_keywords) }}">
+                                    <input name="meta_keywords" type="text" class="form-control" id="meta_keywords"
+                                           value="{{ old('meta_keywords', $product->meta_keywords) }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="meta_description">Meta Description</label>
-                                    <textarea name="meta_description" class="form-control" id="meta_description" rows="3">{{ old('meta_description', $product->meta_description) }}</textarea>
+                                    <textarea name="meta_description" class="form-control" id="meta_description"
+                                              rows="3">{{ old('meta_description', $product->meta_description) }}</textarea>
                                 </div>
                                 <hr>
                                 <div class="custom-file">
@@ -94,6 +108,43 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg col-md">
+            <div class="card shadow mb-12">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Product Gallery</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row justify-content-center sortable-container">
+                        @forelse($product->gallery as $image)
+                            <div  id="{{ $image->id }}" class="col col-md-3 p-2 col-sm-12 mb-4 ml-3 gallery-shadow sortable-item">
+                                <div class="row">
+                                    <div class="col d-flex justify-content-center align-items-center">
+                                        <a href="{{ displayImage($product->id, $image->path) }}" rel="gallery" class="gallery_images">
+                                            <img
+                                                src="{{ displayImage($product->id, $image->path, true) }}"
+                                                alt="Gallery Image"
+                                                class="img-fluid">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col text-end">
+                                        <a href="#" class="btn btn-danger fa-pull-right btn-sm m-2">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            No gallery images
+                        @endforelse
+                    </div>
                 </div>
             </div>
         </div>

@@ -16,11 +16,12 @@
         rel="stylesheet">
 
     <link href="{{ asset('assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet" href="{{ asset('assets/fancybox//jquery.fancybox-1.3.4.css') }}" type="text/css" media="screen" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 </head>
 
 <body id="page-top">
-    <div id="wrapper">
+<div id="wrapper">
     @include('partials/sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
 
@@ -37,31 +38,62 @@
     </div>
 </div>
 
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
 
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
             </div>
         </div>
     </div>
-    <script src="{{ asset('assets/js/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/css/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/js/jquery-easing/jquery.easing.min.js') }}"></script>
-    <script src="{{ asset('assets/js/sb-admin-2.min.js') }}"></script>
+</div>
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+
+<script src="{{ asset('assets/fancybox/jquery.fancybox-1.3.4.pack.js') }}"></script>
+<script>
+    var j = jQuery.noConflict();
+    j(function() {
+       if(j(".gallery_images").length > 0) {
+           j(".gallery_images").fancybox();
+       }
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+<script src="{{ asset('assets/css/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery-easing/jquery.easing.min.js') }}"></script>
+<script src="{{ asset('assets/js/sb-admin-2.min.js') }}"></script>
+<script>
+    $(function() {
+        if($('.sortable-container').length > 0) {
+            $(".sortable-container").sortable({
+                items: ".sortable-item",
+                cursor: "move",
+                update: function(event, ui) {
+                    let sortedItems = $(this).sortable("toArray");
+                    console.log(sortedItems)
+                }
+            });
+        }
+    })
+
+</script>
 </body>
 </html>

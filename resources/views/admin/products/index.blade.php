@@ -16,8 +16,22 @@
                                     <h6 class="m-0 font-weight-bold text-primary">{{ $product->title }}</h6>
                                 </div>
                                 <div class="card-body">
-                                    <img src="{{ displayImage($product->id, $product->thumbnail->first()->path, true) }}" alt="Thumbnail" class="mb-2">
-                                    {{ $product->short_description }}
+                                    <img
+                                        src="{{ displayImage($product->id, $product->thumbnail->first()->path, true) }}"
+                                        alt=""
+                                        class="mb-2 img-fluid">
+                                    <p>
+                                        <b>Category: </b><br />
+                                        {{ $product->category->title }}
+                                    </p>
+                                    <p>
+                                        <b>Short Description: </b><br />
+                                        {{ $product->short_description }}
+                                    </p>
+                                    <p>
+                                        <b>Price: </b><br />
+                                        ${{ $product->price }}
+                                    </p>
                                 </div>
                                 <div class="card-footer">
                                     <div class="d-flex justify-content-end">
