@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Desi - Admin</title>
     <link href="{{ asset('assets/css/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -80,6 +81,7 @@
 <script src="{{ asset('assets/css/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery-easing/jquery.easing.min.js') }}"></script>
 <script src="{{ asset('assets/js/sb-admin-2.min.js') }}"></script>
+
 <script>
     $(function() {
         if($('.sortable-container').length > 0) {
@@ -88,12 +90,25 @@
                 cursor: "move",
                 update: function(event, ui) {
                     let sortedItems = $(this).sortable("toArray");
-                    console.log(sortedItems)
+                    $.ajax({
+                        url: '{{ route("admin.product.reorder_images") }}', // Replace with your actual route
+                        method: "POST",
+                        data: {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            product_id: {{ $product->id }},
+                            order: sortedItems
+                        },
+                        success: function(response) {
+                            console.log("Order updated successfully!");
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error updating order: " + error);
+                        }
+                    });
                 }
             });
         }
-    })
-
+    });
 </script>
 </body>
 </html>

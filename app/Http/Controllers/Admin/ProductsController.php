@@ -52,14 +52,6 @@ class ProductsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Product $product): View
-    {
-        return view('admin.products.show', compact('product'));
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Product $product): View
@@ -87,6 +79,28 @@ class ProductsController extends Controller
 
         return redirect()->route('products.show', ['product' => $product])
             ->with('message', sprintf("Successfully updated product %s", $product->title));
+    }
+
+    public function reorderImages(Request $request)
+    {
+        if($request->has('product_id')) {
+            $ordering = $request->get('order');
+
+            if(!empty($ordering)) {
+                $product = Product::with('gallery')
+                    ->findOrFail($request->get('product_id'));
+
+                $product->gallery()->update(['order' => 0]);
+
+                $i = 0;
+                foreach($ordering as $order) {
+                    $product->gallery()->where('id', $order)->update(['order' => $i]);
+                    $i++;
+                }
+                unset($i);
+            }
+        }
+
     }
 
     /**

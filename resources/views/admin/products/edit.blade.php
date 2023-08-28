@@ -121,6 +121,11 @@
                 </div>
                 <div class="card-body">
                     <div class="row justify-content-center sortable-container">
+                        @if($product->gallery->count())
+                            <div class="col-md-12 col-sm-12 alert mb-3 alert-primary" role="alert">
+                                <i>Use drag and drop to reorder the images.</i>
+                            </div>
+                        @endif
                         @forelse($product->gallery as $image)
                             <div  id="{{ $image->id }}" class="col col-md-3 p-2 col-sm-12 mb-4 ml-3 gallery-shadow sortable-item">
                                 <div class="row">
@@ -135,14 +140,16 @@
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col text-end">
-                                        <a href="#" class="btn btn-danger fa-pull-right btn-sm m-2">
+                                        <a href="" class="btn btn-danger fa-pull-right btn-sm m-2">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         @empty
-                            No gallery images
+                            <div class="col-md-12 col-sm-12 alert alert-warning" role="alert">
+                                No gallery images has been uploaded yet.
+                            </div>
                         @endforelse
                     </div>
                 </div>

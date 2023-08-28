@@ -50,7 +50,7 @@ class Product extends Model
 
     public function gallery(): MorphMany
     {
-        return $this->morphMany(Images::class, 'imageable');
+        return $this->morphMany(Images::class, 'imageable')->orderBy('order', 'asc');
     }
 
     public function thumbnail(): MorphMany
