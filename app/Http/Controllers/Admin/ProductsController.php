@@ -47,7 +47,7 @@ class ProductsController extends Controller
 
         $this->uploadFiles($request, 'images', $product);
 
-        return redirect()->route('products.show', ['product' => $product])
+        return redirect()->route('products.edit', ['product' => $product])
             ->with('message', sprintf("Successfully created product %s", $product->title));
     }
 
@@ -77,7 +77,7 @@ class ProductsController extends Controller
 
         $this->uploadFiles($request, 'images', $product);
 
-        return redirect()->route('products.show', ['product' => $product])
+        return redirect()->route('products.edit', ['product' => $product])
             ->with('message', sprintf("Successfully updated product %s", $product->title));
     }
 

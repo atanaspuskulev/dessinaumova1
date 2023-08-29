@@ -2,7 +2,11 @@
 
 @section('content')
     <h1 class="h3 mb-12 text-gray-800">Edit product "{{ $product->title }}"</h1>
-
+    @if(session()->has('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
+    @endif
     <div class="row mb-3">
         <div class="col-lg col-md">
             <div class="card shadow mb-12">
@@ -140,7 +144,7 @@
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col text-end">
-                                        <a href="" class="btn btn-danger fa-pull-right btn-sm m-2">
+                                        <a href="javascript:void(0);" onclick="deleteImage()" class="btn btn-danger fa-pull-right btn-sm m-2">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </div>
@@ -152,6 +156,25 @@
                             </div>
                         @endforelse
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteImage" tabindex="-1" role="dialog" aria-labelledby="deleteImage"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteImage">Delete Image?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Are you sure you want to delete this gallery image?</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger" href="">Delete</a>
                 </div>
             </div>
         </div>

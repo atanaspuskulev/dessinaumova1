@@ -19,6 +19,12 @@
     <link href="{{ asset('assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/fancybox//jquery.fancybox-1.3.4.css') }}" type="text/css" media="screen" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script>
+        var reorder_gallery_url = '{{ route("admin.product.reorder_images") }}';
+        var productId = {{ $product ? $product->id : 0 }};
+    </script>
 </head>
 
 <body id="page-top">
@@ -43,26 +49,6 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
 
 <script src="{{ asset('assets/fancybox/jquery.fancybox-1.3.4.pack.js') }}"></script>
@@ -77,38 +63,11 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="{{ asset('assets/css/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery-easing/jquery.easing.min.js') }}"></script>
 <script src="{{ asset('assets/js/sb-admin-2.min.js') }}"></script>
+<script src="{{ asset('assets/js/custom.js') }}"></script>
 
-<script>
-    $(function() {
-        if($('.sortable-container').length > 0) {
-            $(".sortable-container").sortable({
-                items: ".sortable-item",
-                cursor: "move",
-                update: function(event, ui) {
-                    let sortedItems = $(this).sortable("toArray");
-                    $.ajax({
-                        url: '{{ route("admin.product.reorder_images") }}', // Replace with your actual route
-                        method: "POST",
-                        data: {
-                            _token: $('meta[name="csrf-token"]').attr('content'),
-                            product_id: {{ $product->id }},
-                            order: sortedItems
-                        },
-                        success: function(response) {
-                            console.log("Order updated successfully!");
-                        },
-                        error: function(xhr, status, error) {
-                            console.error("Error updating order: " + error);
-                        }
-                    });
-                }
-            });
-        }
-    });
-</script>
 </body>
 </html>
