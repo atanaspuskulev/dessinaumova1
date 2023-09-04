@@ -23,7 +23,7 @@
 
     <script>
         var reorder_gallery_url = '{{ route("admin.product.reorder_images") }}';
-        var productId = {{ $product ? $product->id : 0 }};
+        var productId = {{ isset($product) ? $product->id : 0 }};
     </script>
 </head>
 
