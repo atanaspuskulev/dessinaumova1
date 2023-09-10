@@ -49,7 +49,7 @@
                         </div>
                     @empty
                         There're no products currently available.
-                        Start here and <a href="{{ route('products.create') }}">add new product</a>.
+                        Start here and <a href="{{ route('products.create') }}" class="ml-1">add new product</a>.
                     @endforelse
                         </div>
                     </div>
