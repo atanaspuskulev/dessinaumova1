@@ -13,7 +13,11 @@ toastr.options = {
 };
 
 let deleteImageModal;
+let trashProductModal;
+let archiveProductUrl;
 $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+
     if ($('.sortable-container').length > 0) {
         $(".sortable-container").sortable({
             items: ".sortable-item",
@@ -42,8 +46,35 @@ $(function () {
     if($('#deleteImage').length > 0) {
         deleteImageModal = $('#deleteImage');
     }
+
+    if($('#trashProduct').length > 0) {
+        trashProductModal = $('#trashProduct');
+    }
 });
 
 function deleteImage() {
     deleteImageModal.modal('show');
+}
+
+function trashProduct(url) {
+    trashProductModal.modal('show');
+    archiveProductUrl = url;
+}
+
+function trashProductAction() {
+    if(archiveProductUrl) {
+        $.ajax({
+            url: archiveProductUrl, // Replace with your actual route
+            method: "DELETE",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                toastr["error"]("Error saving positioning!");
+            }
+        });
+    }
 }

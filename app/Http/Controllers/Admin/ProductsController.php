@@ -9,7 +9,7 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Traits\FileUploadTrait;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Contracts\Validation\ValidatesWhenResolved;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -23,7 +23,9 @@ class ProductsController extends Controller
      */
     public function index(): View
     {
-        $products = Product::with(['thumbnail', 'category'])->get();
+        $products = Product::with(['thumbnail', 'category'])
+            ->withTrashed()
+            ->get();
 
         return view('admin.products.index', compact('products'));
     }
@@ -106,8 +108,13 @@ class ProductsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product): JsonResponse
     {
-        //
+        try {
+            $product->delete();
+            return response()->json([]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }

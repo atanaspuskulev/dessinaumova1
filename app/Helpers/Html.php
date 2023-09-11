@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Storage;
 
 function displayImage(int $recordId, string|null $path, bool|null $isThumbnail = null, string $thumbnailPath = 'thumbnails'): string
