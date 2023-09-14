@@ -14,7 +14,11 @@ toastr.options = {
 
 let deleteImageModal;
 let trashProductModal;
+let destroyProductModal;
+let restoreProductModal;
 let archiveProductUrl;
+let destroyProductUrl;
+let restoreProductUrl;
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -50,6 +54,14 @@ $(function () {
     if($('#trashProduct').length > 0) {
         trashProductModal = $('#trashProduct');
     }
+
+    if($('#destroyProduct').length > 0) {
+        destroyProductModal = $('#destroyProduct');
+    }
+
+    if($('#untrashProduct').length > 0) {
+        restoreProductModal = $('#untrashProduct');
+    }
 });
 
 function deleteImage() {
@@ -61,11 +73,57 @@ function trashProduct(url) {
     archiveProductUrl = url;
 }
 
+function destroyProduct(url) {
+    destroyProductModal.modal('show');
+    destroyProductUrl = url;
+}
+
+function restoreProduct(url) {
+    restoreProductModal.modal('show');
+    restoreProductUrl = url;
+}
+
 function trashProductAction() {
     if(archiveProductUrl) {
         $.ajax({
             url: archiveProductUrl, // Replace with your actual route
             method: "DELETE",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                toastr["error"]("Error saving positioning!");
+            }
+        });
+    }
+}
+
+function destoryProductAction() {
+    if(destroyProductUrl) {
+        $.ajax({
+            url: destroyProductUrl, // Replace with your actual route
+            method: "DELETE",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                toastr["error"]("Error saving positioning!");
+            }
+        });
+    }
+}
+
+function restoreProductAction() {
+    if(restoreProductUrl) {
+        $.ajax({
+            url: restoreProductUrl, // Replace with your actual route
+            method: "POST",
             data: {
                 _token: $('meta[name="csrf-token"]').attr('content')
             },

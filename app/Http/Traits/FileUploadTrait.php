@@ -2,6 +2,7 @@
 
 namespace App\Http\Traits;
 
+use App\Models\Images;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
@@ -44,5 +45,13 @@ trait FileUploadTrait
         Storage::disk('public')->put($thumbnailPath, $image->encode());
 
         return $thumbnailPath;
+    }
+
+    public function deleteImage(Model $model, Images $imageObject): void
+    {
+        $path = sprintf("uploads/%d", $model->id);
+
+        Storage::disk('public')->delete(sprintf("%s/original/%s", $path, $imageObject->path));
+        Storage::disk('public')->delete(sprintf("%s/thumbnails/%s", $path, $imageObject->path));
     }
 }

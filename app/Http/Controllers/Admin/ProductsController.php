@@ -105,13 +105,39 @@ class ProductsController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Product $product): JsonResponse
     {
         try {
             $product->delete();
+            return response()->json([]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function forceDelete(int $productId): JsonResponse
+    {
+        try {
+            $product = Product::with(['gallery'])
+                ->withTrashed()
+                ->findOrFail($productId);
+
+            foreach($product->gallery as $image) {
+                $this->deleteImage($product, $image);
+                $image->delete();
+            }
+            $product->forceDelete();
+            return response()->json([]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function restore(int $productId): JsonResponse
+    {
+        try {
+            Product::withTrashed()->findOrFail($productId)->restore();
+
             return response()->json([]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);

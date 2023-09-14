@@ -14,7 +14,7 @@
                             @forelse($products as $product)
                                 <div class="col-lg-3 col-md-4 col-sm-12 mb-3">
                                     <div class="card shadow @if($product->trashed()) bg-gray-200 @endif">
-                                        <div class="card-header py-3 @if($product->trashed()) bg-warning @endif">
+                                        <div style="max-height:70px;height:70px;" class="card-header py-3 @if($product->trashed()) bg-warning @endif">
                                             <h6 class="m-0 font-weight-bold text-primary">{{ mb_strimwidth($product->title, 0, 45, '...') }}</h6>
                                         </div>
                                         <div class="card-body" style="height:445px; max-height: 445px; overflow-y: scroll;">
@@ -41,10 +41,10 @@
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                                 @if($product->trashed())
-                                                    <a data-toggle="tooltip" title="Restore product" href="#" class="btn btn-sm btn-secondary mr-2">
+                                                    <a data-toggle="tooltip" title="Restore product" href="javascript:void(0);" onclick="restoreProduct('{{ route('products.restore', ['product' => $product]) }}');" class="btn btn-sm btn-secondary mr-2">
                                                         <i class="fas fa-folder-plus"></i>
                                                     </a>
-                                                    <a data-toggle="tooltip" title="Permanently delete product" onclick="trashProduct('{{ route('products.destroy', ['product' => $product]) }}')" href="javascript:void(0);" class="btn btn-sm btn-danger">
+                                                    <a data-toggle="tooltip" title="Permanently delete product" onclick="destroyProduct('{{ route('products.force-delete', ['product' => $product]) }}')" href="javascript:void(0);" class="btn btn-sm btn-danger">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
                                                 @else
@@ -52,7 +52,6 @@
                                                         <i class="fas fa-folder-minus"></i>
                                                     </a>
                                                 @endif
-
                                             </div>
                                         </div>
                                     </div>
@@ -67,23 +66,5 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="trashProduct" tabindex="-1" role="dialog" aria-labelledby="trashProduct"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="trashProduct">Archive Product?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Are you sure you want to archive this product?</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-danger" href="javascript:void(0);" onclick="trashProductAction();">Archive</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('admin/partials/product_modals')
 @endsection
