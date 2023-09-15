@@ -144,7 +144,7 @@
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col text-end">
-                                        <a href="javascript:void(0);" onclick="deleteImage()" class="btn btn-danger fa-pull-right btn-sm m-2">
+                                        <a href="javascript:void(0);" onclick="deleteImage('{{ route('products.images.destroy', ['product' => $product, 'image' => $image]) }}')" class="btn btn-danger fa-pull-right btn-sm m-2">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </div>
@@ -174,7 +174,7 @@
                 <div class="modal-body">Are you sure you want to delete this gallery image?</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-danger" href="">Delete</a>
+                    <a onclick="destoryImageAction()" class="btn btn-danger" href="javascript:void(0);">Delete</a>
                 </div>
             </div>
         </div>

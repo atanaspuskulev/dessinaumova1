@@ -19,6 +19,7 @@ let restoreProductModal;
 let archiveProductUrl;
 let destroyProductUrl;
 let restoreProductUrl;
+let destroyImageUrl;
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -64,8 +65,9 @@ $(function () {
     }
 });
 
-function deleteImage() {
+function deleteImage(url) {
     deleteImageModal.modal('show');
+    destroyImageUrl = url;
 }
 
 function trashProduct(url) {
@@ -95,7 +97,7 @@ function trashProductAction() {
                 location.reload();
             },
             error: function (xhr, status, error) {
-                toastr["error"]("Error saving positioning!");
+                toastr["error"]("Error archiving product!");
             }
         });
     }
@@ -113,7 +115,25 @@ function destoryProductAction() {
                 location.reload();
             },
             error: function (xhr, status, error) {
-                toastr["error"]("Error saving positioning!");
+                toastr["error"]("Error permanently delete product!");
+            }
+        });
+    }
+}
+
+function destoryImageAction() {
+    if(destroyImageUrl) {
+        $.ajax({
+            url: destroyImageUrl, // Replace with your actual route
+            method: "DELETE",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                toastr["error"]("Error deleting image!");
             }
         });
     }
@@ -131,7 +151,7 @@ function restoreProductAction() {
                 location.reload();
             },
             error: function (xhr, status, error) {
-                toastr["error"]("Error saving positioning!");
+                toastr["error"]("Error restoring product state!");
             }
         });
     }

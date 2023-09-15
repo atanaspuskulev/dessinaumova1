@@ -25,7 +25,7 @@ class ProductsController extends Controller
     {
         $products = Product::with(['thumbnail', 'category'])
             ->withTrashed()
-            ->get();
+            ->paginate(20);
 
         return view('admin.products.index', compact('products'));
     }
