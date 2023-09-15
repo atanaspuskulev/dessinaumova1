@@ -108,7 +108,7 @@
                             <div class="col pt-4 pb-3">
                                 <hr>
                                 <button type="submit" class="float-right btn btn-primary ml-3">Update</button>
-                                <button type="button" class="float-right btn btn-danger">Cancel</button>
+                                <a  href="{{ route('products.index') }}" class="float-right btn btn-danger">Cancel</a>
                             </div>
                         </div>
                     </form>
@@ -131,7 +131,7 @@
                             </div>
                         @endif
                         @forelse($product->gallery as $image)
-                            <div  id="{{ $image->id }}" class="col col-md-3 p-2 col-sm-12 mb-4 ml-3 gallery-shadow sortable-item">
+                            <div id="{{ $image->id }}" class="col col-md-3 p-2 col-sm-12 mb-4 ml-3 gallery-shadow sortable-item">
                                 <div class="row">
                                     <div class="col d-flex justify-content-center align-items-center">
                                         <a href="{{ displayImage($product->id, $image->path) }}" rel="gallery" class="gallery_images">

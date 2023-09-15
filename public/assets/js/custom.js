@@ -48,6 +48,20 @@ $(function () {
         });
     }
 
+    if($('#product-list').length > 0) {
+        $("#product-list").sortable({
+            items: ".sortable-item-product",
+            cursor: "move",
+            handle: ".card-header", // The header is the handle for dragging
+            update: function (event, ui) {
+                // This function is called after an item is dropped
+                // You can perform any necessary updates here, like sending the new order to the server
+                var newOrder = $(this).sortable("toArray");
+                console.log(newOrder); // You can send this order to the server via AJAX
+            }
+        });
+    }
+
     if($('#deleteImage').length > 0) {
         deleteImageModal = $('#deleteImage');
     }

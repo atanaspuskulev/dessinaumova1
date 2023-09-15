@@ -10,9 +10,9 @@
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <div class="row">
+                        <div class="row" id="product-list">
                             @forelse($products as $product)
-                                <div class="col-lg-3 col-md-4 col-sm-12 mb-3">
+                                <div id="{{ $product->id }}" class="sortable-item-product col-lg-3 col-md-4 col-sm-12 mb-3">
                                     <div class="card shadow @if($product->trashed()) bg-gray-200 @endif">
                                         <div style="max-height:70px;height:70px;" class="card-header py-3 @if($product->trashed()) bg-warning @endif">
                                             <h6 class="m-0 font-weight-bold text-primary">{{ mb_strimwidth($product->title, 0, 45, '...') }}</h6>
