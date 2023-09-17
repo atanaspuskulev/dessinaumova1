@@ -23,7 +23,9 @@
 
     <script>
         var reorder_gallery_url = '{{ route("admin.product.reorder_images") }}';
+        var reorder_products_url = '{{ route("admin.products_reorder") }}';
         var productId = {{ isset($product) ? $product->id : 0 }};
+        var currentPage = {{ request()->page ?? 1 }};
     </script>
 </head>
 

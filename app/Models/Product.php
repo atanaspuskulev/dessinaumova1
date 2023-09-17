@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class Product extends Model
 {
@@ -33,12 +35,17 @@ class Product extends Model
         'sold',
         'meta_title',
         'meta_description',
-        'meta_keywords'
+        'meta_keywords',
+        'order'
     ];
 
     public static function boot()
     {
         parent::boot();
+
+        static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('order', 'asc');
+        });
 
         static::creating(function ($item) {
             $item->slug = Str::lower(Str::slug($item->title));

@@ -52,12 +52,24 @@ $(function () {
         $("#product-list").sortable({
             items: ".sortable-item-product",
             cursor: "move",
-            handle: ".card-header", // The header is the handle for dragging
+            handle: ".card-header",
             update: function (event, ui) {
-                // This function is called after an item is dropped
-                // You can perform any necessary updates here, like sending the new order to the server
-                var newOrder = $(this).sortable("toArray");
-                console.log(newOrder); // You can send this order to the server via AJAX
+                let sortedItems = $(this).sortable("toArray");
+                $.ajax({
+                    url: reorder_products_url, // Replace with your actual route
+                    method: "POST",
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        order: sortedItems,
+                        page: currentPage
+                    },
+                    success: function (response) {
+                        toastr["success"]("Positioning saved!");
+                    },
+                    error: function (xhr, status, error) {
+                        toastr["error"]("Error saving positioning!");
+                    }
+                });
             }
         });
     }

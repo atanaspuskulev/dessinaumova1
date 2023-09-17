@@ -83,28 +83,6 @@ class ProductsController extends Controller
             ->with('message', sprintf("Successfully updated product %s", $product->title));
     }
 
-    public function reorderImages(Request $request)
-    {
-        if($request->has('product_id')) {
-            $ordering = $request->get('order');
-
-            if(!empty($ordering)) {
-                $product = Product::with('gallery')
-                    ->findOrFail($request->get('product_id'));
-
-                $product->gallery()->update(['order' => 0]);
-
-                $i = 0;
-                foreach($ordering as $order) {
-                    $product->gallery()->where('id', $order)->update(['order' => $i]);
-                    $i++;
-                }
-                unset($i);
-            }
-        }
-
-    }
-
     public function destroy(Product $product): JsonResponse
     {
         try {
@@ -112,6 +90,21 @@ class ProductsController extends Controller
             return response()->json([]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function reorder(Request $request): void
+    {
+        $ordering = $request->get('order');
+        if(!empty($ordering)) {
+            $pageNumber = $request->get('page', 1);
+            $offset = ($pageNumber - 1) * 20;
+            $i = $offset;
+            foreach($ordering as $order) {
+                Product::withTrashed()->findOrFail($order)->update(['order' => $i]);
+                $i++;
+            }
+            unset($i);
         }
     }
 
