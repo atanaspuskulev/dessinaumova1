@@ -2,7 +2,17 @@
 
 @section('content')
     <div class="container-fluid mt-5 px-0">
-        <img src="{{ asset('assets/images/desinaumovashop1.jpg') }}" alt="Image" class="img-fluid">
+        <div class="row">
+            <div class="col-md-6 px-0">
+                <img style="width: 600px;" src="{{ asset('assets/images/DesiWEB.jpg') }}" class="img-fluid">
+            </div>
+            <div class="col-md-5 p-md-0 p-5">
+                <h3 class="display-1">Dessi Naumova</h3>
+                <hr />
+                <br />
+                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+            </div>
+        </div>
     </div>
 
     <div class="container mt-5">

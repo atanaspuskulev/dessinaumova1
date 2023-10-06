@@ -8,16 +8,50 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link href="{{ asset('assets/bootstrap-5.0.2/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine|Kalam">
+    <style>
+        .display-1 {
+            font-family: 'Tangerine', sans-serif;
+            font-size: 60pt;
+        }
+        div, p {
+            font-size: 15pt;
+            font-weight: normal;
+        }
+        .navbar-shadow {
+            box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.3);
+        }
+        .nav-link {
+            font-family: 'Kalam', sans-serif;
+        }
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 3px 5px;
+            font-size: 10px;
+            width: 15px;
+        }
+        </st
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-shadow navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" href="#">Your Website</a>
+        <a class="navbar-brand" href="#">Desi Naumova</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="#">Home</a>
@@ -26,20 +60,33 @@
                     <a class="nav-link" href="#">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Products</a>
+                    <a class="nav-link" href="#">Paintings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Prints</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contact</a>
                 </li>
             </ul>
         </div>
+        <ul class="navbar-nav"> <!-- Visible only on mobile screens (lg and below) -->
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-shopping-cart position-relative">
+                        <span class="cart-badge d-none">5</span>
+                    </i>
+                </a>
+            </li>
+        </ul>
     </div>
 </nav>
 @yield('content')
-<footer class="bg-dark text-light text-center py-3 fixed-bottom">
+<footer class="bg-dark text-light text-center py-3 bottom-0">
     <div class="container">
-        <p>&copy; 2023 Your Website. All rights reserved.</p>
+        <p>&copy; {{ date('Y') }} Desi Naumova. All rights reserved.</p>
     </div>
 </footer>
+<script src="{{ asset('assets/bootstrap-5.0.2/js/bootstrap.bundle.js') }}"></script>
 </body>
 </html>
