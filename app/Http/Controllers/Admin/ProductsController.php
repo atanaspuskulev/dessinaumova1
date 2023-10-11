@@ -23,9 +23,12 @@ class ProductsController extends Controller
      */
     public function index(): View
     {
-        $products = Product::with(['thumbnail', 'category'])
-            ->withTrashed()
-            ->paginate(20);
+        $products = Product::with([
+            'thumbnail',
+            'category'
+        ])
+        ->withTrashed()
+        ->paginate(20);
 
         return view('admin.products.index', compact('products'));
     }

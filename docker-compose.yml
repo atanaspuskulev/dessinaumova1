@@ -41,6 +41,7 @@ services:
         volumes:
             - 'sail-mysql:/var/lib/mysql'
             - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
+            - './dockerconf/mysql-custom.cnf:/etc/mysql/conf.d/mysql-custom.cnf'  # Add this line to mount a custom MySQL configuration file
         networks:
             - sail
         healthcheck:

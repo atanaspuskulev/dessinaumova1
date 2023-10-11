@@ -19,7 +19,7 @@
                                         </div>
                                         <div class="card-body" style="height:445px; max-height: 445px; overflow-y: scroll;">
                                             <img
-                                                src="{{ displayImage($product->id, $product->thumbnail->first()?->path, true) }}"
+                                                src="{{ displayImage($product->id, $product->thumbnail?->path, true) }}"
                                                 alt=""
                                                 class="mb-2 img-fluid">
                                             <p>

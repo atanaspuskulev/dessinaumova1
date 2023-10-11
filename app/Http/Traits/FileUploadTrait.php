@@ -5,7 +5,7 @@ namespace App\Http\Traits;
 use App\Models\Images;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -31,17 +31,17 @@ trait FileUploadTrait
                     // Generate a thumbnail and store it in the thumbnails directory
                     $thumbnailPath = "{$path}/thumbnails/{$storageFilename}";
                     $this->generateThumbnail($file, $thumbnailPath);
-
                     $model->gallery()->create(['path' => $storageFilename]);
                 }
             }
         }
     }
 
-    protected function generateThumbnail($file, string $thumbnailPath): string
+    protected function generateThumbnail(UploadedFile $file, string $thumbnailPath): string
     {
+        $configThumbnail = config('images.resize.thumbnail');
         $image = Image::make($file);
-        $image->fit(200, 200); // Adjust the dimensions for your thumbnails
+        $image->fit($configThumbnail['max_width'], $configThumbnail['max_height']); // Adjust the dimensions for your thumbnails
         Storage::disk('public')->put($thumbnailPath, $image->encode());
 
         return $thumbnailPath;
