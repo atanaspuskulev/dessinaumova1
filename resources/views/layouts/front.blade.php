@@ -1,47 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Dessi Naumova</title>
+    <title>Desi Naumova</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link href="{{ asset('assets/bootstrap-5.0.2/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine|Kalam">
-    <style>
-        .display-1 {
-            font-family: 'Tangerine', sans-serif;
-            font-size: 60pt;
-        }
-        div, p {
-            font-size: 15pt;
-            font-weight: normal;
-        }
-        .navbar-shadow {
-            box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.3);
-        }
-        .nav-link {
-            font-family: 'Kalam', sans-serif;
-        }
-        .nav-link:hover {
-            text-decoration: underline;
-        }
-        .cart-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            padding: 3px 5px;
-            font-size: 10px;
-            width: 15px;
-        }
-        </st
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine|Handlee"/>
+    <link href="{{ asset('assets/css/custom.css') }}" type="text/css" rel="stylesheet"/>
 </head>
 <body>
 <nav class="navbar navbar-shadow navbar-expand-lg navbar-light bg-light">

@@ -56,21 +56,18 @@ class ProductsController extends Controller
             ->with('message', sprintf("Successfully created product %s", $product->title));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Product $product): View
+    public function edit(int $productId): View
     {
+        $product = Product::with('gallery')->withTrashed()
+            ->where('id', $productId)
+            ->first();
+
         $categories = Category::all();
-        $product->load('gallery');
 
         return view('admin.products.edit', compact('product', 'categories'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(ProductRequest $request, Product $product)
+    public function update(ProductRequest $request, int $productId)
     {
         $data = $request->all();
 
@@ -78,11 +75,14 @@ class ProductsController extends Controller
             $data['sold'] = false;
         }
 
+        $product = Product::withTrashed()
+            ->findOrFail($productId);
+
         $product->update($data);
 
         $this->uploadFiles($request, 'images', $product);
 
-        return redirect()->route('products.edit', ['product' => $product])
+        return redirect()->route('products.edit', compact('product'))
             ->with('message', sprintf("Successfully updated product %s", $product->title));
     }
 
