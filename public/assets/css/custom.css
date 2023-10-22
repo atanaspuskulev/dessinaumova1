@@ -35,3 +35,23 @@ div, p {
 .card-text {
     font-size: 14pt;
 }
+
+.equal-height {
+    display: flex;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card-text {
+    font-family: 'Gochi Hand', sans-serif;
+}
+
+.product-button {
+    color: #999;
+    font-family: 'Gochi Hand', sans-serif;
+    text-decoration: none;
+}

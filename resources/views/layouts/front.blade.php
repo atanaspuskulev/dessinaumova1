@@ -9,7 +9,7 @@
 
     <link href="{{ asset('assets/bootstrap-5.0.2/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine|Handlee"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine|Handlee|Gochi+Hand"/>
     <link href="{{ asset('assets/css/custom.css') }}" type="text/css" rel="stylesheet"/>
 </head>
 <body>
@@ -23,16 +23,16 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" href="{{ route('front.index') }}">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Paintings</a>
+                    <a class="nav-link" href="{{ route('front.paintings') }}">Paintings</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Prints</a>
+                    <a class="nav-link" href="{{ route('front.prints') }}">Prints</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contact</a>

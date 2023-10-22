@@ -25,15 +25,16 @@
     </div>
 
     <div class="container-fluid mt-5">
-        <div class="row">
+        <div class="row  equal-height">
             @forelse($products as $product)
-                <div class="col-md-4">
+                <div class="col-md-4 mb-5">
                     <div class="card mb-4 rounded-5" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
                         <img src="{{ displayImage($product->id, $product->thumbnail?->path, true) }}" class="card-img-top" alt="Product 1">
                         <div class="card-body">
                             <h3 class="card-title">{{ $product->title }}</h3>
                             <p class="card-text">{!! $product->short_description !!}</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
+                            <p>In {{ $product->category->title }}</p>
+                            <a href="#" class="product-button mb-3 position-absolute bottom-0 end-0 me-3">View More</a>
                         </div>
                     </div>
                 </div>
