@@ -9,47 +9,51 @@
 
     <link href="{{ asset('assets/bootstrap-5.0.2/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine|Handlee|Gochi+Hand"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine|Handlee|Gochi+Hand|Kalam"/>
     <link href="{{ asset('assets/css/custom.css') }}" type="text/css" rel="stylesheet"/>
 </head>
 <body>
-<nav class="navbar navbar-shadow navbar-expand-lg navbar-light bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" href="#">Desi Naumova</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        <div class="navbar-logo">
+            <a class="navbar-brand" href="{{ route('front.index') }}">Desi Naumova</a>
+        </div>
+
+        <div class="navbar-cart">
+            <i class="fas fa-shopping-cart">
+                <span class="cart-badge">5</span>
+            </i>
+        </div>
+
+        <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('front.index') }}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('front.paintings') }}">Paintings</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('front.prints') }}">Prints</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-            </ul>
-        </div>
-        <ul class="navbar-nav"> <!-- Visible only on mobile screens (lg and below) -->
+    </div>
+
+    <!-- Right part with menu -->
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-shopping-cart position-relative">
-                        <span class="cart-badge d-none">5</span>
-                    </i>
-                </a>
+                <a class="nav-link" href="{{ route('front.index') }}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('front.paintings') }}">Paintings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('front.prints') }}">Prints</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
             </li>
         </ul>
     </div>
 </nav>
+
 @yield('content')
 <footer class="bg-dark text-light text-center py-3 bottom-0">
     <div class="container">

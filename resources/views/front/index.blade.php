@@ -33,7 +33,11 @@
                         <div class="card-body">
                             <h3 class="card-title">{{ $product->title }}</h3>
                             <p class="card-text">{!! $product->short_description !!}</p>
-                            <p>In {{ $product->category->title }}</p>
+                            <p>
+                                In <a href="{{ route('front.to_category', ['category' => $product->category->slug]) }}" class="common-link">
+                                    {{ $product->category->title }}
+                                </a>
+                            </p>
                             <a href="#" class="product-button mb-3 position-absolute bottom-0 end-0 me-3">View More</a>
                         </div>
                     </div>
