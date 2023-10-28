@@ -1,14 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Category;
+use Illuminate\View\View;
 
 class ProductsController extends Controller
 {
-    public function byCategory(string $category)
+    public function byCategory(string $slug): View
     {
-        dd($category);
+        $category = Category::with([
+            'products' => function($query) {
+                $query->paginate(10);
+            },
+            'products.thumbnail'
+        ])
+        ->where('slug', $slug)
+        ->first();
+
+        $products = $category->products;
+
+        return view('front.products', compact('products'));
     }
 }

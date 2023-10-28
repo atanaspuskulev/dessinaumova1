@@ -29,4 +29,9 @@ class Category extends Model
             $item->updating_at = now()->toDateString();
         });
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }
