@@ -10,19 +10,18 @@ use Illuminate\View\View;
 
 class ProductsController extends Controller
 {
-    public function byCategory(string $slug): View
+    public function byCategory(string $category): View
     {
-        $category = Category::with([
+        $categoryData = Category::with([
             'products' => function($query) {
                 $query->paginate(10);
             },
             'products.thumbnail'
         ])
-        ->where('slug', $slug)
+        ->where('slug', $category)
         ->first();
 
-        $products = $category->products;
-
-        return view('front.products', compact('products'));
+        $products = $categoryData->products ?? [];
+        return view('front.products', compact('categoryData', 'products'));
     }
 }

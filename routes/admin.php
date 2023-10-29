@@ -19,5 +19,7 @@ Route::prefix('admin')->group(function () {
 
         Route::resource('products', Admin\ProductsController::class);
         Route::resource('products.images', Admin\ImagesController::class);
+
+        Route::resource('categories', Admin\CategoriesController::class);
     });
 });

@@ -17,9 +17,11 @@
         rel="stylesheet">
 
     <link href="{{ asset('assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/fancybox//jquery.fancybox-1.3.4.css') }}" type="text/css" media="screen" />
+    <link rel="stylesheet" href="{{ asset('assets/fancybox//jquery.fancybox-1.3.4.css') }}" type="text/css"
+          media="screen"/>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script src="{{ asset('assets/ckeditor5/ckeditor.js') }}"></script>
 
     <script>
         var reorder_gallery_url = '{{ route("admin.product.reorder_images") }}';
@@ -31,12 +33,12 @@
 
 <body id="page-top">
 <div id="wrapper">
-    @include('partials/sidebar')
+    @include('admin.partials.sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
 
         <!-- Main Content -->
         <div id="content">
-            @include('partials/topbar')
+            @include('admin.partials.topbar')
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
@@ -56,10 +58,10 @@
 <script src="{{ asset('assets/fancybox/jquery.fancybox-1.3.4.pack.js') }}"></script>
 <script>
     var j = jQuery.noConflict();
-    j(function() {
-       if(j(".gallery_images").length > 0) {
-           j(".gallery_images").fancybox();
-       }
+    j(function () {
+        if (j(".gallery_images").length > 0) {
+            j(".gallery_images").fancybox();
+        }
     });
 </script>
 

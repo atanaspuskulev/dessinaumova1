@@ -89,6 +89,14 @@ $(function () {
     if($('#untrashProduct').length > 0) {
         restoreProductModal = $('#untrashProduct');
     }
+
+    if($('textarea#description').length > 0) {
+        ClassicEditor
+            .create( document.querySelector( '#description' ))
+            .catch( error => {
+                console.error( error );
+            } );
+    }
 });
 
 function deleteImage(url) {

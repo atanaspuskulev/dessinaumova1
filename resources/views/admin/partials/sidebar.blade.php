@@ -22,23 +22,38 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Paintings
-    </div>
+    @php
+        $activeCategories = preg_match('/^admin\/categories(\/|$)/', request()->path());
+    @endphp
+    <li class="nav-item {{ $activeCategories ? 'active' : ''}}">
+        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseOne"
+           aria-expanded="true" aria-controls="collapseOne">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Categories</span>
+        </a>
+        <div id="collapseOne" class="collapse {{ $activeCategories ? 'show' : '' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Actions:</h6>
+                <a class="collapse-item {{ request()->path() === 'admin/categories' ? 'active' : '' }}" href="{{ route('categories.index') }}">List all</a>
+                <a class="collapse-item {{ request()->path() === 'admin/categories/create' ? 'active' : '' }}" href="{{ route('categories.create') }}">Add new</a>
+            </div>
+        </div>
+    </li>
 
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item active">
+    @php
+        $activeProducts = request()->path() === 'admin' || preg_match('/^admin\/products(\/|$)/', request()->path());
+    @endphp
+    <li class="nav-item {{ $activeProducts ? 'active' : ''}}">
         <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo"
            aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
             <span>Products</span>
         </a>
-        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseTwo" class="collapse {{ $activeProducts ? 'show' : '' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Actions:</h6>
-                <a class="collapse-item {{ request()->is('admin/products/index') ? 'active' : '' }}" href="{{ route('products.index') }}">List all</a>
-                <a class="collapse-item {{ request()->is('admin/products/create') ? 'active' : '' }}" href="{{ route('products.create') }}">Add new</a>
+                <a class="collapse-item {{ request()->path() === 'admin/products' || request()->path() === 'admin' ? 'active' : '' }}" href="{{ route('products.index') }}">List all</a>
+                <a class="collapse-item {{ request()->path() === 'admin/products/create' ? 'active' : '' }}" href="{{ route('products.create') }}">Add new</a>
             </div>
         </div>
     </li>
