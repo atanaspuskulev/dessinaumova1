@@ -4,21 +4,33 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class Category extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'title', 'slug', 'is_active'
+        'title',
+        'slug',
+        'is_active',
+        'meta_description',
+        'meta_keywords',
+        'meta_title',
+        'position'
     ];
 
     public static function boot()
     {
         parent::boot();
+
+        static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('position', 'asc');
+        });
 
         static::creating(function ($item) {
             $item->slug = Str::lower(Str::slug($item->title));

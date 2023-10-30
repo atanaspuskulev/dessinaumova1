@@ -19,7 +19,6 @@ class Product extends Model
     use HasFactory;
 
     use HasFactory, SoftDeletes;
-
     protected $fillable = [
         'category_id',
         'title',

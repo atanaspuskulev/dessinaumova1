@@ -13,7 +13,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.home') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Home</span></a>
@@ -23,7 +23,7 @@
     <hr class="sidebar-divider">
 
     @php
-        $activeCategories = preg_match('/^admin\/categories(\/|$)/', request()->path());
+        $activeCategories = preg_match('/^admin\/categories(\/|$)/', $current_path);
     @endphp
     <li class="nav-item {{ $activeCategories ? 'active' : ''}}">
         <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseOne"
@@ -34,14 +34,14 @@
         <div id="collapseOne" class="collapse {{ $activeCategories ? 'show' : '' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Actions:</h6>
-                <a class="collapse-item {{ request()->path() === 'admin/categories' ? 'active' : '' }}" href="{{ route('categories.index') }}">List all</a>
-                <a class="collapse-item {{ request()->path() === 'admin/categories/create' ? 'active' : '' }}" href="{{ route('categories.create') }}">Add new</a>
+                <a class="collapse-item {{ $current_path === 'admin/categories' ? 'active' : '' }}" href="{{ route('categories.index') }}">List all</a>
+                <a class="collapse-item {{ $current_path === 'admin/categories/create' ? 'active' : '' }}" href="{{ route('categories.create') }}">Add new</a>
             </div>
         </div>
     </li>
 
     @php
-        $activeProducts = request()->path() === 'admin' || preg_match('/^admin\/products(\/|$)/', request()->path());
+        $activeProducts = $current_path === 'admin' || preg_match('/^admin\/products(\/|$)/', $current_path);
     @endphp
     <li class="nav-item {{ $activeProducts ? 'active' : ''}}">
         <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -52,8 +52,8 @@
         <div id="collapseTwo" class="collapse {{ $activeProducts ? 'show' : '' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Actions:</h6>
-                <a class="collapse-item {{ request()->path() === 'admin/products' || request()->path() === 'admin' ? 'active' : '' }}" href="{{ route('products.index') }}">List all</a>
-                <a class="collapse-item {{ request()->path() === 'admin/products/create' ? 'active' : '' }}" href="{{ route('products.create') }}">Add new</a>
+                <a class="collapse-item {{ $current_path === 'admin/products' || $current_path === 'admin' ? 'active' : '' }}" href="{{ route('products.index') }}">List all</a>
+                <a class="collapse-item {{ $current_path === 'admin/products/create' ? 'active' : '' }}" href="{{ route('products.create') }}">Add new</a>
             </div>
         </div>
     </li>
