@@ -18,6 +18,7 @@ class Category extends Model
         'title',
         'slug',
         'is_active',
+        'description',
         'meta_description',
         'meta_keywords',
         'meta_title',
@@ -38,7 +39,7 @@ class Category extends Model
         });
 
         static::updating(function ($item) {
-            $item->updating_at = now()->toDateString();
+            $item->updated_at = now()->toDateString();
         });
     }
 
