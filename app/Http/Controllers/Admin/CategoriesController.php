@@ -16,9 +16,6 @@ class CategoriesController extends Controller
 {
     use ProductsTrait;
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $categories = Category::withTrashed()->get();
@@ -39,8 +36,11 @@ class CategoriesController extends Controller
             ->with('message', sprintf("Successfully updated category %s", $category->title));
     }
 
-    public function edit(Category $category): View
+    public function edit(int $categoryId): View
     {
+        $category = Category::withTrashed()
+            ->findOrFail($categoryId);
+
         return view('admin.categories.edit', compact('category'));
     }
 
