@@ -41,12 +41,13 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">About</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('front.paintings') }}">Paintings</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('front.prints') }}">Prints</a>
-            </li>
+            @if(isset($products_categories) && $products_categories->count())
+                @foreach($products_categories as $slug => $title)
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('front.to_category', ['category' => $slug]) }}">{{ $title }}</a>
+                    </li>
+                @endforeach
+            @endif
             <li class="nav-item">
                 <a class="nav-link" href="#">Contact</a>
             </li>

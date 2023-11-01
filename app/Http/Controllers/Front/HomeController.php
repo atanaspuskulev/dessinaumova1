@@ -16,9 +16,12 @@ class HomeController extends Controller
             'thumbnail',
             'category'
         ])
+        ->where('sold', false)
         ->inRandomOrder()
         ->take(6)->get();
 
-        return view('front.index', compact('products'));
+        $productsCount = $products->count();
+
+        return view('front.index', compact('products', 'productsCount'));
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 
@@ -11,8 +12,13 @@ class GlobalData
 {
     public function handle(Request $request, \Closure $next)
     {
+        $categories = Category::where('is_active', true)
+            ->get()
+            ->pluck('title', 'slug');
+
         View::share([
-            'current_path' => request()->path()
+            'current_path' => request()->path(),
+            'products_categories' => $categories
         ]);
 
         return $next($request);

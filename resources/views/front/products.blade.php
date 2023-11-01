@@ -17,8 +17,13 @@
                         <div class="card-body">
                             <h3 class="card-title">{{ $product->title }}</h3>
                             <p class="card-text">{!! $product->short_description !!}</p>
-                            <h3>Price: ${{ $product->price }}</h3>
-                            <a href="#" class="product-button mb-3 position-absolute bottom-0 end-0 me-3">View More</a>
+                            <h3 class="@if($product->sold) bg-warning @endif p-2 mb-5">
+                                Price: {{ $product->price }}&euro;
+                                @if($product->sold)
+                                    - This product is sold!
+                                @endif
+                            </h3>
+                            <a  href="#" class="product-button mb-3 position-absolute bottom-0 end-0 me-3">View More</a>
                         </div>
                     </div>
                 </div>

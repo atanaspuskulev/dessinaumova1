@@ -26,13 +26,22 @@
 
     <div class="container-fluid mt-5">
         <div class="row  equal-height">
+            @php
+                $colClass = match($productsCount) {
+                    1 => 'col-md-12',
+                    2 => 'col-md-6',
+                    default => 'col-md-4'
+                };
+            @endphp
             @forelse($products as $product)
-                <div class="col-md-4 mb-5">
+                <div class="{{ $colClass }} mb-5">
                     <div class="card mb-4 rounded-5 card-box-shadow">
                         <img src="{{ displayImage($product->id, $product->thumbnail?->path, true) }}" class="card-img-top" alt="Product 1">
                         <div class="card-body">
                             <h3 class="card-title">{{ $product->title }}</h3>
                             <p class="card-text">{!! $product->short_description !!}</p>
+                            <h3>Price: {{ $product->price }}&euro;</h3>
+                            <br>
                             <p>
                                 In <a href="{{ route('front.to_category', ['category' => $product->category->slug]) }}" class="common-link">
                                     {{ $product->category->title }}
