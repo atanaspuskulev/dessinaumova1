@@ -36,6 +36,10 @@ class Category extends Model
         static::creating(function ($item) {
             $item->slug = Str::lower(Str::slug($item->title));
             $item->created_at = now()->toDateString();
+
+            if($item->position === null) {
+                $item->position = 0;
+            }
         });
 
         static::updating(function ($item) {

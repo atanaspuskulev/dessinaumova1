@@ -20,6 +20,14 @@ let archiveProductUrl;
 let destroyProductUrl;
 let restoreProductUrl;
 let destroyImageUrl;
+
+let trashCategoryModal;
+let destroyCategoryModal;
+let restoreCategoryModal;
+let archiveCategoryUrl;
+let destroyCategoryUrl;
+let restoreCategoryUrl;
+
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -90,6 +98,18 @@ $(function () {
         restoreProductModal = $('#untrashProduct');
     }
 
+    if($('#trashCategory').length > 0) {
+        trashCategoryModal = $('#trashCategory');
+    }
+
+    if($('#destroyCategory').length > 0) {
+        destroyCategoryModal = $('#destroyCategory');
+    }
+
+    if($('#untrashCategory').length > 0) {
+        restoreCategoryModal = $('#untrashCategory');
+    }
+
     if($('textarea#description').length > 0) {
         ClassicEditor
             .create( document.querySelector( '#description' ))
@@ -117,6 +137,21 @@ function destroyProduct(url) {
 function restoreProduct(url) {
     restoreProductModal.modal('show');
     restoreProductUrl = url;
+}
+
+function trashCategory(url) {
+    trashCategoryModal.modal('show');
+    archiveCategoryUrl = url;
+}
+
+function destroyCategory(url) {
+    destroyCategoryModal.modal('show');
+    destroyCategoryUrl = url;
+}
+
+function restoreCategory(url) {
+    restoreCategoryModal.modal('show');
+    restoreCategoryUrl = url;
 }
 
 function trashProductAction() {
@@ -186,6 +221,60 @@ function restoreProductAction() {
             },
             error: function (xhr, status, error) {
                 toastr["error"]("Error restoring product state!");
+            }
+        });
+    }
+}
+
+function trashCategoryAction() {
+    if(archiveCategoryUrl) {
+        $.ajax({
+            url: archiveCategoryUrl, // Replace with your actual route
+            method: "DELETE",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                toastr["error"]("Error archiving category!");
+            }
+        });
+    }
+}
+
+function destoryCategoryAction() {
+    if(destroyCategoryUrl) {
+        $.ajax({
+            url: destroyCategoryUrl, // Replace with your actual route
+            method: "DELETE",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                toastr["error"]("Error permanently delete category!");
+            }
+        });
+    }
+}
+
+function restoreCategoryAction() {
+    if(restoreCategoryUrl) {
+        $.ajax({
+            url: restoreCategoryUrl, // Replace with your actual route
+            method: "POST",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                toastr["error"]("Error restoring category state!");
             }
         });
     }

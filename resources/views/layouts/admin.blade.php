@@ -35,13 +35,8 @@
 <div id="wrapper">
     @include('admin.partials.sidebar')
     <div id="content-wrapper" class="d-flex flex-column">
-
-        <!-- Main Content -->
         <div id="content">
             @include('admin.partials.topbar')
-            <!-- End of Topbar -->
-
-            <!-- Begin Page Content -->
             <div class="container-fluid">
                 @yield('content')
             </div>

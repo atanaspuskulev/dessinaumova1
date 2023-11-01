@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Http\Traits\FileUploadTrait;
+use App\Http\Traits\ProductsTrait;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
@@ -16,7 +17,7 @@ use Illuminate\View\View;
 
 class ProductsController extends Controller
 {
-    use FileUploadTrait;
+    use FileUploadTrait, ProductsTrait;
 
     /**
      * Display a listing of the resource.
@@ -118,11 +119,8 @@ class ProductsController extends Controller
                 ->withTrashed()
                 ->findOrFail($productId);
 
-            foreach($product->gallery as $image) {
-                $this->deleteImage($product, $image);
-                $image->delete();
-            }
-            $product->forceDelete();
+            $this->forceDeleteProduct($product);
+
             return response()->json([]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);

@@ -39,4 +39,5 @@
             </table>
         </div>
     </div>
+    @include('admin/partials/category_modals')
 @endsection

@@ -90,12 +90,12 @@
                                 <div class="form-check">
                                     <input
                                         class="form-check-input"
-                                        name="is_active "
+                                        name="is_active"
                                         type="checkbox"
                                         value="1"
-                                        id="is_active "
-                                        @checked(old('is_active ', $category->is_active ) == 1)>
-                                    <label class="form-check-label" for="is_active ">
+                                        id="is_active"
+                                        @checked(old('is_active', $category->is_active ) == 1)>
+                                    <label class="form-check-label" for="is_active">
                                         Is active
                                     </label>
                                 </div>

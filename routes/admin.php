@@ -17,6 +17,9 @@ Route::prefix('admin')->group(function () {
         Route::post('products/{product}/restore', [Admin\ProductsController::class, 'restore'])->name('products.restore');
         Route::post('/products/reorder', [Admin\ProductsController::class, 'reorder'])->name('admin.products_reorder');
 
+        Route::delete('categories/{category}/force-delete', [Admin\CategoriesController::class, 'forceDelete'])->name('categories.force-delete');
+        Route::post('categories/{category}/restore', [Admin\CategoriesController::class, 'restore'])->name('categories.restore');
+
         Route::resource('products', Admin\ProductsController::class);
         Route::resource('products.images', Admin\ImagesController::class);
 
