@@ -36,7 +36,7 @@
             @forelse($products as $product)
                 <div class="{{ $colClass }} mb-5">
                     <div class="card mb-4 rounded-5 card-box-shadow">
-                        <img src="{{ displayImage($product->id, $product->thumbnail?->path, true) }}" class="card-img-top" alt="Product 1">
+                        <img src="{{ displayImage($product->id, $product->thumbnail?->path, true) }}" class="card-img-top" alt="{{ $product->title }}">
                         <div class="card-body">
                             <h3 class="card-title">{{ $product->title }}</h3>
                             <p class="card-text">{!! $product->short_description !!}</p>
@@ -47,7 +47,7 @@
                                     {{ $product->category->title }}
                                 </a>
                             </p>
-                            <a href="#" class="product-button mb-3 position-absolute bottom-0 end-0 me-3">View More</a>
+                            <a href="{{ route('front.product_view', ['category_slug' => $product->category->slug, 'product_slug' => $product->slug]) }}" class="product-button mb-3 position-absolute bottom-0 end-0 me-3">View More</a>
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Product 2</h5>
                         <p class="card-text">Description of Product 2.</p>
-                        <a href="#" class="btn btn-primary">Learn More</a>
+                        <a href="" class="btn btn-primary">Learn More</a>
                     </div>
                 </div>
             </div>

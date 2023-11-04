@@ -24,4 +24,21 @@ class ProductsController extends Controller
         $products = $categoryData->products ?? [];
         return view('front.products', compact('categoryData', 'products'));
     }
+
+    public function view(string $categorySlug, string $productSlug): View
+    {
+        $categoryData = Category::with([
+            'products' => function($query) use ($productSlug) {
+                $query->where('slug', $productSlug);
+            },
+            'products.thumbnail',
+            'products.gallery' => function($query) {
+                $query->take(1);
+            }
+        ])
+        ->where('slug', $categorySlug)
+        ->firstOrFail();
+
+        return view('front.product_view', compact('categoryData'));
+    }
 }

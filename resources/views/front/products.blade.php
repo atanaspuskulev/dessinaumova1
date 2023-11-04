@@ -5,6 +5,8 @@
         <div class="row">
             <div class="col">
                 <h1>{{ $categoryData?->title }}</h1>
+                <hr>
+                <p>{!! $categoryData->description !!}</p>
             </div>
         </div>
     </div>
@@ -23,7 +25,7 @@
                                     - This product is sold!
                                 @endif
                             </h3>
-                            <a  href="#" class="product-button mb-3 position-absolute bottom-0 end-0 me-3">View More</a>
+                            <a href="{{ route('front.product_view', ['category_slug' => $categoryData->slug, 'product_slug' => $product->slug]) }}" class="product-button mb-3 position-absolute bottom-0 end-0 me-3">View More</a>
                         </div>
                     </div>
                 </div>
