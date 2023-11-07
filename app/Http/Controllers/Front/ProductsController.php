@@ -32,9 +32,7 @@ class ProductsController extends Controller
                 $query->where('slug', $productSlug);
             },
             'products.thumbnail',
-            'products.gallery' => function($query) {
-                $query->take(1);
-            }
+            'products.gallery'
         ])
         ->where('slug', $categorySlug)
         ->firstOrFail();

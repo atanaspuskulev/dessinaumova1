@@ -7,7 +7,24 @@
     <div class="container-fluid mt-5 mb-5">
         <div class="row">
             <div class="col-md-6 col-sm-12 mb-0">
-                <img class="img-fluid" src="{{ displayImage($product?->id, $product?->gallery()->first()->path) }}" />
+                <div id="slider" class="flexslider">
+                    <ul class="slides">
+                        @foreach($product->gallery as $mainImage)
+                            <li>
+                                <img class="img-fluid" src="{{ displayImage($product?->id, $mainImage->path) }}" />
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div id="carousel" class="flexslider">
+                    <ul class="slides">
+                        @foreach($product->gallery as $mainImage)
+                            <li>
+                                <img class="img-fluid" src="{{ displayImage($product?->id, $mainImage->path, true) }}" />
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
             <div class="col-md-6 col-sm-12 mt-5 mt-md-0">
                 <h1>{{ $product?->title }}</h1>
