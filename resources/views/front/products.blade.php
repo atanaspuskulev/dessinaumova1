@@ -43,5 +43,14 @@
                 </div>
             @endforelse
         </div>
+        <div class="row mb-4">
+            <div class="col text-center">
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        {{ $products->links() }}
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
 @endsection

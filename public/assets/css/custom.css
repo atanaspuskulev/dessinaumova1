@@ -105,3 +105,34 @@ div, p {
 .card-box-shadow {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+.pagination {
+    margin: 0; /* Remove any margin */
+    padding: 0; /* Remove any padding */
+    list-style: none; /* Remove list-style */
+}
+
+.pagination li {
+    display: inline; /* Display list items inline */
+    margin-right: 5px; /* Add some spacing between the items */
+}
+
+.pagination li a {
+    text-decoration: none; /* Remove underline */
+    border: none; /* Remove the border */
+    background: none; /* Remove the background */
+    padding: 5px 10px; /* Add some padding for spacing */
+    color: #333; /* Set the text color */
+    border-radius: 0; /* Remove any border radius */
+}
+
+.pagination li.active a {
+    background: #333; /* Style the active page link with a background */
+    color: #fff; /* Style the text color for the active page */
+    text-decoration: underline;
+}
+.page-link {
+    background: none !important;
+    color: #000 !important;
+    border: none !important;
+    font-family: 'Gochi Hand', sans-serif;
+}

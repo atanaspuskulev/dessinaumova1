@@ -12,16 +12,14 @@ class ProductsController extends Controller
 {
     public function byCategory(string $category): View
     {
-        $categoryData = Category::with([
-            'products' => function($query) {
-                $query->paginate(10);
-            },
-            'products.thumbnail'
-        ])
-        ->where('slug', $category)
-        ->first();
+        $categoryData = Category::where('slug', $category)->first();
 
-        $products = $categoryData->products ?? [];
+        if (!$categoryData) {
+            abort(404); // Handle the case where the category is not found
+        }
+
+        $products = $categoryData->products()->with('thumbnail')->paginate(10);
+
         return view('front.products', compact('categoryData', 'products'));
     }
 
