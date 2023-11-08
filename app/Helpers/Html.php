@@ -16,7 +16,8 @@ function displayImage(int $recordId, string|null $path, bool|null $isThumbnail =
     $storageDirectory = "uploads/{$recordId}/" . ($isThumbnail ? $thumbnailPath : 'original');
     $fileExists = Storage::disk('public')->exists($storageDirectory . '/' . $path);
 
-    return $fileExists
-        ? asset("storage/{$storageDirectory}/{$path}")
-        : $defaultImage;
+    if ($fileExists) {
+        return asset("storage/{$storageDirectory}/{$path}");
+    }
+    return $defaultImage;
 }
