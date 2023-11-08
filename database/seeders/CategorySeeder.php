@@ -14,10 +14,6 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $categories = ['Paintings', 'Prints'];
-
-        foreach ($categories as $category) {
-            Category::create(['title' => $category]);
-        }
+        Category::factory()->count(2)->create();
     }
 }

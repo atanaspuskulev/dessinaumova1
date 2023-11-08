@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use Database\Factories\Trait\MetaKeywordsGeneratorTrait;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductFactory extends Factory
 {
+    use MetaKeywordsGeneratorTrait;
+
     public function definition(): array
     {
         return [
@@ -21,7 +24,7 @@ class ProductFactory extends Factory
             'sold' => $this->faker->boolean,
             'delivery' => $this->faker->sentence,
             'meta_title' => $this->faker->sentence,
-            'meta_keywords' => $this->generateMetaKeywords(),
+            'meta_keywords' => $this->generateMetaKeywords($this->faker),
             'meta_description' => $this->faker->text(50)
         ];
     }
@@ -33,11 +36,5 @@ class ProductFactory extends Factory
                 'deleted_at' => now(),
             ];
         });
-    }
-
-    private function generateMetaKeywords(): string
-    {
-        $keywords = $this->faker->words($this->faker->numberBetween(3, 5));
-        return implode(', ', $keywords);
     }
 }
