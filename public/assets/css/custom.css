@@ -106,28 +106,28 @@ div, p {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .pagination {
-    margin: 0; /* Remove any margin */
-    padding: 0; /* Remove any padding */
-    list-style: none; /* Remove list-style */
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 .pagination li {
-    display: inline; /* Display list items inline */
-    margin-right: 5px; /* Add some spacing between the items */
+    display: inline;
+    margin-right: 5px;
 }
 
 .pagination li a {
-    text-decoration: none; /* Remove underline */
-    border: none; /* Remove the border */
-    background: none; /* Remove the background */
-    padding: 5px 10px; /* Add some padding for spacing */
-    color: #333; /* Set the text color */
-    border-radius: 0; /* Remove any border radius */
+    text-decoration: none;
+    border: none;
+    background: none;
+    padding: 5px 10px;
+    color: #333;
+    border-radius: 0;
 }
 
 .pagination li.active a {
-    background: #333; /* Style the active page link with a background */
-    color: #fff; /* Style the text color for the active page */
+    background: #333;
+    color: #fff;
     text-decoration: underline;
 }
 .page-link {
@@ -135,4 +135,25 @@ div, p {
     color: #000 !important;
     border: none !important;
     font-family: 'Gochi Hand', sans-serif;
+}
+#bx-pager {
+    text-align: center;
+    margin-top: -30px;
+}
+
+#bx-pager a {
+    margin: 0 3px;
+}
+
+#bx-pager a img {
+    padding: 3px;
+    border: solid #ccc 1px
+}
+
+#bx-pager a.active img {
+    border: solid #ccc 3px;
+}
+
+.bx-viewport {
+    height:400px !important;
 }

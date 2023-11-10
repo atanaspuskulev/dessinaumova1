@@ -42,6 +42,13 @@
                                            value="{{ old('title', $product->title) }}">
                                 </div>
                                 <div class="form-group">
+                                    <label for="slug">URL</label>
+                                    <input
+                                        type="text"
+                                        class="form-control" id="slug" name="slug"
+                                        value="{{ old('slug', $product->slug) }}">
+                                </div>
+                                <div class="form-group">
                                     <label for="short_description">Short description</label>
                                     <textarea class="form-control" name="short_description" id="short_description"
                                               rows="3">{{ old('short_description', $product->short_description) }}</textarea>

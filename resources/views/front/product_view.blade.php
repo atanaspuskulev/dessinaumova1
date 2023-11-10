@@ -1,5 +1,42 @@
 @extends('layouts.front')
 
+@section('css_files')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <link rel="stylesheet" href="{{ asset('assets/mp/magnific-popup.css') }}">
+@endsection
+
+@section('js_files')
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="{{ asset('assets/mp/jquery.magnific-popup.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            // $('.bxslider').bxSlider({
+            //     pagerCustom: '#bx-pager',
+            //     onSliderLoad: function() {
+            //         $('.lightbox').magnificPopup({
+            //             type: 'image',
+            //             gallery: {
+            //                 enabled: true
+            //             }
+            //         });
+            //     }
+            // });
+            $('.lightbox').magnificPopup({
+                type: 'image',
+                gallery: {
+                    enabled: true
+                }
+            });
+
+
+        });
+
+
+    </script>
+@endsection
+
 @section('content')
     @php
         $product = $categoryData?->products?->first();
@@ -8,30 +45,22 @@
         <div class="row">
             <div class="col-md-6 col-sm-12 mb-0">
                 @if($product->gallery->count())
-                    <div id="slider" class="flexslider">
-                        <ul class="slides">
-                            @foreach($product->gallery as $mainImage)
-                                <li>
+                    @foreach($product->gallery as $mainImage)
+                        <div class="row">
+                            <div class="col mb-3">
+                                <a class="lightbox" href="{{ displayImage($product?->id, $mainImage->path) }}">
                                     <img class="img-fluid" src="{{ displayImage($product?->id, $mainImage->path) }}" />
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    <div id="carousel" class="flexslider">
-                        <ul class="slides">
-                            @foreach($product->gallery as $mainImage)
-                                <li>
-                                    <img class="img-fluid" src="{{ displayImage($product?->id, $mainImage->path, true) }}" />
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                    @endforeach
                 @else
-                    <img class="img-fluid" src="{{ asset('assets/images/default-image.png') }}" />
+                    <img  class="img-fluid" src="{{ asset('assets/images/default-image.png') }}" />
                 @endif
             </div>
             <div class="col-md-6 col-sm-12 mt-5 mt-md-0">
-                <h1>{{ $product?->title }}</h1>
+                <h1>{{ $product?->title }} {{ $product->id }}</h1>
                 <hr>
                 <p>{!! $product?->description !!}</p>
                 @if($product?->price)

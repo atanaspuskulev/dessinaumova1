@@ -35,7 +35,7 @@ class ProductRequest extends FormRequest
             'meta_title' => 'present',
             'meta_keywords' => 'present',
             'meta_description' => 'present',
-            'images.*' => 'file|mimes:jpeg,png'
+            'images.*' => 'file|mimes:jpeg,png,webp'
         ];
     }
 
@@ -44,7 +44,8 @@ class ProductRequest extends FormRequest
         return [
             'category_id.required' => 'Category is required',
             'title.required' => 'Title is required',
-            'title.unique' => 'There is already a product with that name',            'short_description.required' => 'Short description is required',
+            'title.unique' => 'There is already a product with that name',
+            'short_description.required' => 'Short description is required',
             'description.required' => 'Description is required',
             'price.required' => 'Price is required',
             'material.required' => 'Material is required',

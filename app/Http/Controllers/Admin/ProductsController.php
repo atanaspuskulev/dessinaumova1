@@ -29,7 +29,7 @@ class ProductsController extends Controller
             'category'
         ])
         ->withTrashed()
-        ->paginate(20);
+        ->paginate(12);
 
         return view('admin.products.index', compact('products'));
     }

@@ -27,7 +27,7 @@ class ProductsController extends Controller
     {
         $categoryData = Category::with([
             'products' => function($query) use ($productSlug) {
-                $query->where('slug', $productSlug);
+                $query->where('slug', $productSlug)->firstOrFail();
             },
             'products.thumbnail',
             'products.gallery'
