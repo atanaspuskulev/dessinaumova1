@@ -1,39 +1,22 @@
 @extends('layouts.front')
 
 @section('css_files')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
     <link rel="stylesheet" href="{{ asset('assets/mp/magnific-popup.css') }}">
 @endsection
 
 @section('js_files')
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
     <script src="{{ asset('assets/mp/jquery.magnific-popup.js') }}"></script>
 
     <script>
         $(document).ready(function() {
-            // $('.bxslider').bxSlider({
-            //     pagerCustom: '#bx-pager',
-            //     onSliderLoad: function() {
-            //         $('.lightbox').magnificPopup({
-            //             type: 'image',
-            //             gallery: {
-            //                 enabled: true
-            //             }
-            //         });
-            //     }
-            // });
             $('.lightbox').magnificPopup({
                 type: 'image',
                 gallery: {
                     enabled: true
                 }
             });
-
-
         });
-
-
     </script>
 @endsection
 
@@ -43,7 +26,7 @@
     @endphp
     <div class="container-fluid mt-5 mb-5">
         <div class="row">
-            <div class="col-md-6 col-sm-12 mb-0">
+            <div class="col-md-6 col-sm-12 mb-0  order-xxl-1 order-2">
                 @if($product->gallery->count())
                     @foreach($product->gallery as $mainImage)
                         <div class="row">
@@ -59,7 +42,7 @@
                     <img  class="img-fluid" src="{{ asset('assets/images/default-image.png') }}" />
                 @endif
             </div>
-            <div class="col-md-6 col-sm-12 mt-5 mt-md-0">
+            <div class="col-md-6 col-sm-12 mt-5 mt-md-0 order-xxl-2 order-1">
                 <h1>{{ $product?->title }} {{ $product->id }}</h1>
                 <hr>
                 <p>{!! $product?->description !!}</p>

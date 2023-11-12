@@ -13,7 +13,7 @@
     <div class="container-fluid mt-5">
         <div class="row  equal-height">
             @forelse($products as $product)
-                <div class="col-md-6 mb-5">
+                <div class="col-md-3 mb-5">
                     <div class="card mb-4 rounded-5 card-box-shadow">
                         <img src="{{ displayImage($product->id, $product->thumbnail?->path, true) }}" class="card-img-top" alt="Product 1">
                         <div class="card-body">

@@ -30,7 +30,7 @@
                 $colClass = match($productsCount) {
                     1 => 'col-md-12',
                     2 => 'col-md-6',
-                    default => 'col-md-4'
+                    default => 'col-md-3'
                 };
             @endphp
             @forelse($products as $product)
