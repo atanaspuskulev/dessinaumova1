@@ -42,7 +42,7 @@
                     <img  class="img-fluid" src="{{ asset('assets/images/default-image.png') }}" />
                 @endif
             </div>
-            <div class="col-md-6 col-sm-12 mt-5 mt-md-0 order-xxl-2 order-1">
+            <div class="col-md-6 col-sm-12 mt-5 mt-md-0 order-xxl-2 order-1l up">
                 <h1>{{ $product?->title }} {{ $product->id }}</h1>
                 <hr>
                 <p>{!! $product?->description !!}</p>
