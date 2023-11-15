@@ -32,7 +32,7 @@
                         <div class="row">
                             <div class="col mb-3">
                                 <a class="lightbox" href="{{ displayImage($product?->id, $mainImage->path) }}">
-                                    <img class="img-fluid" src="{{ displayImage($product?->id, $mainImage->path) }}" />
+                                    <img class="img-fluid" src="{{ displayImage($product?->id, $mainImage->path, true) }}" />
                                 </a>
                             </div>
                         </div>
@@ -65,6 +65,10 @@
                 @if($product?->sold)
                     <h3 class="p-3 bg-warning">This product is sold.</h3>
                 @endif
+                <form method="post" action="{{ route('front.cart.store') }}" class="mt-4 mb-sm-4">
+                    <input type="hidden" name="product_id" value="{{ $product->id }}" />
+                    <button type="submit" class="buy-button">Buy this item</button>
+                </form>
             </div>
         </div>
     </div>
