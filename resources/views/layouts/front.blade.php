@@ -24,7 +24,7 @@
 
         <div class="navbar-cart">
             <i class="fas fa-shopping-cart">
-                <span class="cart-badge">5</span>
+                <span class="cart-badge" id="cart-items-num">0</span>
             </i>
         </div>
 

@@ -7,7 +7,7 @@
 @section('js_files')
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="{{ asset('assets/mp/jquery.magnific-popup.js') }}"></script>
-
+    <script src="{{ asset('assets/js/cart.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('.lightbox').magnificPopup({
@@ -17,6 +17,13 @@
                 }
             });
         });
+    </script>
+@endsection
+
+@section('head_js')
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        let cart_add_url = "{{ route('front.cart.store') }}";
     </script>
 @endsection
 
@@ -65,9 +72,16 @@
                 @if($product?->sold)
                     <h3 class="p-3 bg-warning">This product is sold.</h3>
                 @endif
-                <form method="post" action="{{ route('front.cart.store') }}" class="mt-4 mb-sm-4">
+                <form
+                    onsubmit="return false"
+                    method="post"
+                    action="{{ route('front.cart.store') }}"
+                    class="mt-4 mb-sm-4"
+                    id="__PRODUCT__"
+                >
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                     <input type="hidden" name="product_id" value="{{ $product->id }}" />
-                    <button type="submit" class="buy-button">Buy this item</button>
+                    <button type="submit" class="buy-button" id="buy-button">Buy this item</button>
                 </form>
             </div>
         </div>
