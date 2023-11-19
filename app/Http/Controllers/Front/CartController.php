@@ -23,14 +23,31 @@ class CartController extends Controller
             return response()->json(['success' => false, 'message' => 'This product is not valid.']);
         }
 
+        $message = 'Product was added to the cart.';
+        $showContinueBrowsingButton = true;
+        $cartCount = 0;
+
         if(!$cart) {
             session()->put('cart', [$productId]);
-        } else if(!in_array($productId, $cart, true)) {
-            $cart[] = $productId;
-            session()->put('cart', $cart);
+            $cartCount = 1;
+        } else {
+            if(!in_array($productId, $cart, true)) {
+                $cart[] = $productId;
+                session()->put('cart', $cart);
+            } else {
+                $message = 'This product is already in your cart.';
+                $showContinueBrowsingButton = false;
+            }
+            $cartCount = count($cart);
         }
 
-        return response()->json(['success' => true, 'message' => 'Product added to the cart.']);
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+            'continue' => $showContinueBrowsingButton,
+            'cart_url' => route('front.cart.index'),
+            'cart_count' => $cartCount
+        ]);
     }
 
     /**

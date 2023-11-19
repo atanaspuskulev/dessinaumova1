@@ -7,6 +7,7 @@
 @section('js_files')
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="{{ asset('assets/mp/jquery.magnific-popup.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('assets/js/cart.js') }}"></script>
     <script>
         $(document).ready(function() {
