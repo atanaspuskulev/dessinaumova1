@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Helpers\Cart;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
@@ -18,7 +19,8 @@ class GlobalData
 
         View::share([
             'current_path' => request()->path(),
-            'products_categories' => $categories
+            'products_categories' => $categories,
+            'cart_items' => Cart::getCartFromSession()
         ]);
 
         return $next($request);

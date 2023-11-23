@@ -73,17 +73,19 @@
                 @if($product?->sold)
                     <h3 class="p-3 bg-warning">This product is sold.</h3>
                 @endif
-                <form
-                    onsubmit="return false"
-                    method="post"
-                    action="{{ route('front.cart.store') }}"
-                    class="mt-4 mb-sm-4"
-                    id="__PRODUCT__"
-                >
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                    <input type="hidden" name="product_id" value="{{ $product->id }}" />
-                    <button type="submit" class="buy-button" id="buy-button">Buy this item</button>
-                </form>
+                @if(!$product?->sold)
+                    <form
+                        onsubmit="return false"
+                        method="post"
+                        action="{{ route('front.cart.store') }}"
+                        class="mt-4 mb-sm-4"
+                        id="__PRODUCT__"
+                    >
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                        <input type="hidden" name="product_id" value="{{ $product->id }}" />
+                        <button type="submit" class="buy-button" id="buy-button">Buy this item</button>
+                    </form>
+                @endif
             </div>
         </div>
     </div>
