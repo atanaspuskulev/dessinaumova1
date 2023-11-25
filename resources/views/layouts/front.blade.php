@@ -24,32 +24,34 @@
 
         <div class="navbar-cart">
             <div class="cart-dropdown">
-                <i class="fas fa-shopping-cart" id="cart-icon" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-shopping-cart" id="cart-icon" data-bs-toggle="dropdown" role="button"
+                   aria-expanded="false">
                     <span class="cart-badge" id="cart-items-num">{{ $cart_items['total_count'] }}</span>
                 </i>
-                <div class="dropdown-menu" aria-labelledby="cart-icon">
-                    <div class="cart-items-list">
+                @if($cart_items['total_count'])
+                    <ul class="dropdown-menu dropdown-cart" role="menu">
                         @foreach($cart_items['cart_products'] as $item)
-                            <div class="cart-item row border-bottom py-2">
-                                <div class="col-md-8 font-12">
-                                    <span>{{ $item['title'] }}</span>
-                                </div>
-                                <div class="col-md-4">
-                                    <img
-                                        @if($item['thumbnail'])
-                                            src="{{ displayImage($item['id'], $item['thumbnail']['path'], true) }}"
-                                        @else
-                                            src="{{ displayImage($item['id'], null, true) }}"
-                                        @endif
-                                        alt="{{ $item['title'] }}"
-                                        class="img-thumbnail" style="max-width: 50px;">
-                                </div>
-                            </div>
+                            <li>
+                                  <span class="item">
+                                    <span class="item-left">
+                                        <img style="width:150px;" src="{{ displayImage($item['id'], $item['thumbnail']?->path, true) }}" alt=""/>
+                                        <span class="item-info">
+                                            <span>{!! $item['title'] !!}</span>
+                                            <span>23$</span>
+                                        </span>
+                                    </span>
+                                    <span class="item-right">
+                                        <button class="btn btn-xs btn-danger pull-right">x</button>
+                                    </span>
+                                </span>
+                            </li>
                         @endforeach
-                    </div>
-                    <a href="" class="btn btn-primary">Checkout</a>
-                </div>
+                        <li class="divider"></li>
+                        <li><a class="text-center" href="">View Cart</a></li>
+                    </ul>
+                @endif
             </div>
+
         </div>
 
         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -70,7 +72,8 @@
             @if(isset($products_categories) && $products_categories->count())
                 @foreach($products_categories as $slug => $title)
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('front.to_category', ['category' => $slug]) }}">{{ $title }}</a>
+                        <a class="nav-link"
+                           href="{{ route('front.to_category', ['category' => $slug]) }}">{{ $title }}</a>
                     </li>
                 @endforeach
             @endif
@@ -89,20 +92,7 @@
 </footer>
 <script src="{{ asset('assets/bootstrap-5.0.2/js/bootstrap.bundle.js') }}"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var cartIcon = document.getElementById('cart-icon');
 
-        if (cartIcon) {
-            cartIcon.addEventListener('click', function () {
-                let cartDropdown = document.querySelector('.cart-dropdown .dropdown-menu');
-                if (cartDropdown.style.display === 'block') {
-                    cartDropdown.style.display = 'none';
-                } else {
-                    cartDropdown.style.display = 'block';
-                }
-            });
-        }
-    });
 </script>
 @yield('js_files')
 </body>
