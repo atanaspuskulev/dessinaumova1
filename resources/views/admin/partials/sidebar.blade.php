@@ -1,6 +1,5 @@
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon rotate-n-15">
@@ -13,7 +12,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item">
+    <li class="nav-item @if(request()->path() === 'admin') active @endif">
         <a class="nav-link" href="{{ route('admin.home') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Home</span></a>
@@ -22,38 +21,32 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    @php
-        $activeCategories = preg_match('/^admin\/categories(\/|$)/', $current_path);
-    @endphp
-    <li class="nav-item {{ $activeCategories ? 'active' : ''}}">
+    <li class="{{ admin_link_active_class('/^admin\/categories(\/|$)/') }}">
         <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseOne"
            aria-expanded="true" aria-controls="collapseOne">
             <i class="fas fa-fw fa-cog"></i>
             <span>Categories</span>
         </a>
-        <div id="collapseOne" class="collapse {{ $activeCategories ? 'show' : '' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseOne" class="{{ admin_link_active_class('/^admin\/categories(\/|$)/', 'collapse', 'show') }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Actions:</h6>
-                <a class="collapse-item {{ $current_path === 'admin/categories' ? 'active' : '' }}" href="{{ route('categories.index') }}">List all</a>
-                <a class="collapse-item {{ $current_path === 'admin/categories/create' ? 'active' : '' }}" href="{{ route('categories.create') }}">Add new</a>
+                <a class="{{ admin_link_active_class('/^admin\/categories\/?$/', 'collapse-item') }}" href="{{ route('categories.index') }}">List all</a>
+                <a class="{{ admin_link_active_class('/^admin\/categories\/create?\/?$/', 'collapse-item') }}" href="{{ route('categories.create') }}">Add new</a>
             </div>
         </div>
     </li>
 
-    @php
-        $activeProducts = $current_path === 'admin' || preg_match('/^admin\/products(\/|$)/', $current_path);
-    @endphp
-    <li class="nav-item {{ $activeProducts ? 'active' : ''}}">
+    <li class="{{ admin_link_active_class('/^admin\/products(\/|$)/') }}">
         <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo"
            aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
             <span>Products</span>
         </a>
-        <div id="collapseTwo" class="collapse {{ $activeProducts ? 'show' : '' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseTwo" class="{{ admin_link_active_class('/^admin\/products(\/|$)/', 'collapse', 'show') }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Actions:</h6>
-                <a class="collapse-item {{ $current_path === 'admin/products' || $current_path === 'admin' ? 'active' : '' }}" href="{{ route('products.index') }}">List all</a>
-                <a class="collapse-item {{ $current_path === 'admin/products/create' ? 'active' : '' }}" href="{{ route('products.create') }}">Add new</a>
+                <a class="{{ admin_link_active_class('/^admin\/products\/?$/', 'collapse-item') }}" href="{{ route('products.index') }}">List all</a>
+                <a class="{{ admin_link_active_class('/^admin\/products\/create?\/?$/', 'collapse-item') }}" href="{{ route('products.create') }}">Add new</a>
             </div>
         </div>
     </li>

@@ -21,3 +21,17 @@ function displayImage(int $recordId, string|null $path, bool|null $isThumbnail =
     }
     return $defaultImage;
 }
+
+function admin_link_active_class(
+    string $matchAgainst,
+    string $defaultClass = 'nav-item',
+    $addClass = 'active',
+    string $defaultHome = 'admin'
+): string
+{
+    if (request()->path() !== $defaultHome && preg_match($matchAgainst, request()->path())) {
+        return $defaultClass . ' ' . $addClass;
+    }
+    return $defaultClass;
+}
+
