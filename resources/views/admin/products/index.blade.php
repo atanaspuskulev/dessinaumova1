@@ -15,7 +15,7 @@
                                 <div id="{{ $product->id }}" class="sortable-item-product col-lg-3 col-md-4 col-sm-12 mb-3">
                                     <div class="card shadow @if($product->trashed()) bg-gray-200 @endif">
                                         <div style="max-height:70px;height:70px;" class="card-header py-3 @if($product->trashed()) bg-warning @endif">
-                                        <h6 class="m-0 font-weight-bold text-primary">{{ mb_strimwidth($product->title, 0, 45, '...') }}</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary ">{{ mb_strimwidth($product->title, 0, 45, '...') }}</h6>
                                         </div>
                                         <div class="card-body" style="height:445px; max-height: 445px; overflow-y: scroll;">
                                             <img
@@ -32,7 +32,11 @@
                                             </p>
                                             <p>
                                                 <b>Price: </b><br />
-                                                ${{ $product->price }}
+                                                @if($product->sold)
+                                                    <b>SOLD</b>
+                                                @else
+                                                    ${{ $product->price }}
+                                                @endif
                                             </p>
                                         </div>
                                         <div class="card-footer">

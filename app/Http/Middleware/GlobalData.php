@@ -18,7 +18,6 @@ class GlobalData
             ->pluck('title', 'slug');
 
         View::share([
-            'current_path' => request()->path(),
             'products_categories' => $categories,
             'cart_items' => Cart::getCartFromSession()
         ]);
