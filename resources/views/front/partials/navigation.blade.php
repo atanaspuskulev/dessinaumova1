@@ -16,20 +16,19 @@
                             <li>
                                   <span class="item">
                                     <span class="item-left">
-                                        <img style="width:150px;" src="{{ displayImage($item['id'], $item['thumbnail']?->path, true) }}" alt=""/>
+                                        <img style="width:60px;" src="{{ displayImage($item['id'], $item['thumbnail']?->path, true) }}" alt=""/>
                                         <span class="item-info">
-                                            <span>{!! $item['title'] !!}</span>
-                                            <span>23$</span>
+                                            <span>{!! $item['title'] !!}</span><br>
+                                            <span class="fw-bolder">{{ $item['price'] }}&euro;</span>
                                         </span>
-                                    </span>
-                                    <span class="item-right">
-                                        <button class="btn btn-xs btn-danger pull-right">x</button>
                                     </span>
                                 </span>
                             </li>
                         @endforeach
                         <li class="divider"></li>
-                        <li><a class="text-center" href="">View Cart</a></li>
+                        <li class="text-center mt-2 mb-2">
+                            <a class="btn btn-primary" href="{{ route('front.cart.index') }}">View Cart</a>
+                        </li>
                     </ul>
                 @endif
             </div>

@@ -18,11 +18,13 @@ $(function() {
                         denyButtonText: 'Continue Browsing',
                         denyButtonColor: '#009F46'
                     }).then((result) => {
+                        console.log(result);
                         if (result.isConfirmed) {
                             window.location.href = response.data.cart_url;
                         } else if (result.isDenied) {
-                            // Continue browsing, do nothing (stay on the same page) or redirect as needed
                             window.location.href = '/'; // Example: Redirect to the home page
+                        } else if(result.isDismissed) {
+                            window.location.reload();
                         }
                     });
                 } else {

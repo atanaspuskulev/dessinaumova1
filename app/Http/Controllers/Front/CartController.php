@@ -79,7 +79,7 @@ class CartController extends Controller
         //
     }
 
-    private function _verifyProduct($productId): bool
+    private function _verifyProduct(int $productId): bool
     {
         return (bool) Product::find($productId);
     }
