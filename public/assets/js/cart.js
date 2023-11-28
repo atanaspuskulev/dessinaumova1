@@ -7,6 +7,7 @@ $(function() {
             }).then((response) => {
                 if(response.data.success) {
                     $('#__PRODUCT__').remove();
+                    $('#cart-items-num').text(response.data.cart_count);
                     Swal.fire({
                         title: !response.data.continue ? 'Cart Info' : 'Cart Updated!',
                         text: response.data.message,

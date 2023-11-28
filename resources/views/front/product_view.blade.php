@@ -73,7 +73,8 @@
                 @if($product?->sold)
                     <h3 class="p-3 bg-warning">This product is sold.</h3>
                 @endif
-                @if(!$product?->sold)
+
+                @if(!$product?->sold && !in_array($product?->id, session()->get('cart')))
                     <form
                         onsubmit="return false"
                         method="post"

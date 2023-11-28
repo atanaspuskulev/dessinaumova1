@@ -11,9 +11,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class CartController extends Controller
 {
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(CartAddRequest $request): JsonResponse
     {
         $cart = session()->get('cart');
