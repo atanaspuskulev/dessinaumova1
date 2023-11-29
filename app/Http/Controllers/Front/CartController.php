@@ -8,9 +8,15 @@ use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\View\View;
 
 class CartController extends Controller
 {
+
+    public function index(): View
+    {
+        die;
+    }
     public function store(CartAddRequest $request): JsonResponse
     {
         $cart = session()->get('cart');
@@ -45,14 +51,6 @@ class CartController extends Controller
             'cart_url' => route('front.cart.index'),
             'cart_count' => $cartCount
         ]);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**
