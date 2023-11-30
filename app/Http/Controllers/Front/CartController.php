@@ -15,7 +15,19 @@ class CartController extends Controller
 
     public function index(): View
     {
-        die;
+        $cart = session()->get('cart', []);
+        $totalPrice = 0.00;
+
+        $products = Product::with([
+            'category',
+            'thumbnail'
+        ])->whereIn('id', $cart)
+        ->get()
+        ->each(static function($product) use (&$totalPrice) {
+            $totalPrice += $product->price;
+        });
+
+        return view('front.cart.index', compact('products', 'totalPrice'));
     }
     public function store(CartAddRequest $request): JsonResponse
     {
