@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
@@ -13,7 +15,6 @@ use Illuminate\View\View;
 
 class CartController extends Controller
 {
-
     public function index(): View
     {
         $cart = session()->get('cart', []);
@@ -71,28 +72,9 @@ class CartController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function removeFromCart(Request $request): JsonResource
     {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 
     private function _verifyProduct(int $productId): bool

@@ -18,6 +18,7 @@
                             <th scope="col">Product</th>
                             <th scope="col">Category</th>
                             <th scope="col">Price</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -32,14 +33,17 @@
                                     </td>
                                     <td>{!! $product->category->title !!}</td>
                                     <td>{!! $product->price !!}&euro;</td>
+                                    <td>
+                                        <a href="#">Remove</a>
+                                    </td>
                                 </tr>
                             @endforeach
                             <tr>
-                                <td colspan="4" class="text-end">Total: {{ $totalPrice }}&euro;</td>
+                                <td colspan="5" class="text-end">Total: {{ $totalPrice }}&euro;</td>
                             </tr>
                             <tr>
-                                <td colspan="4" class="text-end">
-                                    <button class="btn btn-success">Proceed To Checkout</button>
+                                <td colspan="5" class="text-end">
+                                    <a href="{{ route('front.payment_method') }}" class="btn btn-success">Proceed To Checkout</a>
                                 </td>
                             </tr>
                         </tbody>
