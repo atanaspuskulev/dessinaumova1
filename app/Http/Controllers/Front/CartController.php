@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CartAddRequest;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -27,7 +28,12 @@ class CartController extends Controller
             $totalPrice += $product->price;
         });
 
-        return view('front.cart.index', compact('products', 'totalPrice'));
+        $categories = null;
+        if(!$products->count()) {
+            $categories = Category::all();
+        }
+
+        return view('front.cart.index', compact('products', 'totalPrice', 'categories'));
     }
     public function store(CartAddRequest $request): JsonResponse
     {

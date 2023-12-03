@@ -19,7 +19,7 @@
 @include('front.partials.navigation')
 
 @yield('content')
-<footer class="bg-dark text-light text-center py-3 bottom-0">
+<footer>
     <div class="container">
         <p>&copy; {{ date('Y') }} Desi Naumova. All rights reserved.</p>
     </div>
