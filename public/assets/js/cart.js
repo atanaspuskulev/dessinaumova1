@@ -18,7 +18,6 @@ $(function() {
                         denyButtonText: 'Continue Browsing',
                         denyButtonColor: '#009F46'
                     }).then((result) => {
-                        console.log(result);
                         if (result.isConfirmed) {
                             window.location.href = response.data.cart_url;
                         } else if (result.isDenied) {
@@ -40,3 +39,31 @@ $(function() {
     }
 });
 
+function confirmRemove(productId) {
+    Swal.fire({
+        title: 'Remove From Cart',
+        text: 'Are you sure you want to remove this product from the cart?',
+        icon: 'warning',
+        confirmButtonText: 'Remove',
+        showCancelButton: true
+    }).then((result) => {
+        if(result.isConfirmed) {
+            axios.post(removeFromCartUrl, {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                productId: productId
+            }).then((response) => {
+                if(response.data.success) {
+                    $(`tr#${productId}`).fadeOut();
+                    $('.total-price').html(`Total: ${response.data.total_price}&euro;`);
+                } else {
+                    Swal.fire({
+                        title: 'Error Updating Cart!',
+                        text: 'Something went wrong while trying to remove product from a list.',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                }
+            });
+        }
+    });
+}

@@ -10,8 +10,9 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\View\View;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class CartController extends Controller
 {
@@ -39,7 +40,7 @@ class CartController extends Controller
     public function store(CartAddRequest $request): JsonResponse
     {
         $cart = session()->get('cart');
-        $productId = $request->input('product_id');
+        $productId = (int) $request->input('product_id');
 
         if(!$this->_verifyProduct($productId)) {
             return response()->json(['success' => false, 'message' => 'This product is not valid.']);
@@ -72,9 +73,41 @@ class CartController extends Controller
         ]);
     }
 
-    public function removeFromCart(Request $request): JsonResource
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function removeFromCart(Request $request): JsonResponse
     {
+        $productId = (int) $request->input('productId');
 
+        if(!$this->_verifyProduct($productId)) {
+            return response()->json(['success' => false]);
+        }
+
+        $cart = session()->get('cart', []);
+
+        $searchIndex = array_search($productId, $cart);
+
+        if($searchIndex !== false) {
+            unset($cart[$searchIndex]);
+
+            $cart = array_values($cart);
+            session()->put('cart', $cart);
+        }
+
+        $cart = session()->get('cart', []);
+        $price = 0.00;
+
+        if(!empty($cart)) {
+            Product::whereIn('id', $cart)
+                ->get()
+                ->map(static function($record) use (&$price) {
+                    $price += $record->price;
+                });
+        }
+
+        return response()->json(['success' => true, 'total_price' => $price]);
     }
 
     private function _verifyProduct(int $productId): bool
