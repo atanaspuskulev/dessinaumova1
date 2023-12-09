@@ -7,7 +7,8 @@ Route::name('front.')->group(function () {
     Route::get('/', [Front\HomeController::class, 'index'])->name('index');
 
     Route::post('/cart/remove-product', [Front\CartController::class, 'removeFromCart'])->name('remove_product_from_cart');
-    Route::get('/cart/checkout/choose-payment', [Front\CheckoutController::class, 'paymentMethod'])->name('payment_method');
+//    Route::get('/cart/checkout/choose-payment', [Front\CheckoutController::class, 'paymentMethod'])->name('payment_method');
+    Route::get('/cart/checkout/delivery-information', [\App\Livewire\Checkout::class, 'deliveryInformation'])->name('delivery');
 
     Route::resource('cart',Front\CartController::class);
 

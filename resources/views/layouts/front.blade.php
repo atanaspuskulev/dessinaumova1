@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Desi Naumova</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <head>
+        <title>Desi Naumova</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link href="{{ asset('assets/bootstrap-5.0.2/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine|Handlee|Gochi+Hand|Kalam"/>
-    <link href="{{ asset('assets/css/custom.css') }}" type="text/css" rel="stylesheet"/>
-    @yield('css_files')
-    @yield('head_js')
-</head>
-<body>
+        <link href="{{ asset('assets/bootstrap-5.0.2/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine|Handlee|Gochi+Hand|Kalam"/>
+        <link href="{{ asset('assets/css/custom.css') }}" type="text/css" rel="stylesheet"/>
+        @yield('css_files')
+        @yield('head_js')
 
-@include('front.partials.navigation')
+        @livewireStyles
+    </head>
+    <body>
 
-@yield('content')
-<footer>
-    <div class="container">
-        <p>&copy; {{ date('Y') }} Desi Naumova. All rights reserved.</p>
-    </div>
-</footer>
-<script src="{{ asset('assets/bootstrap-5.0.2/js/bootstrap.bundle.js') }}"></script>
-<script>
+    @include('front.partials.navigation')
 
-</script>
-@yield('js_files')
-</body>
+    @yield('content')
+
+    <script src="{{ asset('assets/bootstrap-5.0.2/js/bootstrap.bundle.js') }}"></script>
+        @yield('js_files')
+        @livewireScripts
+
+    </body>
+    <footer>
+        <div class="container">
+            <p>&copy; {{ date('Y') }} Desi Naumova. All rights reserved.</p>
+        </div>
+    </footer>
 </html>
