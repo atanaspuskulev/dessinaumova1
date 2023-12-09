@@ -249,7 +249,7 @@ class CountriesHelper
         ['name' =>'Zambia', 'code' =>  'ZM'],
         ['name' =>'Zimbabwe', 'code' =>  'ZW']
     ];
-
+    
     public static function getCountries(): array
     {
         return self::$countries;
