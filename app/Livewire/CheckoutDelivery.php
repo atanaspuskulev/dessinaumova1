@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire;
 
 use Illuminate\View\View;
@@ -17,6 +19,18 @@ class CheckoutDelivery extends Component
     public string $phone = '';
     public string $additional_information = '';
 
+    protected $rules = [
+        'country' => 'required',
+        'state' => 'required',
+        'city' => 'required',
+        'zip' => 'required',
+        'delivery_address' => 'required',
+        'name' => 'required',
+        'email' => 'required|email',
+        'phone' => 'nullable|numeric',
+        'additional_information' => 'nullable|string',
+    ];
+
     public function render(): View
     {
         return view('livewire.checkout.delivery-information')
@@ -24,11 +38,13 @@ class CheckoutDelivery extends Component
             ->section('content');
     }
 
-    public function saveDeliveryInformation()
+
+    public function saveDeliveryInformation(): void
     {
-        dd("DD");
+        $this->validate();
 
         $this->resetFormFields();
+
     }
 
     private function resetFormFields(): void

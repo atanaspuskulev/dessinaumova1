@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3 mb-4">
-            <form wire:submit="saveDeliveryInformation">
+            <form wire:submit.prevent="saveDeliveryInformation">
                       <fieldset>
                           <legend>Delivery And Address Information</legend>
 
@@ -18,25 +18,50 @@
                                   <option value="{{ $country['name'] }}">{{ $country['name'] }}</option>
                               @endforeach
                           </select>
+                          @error('country')
+                          <div class="alert-danger mb-3 p-1">
+                              {{ $message }}
+                          </div>
+                          @enderror
 
                           <div class="form-floating mb-3">
                               <input wire:model="state" type="text" class="form-control" id="state" autocomplete="off">
                               <label for="state">* State/County</label>
+                              @error('state')
+                                  <div class="alert-danger mt-2 p-1">
+                                      {{ $message }}
+                                  </div>
+                              @enderror
                           </div>
 
                           <div class="form-floating mb-3">
                               <input wire:model="city" type="text" class="form-control" id="city" autocomplete="off">
                               <label for="city">* City/Residential</label>
+                              @error('city')
+                                  <div class="alert-danger mt-2 p-1">
+                                      {{ $message }}
+                                  </div>
+                              @enderror
                           </div>
 
                           <div class="form-floating mb-3">
                               <input type="text" class="form-control" id="zip" autocomplete="off">
                               <label for="zip">* ZIP/Postal Code</label>
+                              @error('zip')
+                                  <div class="alert-danger mt-2 p-1">
+                                      {{ $message }}
+                                  </div>
+                              @enderror
                           </div>
 
                           <div class="form-floating mb-3">
                               <input wire:model="delivery_address" type="text" class="form-control" id="delivery_address" autocomplete="off">
                               <label for="delivery_address">* Delivery Address</label>
+                              @error('delivery_address')
+                                  <div class="alert-danger mt-2 p-1">
+                                      {{ $message }}
+                                  </div>
+                              @enderror
                           </div>
                       </fieldset>
 
@@ -46,16 +71,31 @@
                           <div class="form-floating mb-3">
                               <input wire:model="name" type="text" class="form-control" id="name" autocomplete="off">
                               <label for="name">* Full Name</label>
+                              @error('name')
+                                  <div class="alert-danger mt-2 p-1">
+                                      {{ $message }}
+                                  </div>
+                              @enderror
                           </div>
 
                           <div class="form-floating mb-3">
                               <input wire:model="email" type="email" class="form-control" id="email" autocomplete="off">
                               <label for="email">* E-Mail Address</label>
+                              @error('email')
+                                  <div class="alert-danger mt-2 p-1">
+                                      {{ $message }}
+                                  </div>
+                              @enderror
                           </div>
 
                           <div class="form-floating mb-3">
                               <input wire:model="phone" type="phone" class="form-control" id="phone" autocomplete="off">
-                              <label for="phone">Your Phone</label>
+                              <label for="phone">Your Phone (Optional)</label>
+                              @error('phone')
+                                  <div class="alert-danger mt-2 p-1">
+                                      {{ $message }}
+                                  </div>
+                              @enderror
                           </div>
 
                           <div class="mb-3">
