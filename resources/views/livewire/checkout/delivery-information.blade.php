@@ -1,6 +1,3 @@
-@extends('layouts.front')
-
-@section('content')
     <div>
         <div class="container-fluid mt-5">
             <div class="row">
@@ -11,24 +8,24 @@
             </div>
         </div>
         <div class="d-flex align-items-center justify-content-center mt-3 mb-4">
-                  <form>
+            <form wire:submit="saveDeliveryInformation">
                       <fieldset>
                           <legend>Delivery And Address Information</legend>
 
-                          <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg">
-                              <option selected>* Choose Your Country</option>
+                          <select wire:model="country" class="form-select form-select-lg mb-3" aria-label=".form-select-lg">
+                              <option>* Choose Your Country</option>
                               @foreach(\App\Helpers\CountriesHelper::getCountries() as $country)
                                   <option value="{{ $country['name'] }}">{{ $country['name'] }}</option>
                               @endforeach
                           </select>
 
                           <div class="form-floating mb-3">
-                              <input type="text" class="form-control" id="state" autocomplete="off">
+                              <input wire:model="state" type="text" class="form-control" id="state" autocomplete="off">
                               <label for="state">* State/County</label>
                           </div>
 
                           <div class="form-floating mb-3">
-                              <input type="text" class="form-control" id="city" autocomplete="off">
+                              <input wire:model="city" type="text" class="form-control" id="city" autocomplete="off">
                               <label for="city">* City/Residential</label>
                           </div>
 
@@ -38,7 +35,7 @@
                           </div>
 
                           <div class="form-floating mb-3">
-                              <input type="text" class="form-control" id="delivery_address" autocomplete="off">
+                              <input wire:model="delivery_address" type="text" class="form-control" id="delivery_address" autocomplete="off">
                               <label for="delivery_address">* Delivery Address</label>
                           </div>
                       </fieldset>
@@ -47,27 +44,27 @@
                           <legend>Contact Information</legend>
 
                           <div class="form-floating mb-3">
-                              <input type="text" class="form-control" id="name" autocomplete="off">
+                              <input wire:model="name" type="text" class="form-control" id="name" autocomplete="off">
                               <label for="name">* Full Name</label>
                           </div>
 
                           <div class="form-floating mb-3">
-                              <input type="email" class="form-control" id="email" autocomplete="off">
+                              <input wire:model="email" type="email" class="form-control" id="email" autocomplete="off">
                               <label for="email">* E-Mail Address</label>
                           </div>
 
                           <div class="form-floating mb-3">
-                              <input type="phone" class="form-control" id="phone" autocomplete="off">
+                              <input wire:model="phone" type="phone" class="form-control" id="phone" autocomplete="off">
                               <label for="phone">Your Phone</label>
                           </div>
 
                           <div class="mb-3">
                               <label for="additional_information" class="form-label">Additional Information (Optional)</label>
-                              <textarea rows="5" name=additional_information" class="form-control form-floating" id="additional_information" autocomplete="off"></textarea>
+                              <textarea wire:model="additional_information" rows="5" name="additional_information" class="form-control form-floating" id="additional_information" autocomplete="off"></textarea>
                           </div>
                       </fieldset>
+                      <button type="submit" class="btn btn-success">Continue</button>
                   </form>
             </div>
         </div>
     </div>
-@endsection
