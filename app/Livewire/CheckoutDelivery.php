@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -39,12 +40,17 @@ class CheckoutDelivery extends Component
     }
 
 
-    public function saveDeliveryInformation(): void
+    public function saveDeliveryInformation(): RedirectResponse
     {
-        $this->validate();
+        $data = $this->validate();
+
+        session()->forget('delivery-information');
+
+        session()->put('delivery-information', $data);
 
         $this->resetFormFields();
 
+        return redirect()->to('front.payment');
     }
 
     private function resetFormFields(): void

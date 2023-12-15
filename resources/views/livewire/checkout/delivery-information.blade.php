@@ -45,7 +45,7 @@
                           </div>
 
                           <div class="form-floating mb-3">
-                              <input type="text" class="form-control" id="zip" autocomplete="off">
+                              <input type="text" wire:model="zip" class="form-control" id="zip" autocomplete="off">
                               <label for="zip">* ZIP/Postal Code</label>
                               @error('zip')
                                   <div class="alert-danger mt-2 p-1">
