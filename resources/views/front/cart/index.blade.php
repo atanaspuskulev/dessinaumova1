@@ -56,7 +56,7 @@
                             </tr>
                             <tr>
                                 <td colspan="5" class="text-end">
-                                    <a href="{{ route('front.delivery') }}" class="btn btn-success">Proceed To Checkout</a>
+                                    <a href="{{ route('front.delivery', ['cref' => config('app.cart_referer')]) }}" class="btn btn-success">Proceed To Checkout</a>
                                 </td>
                             </tr>
                         </tbody>

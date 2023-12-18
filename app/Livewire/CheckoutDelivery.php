@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
+use App\Http\Traits\CartTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class CheckoutDelivery extends Component
 {
+    use CartTrait;
+
     public string $country = '';
     public string $state = '';
     public string $city = '';
@@ -39,6 +42,11 @@ class CheckoutDelivery extends Component
             ->section('content');
     }
 
+    public function boot(): RedirectResponse|bool|null
+    {
+        $this->checkValidCart();
+        $this->checkCartRefererSource();
+    }
 
     public function saveDeliveryInformation(): RedirectResponse
     {
