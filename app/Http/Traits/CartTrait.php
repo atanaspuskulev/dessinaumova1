@@ -24,7 +24,7 @@ trait CartTrait
 
         $requestCref = request()->has('cref')
             ? (int) request()->get('cref')
-            : null;
+            : (session()->has('session_cref') ? (int) session()->get('session_cref') : null);
 
         if(($cref && $requestCref) && ($cref === $requestCref)) {
             return true;

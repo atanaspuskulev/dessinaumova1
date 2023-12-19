@@ -22,6 +22,7 @@ class CheckoutDelivery extends Component
     public string $email = '';
     public string $phone = '';
     public string $additional_information = '';
+    public ?int $cref = null;
 
     protected $rules = [
         'country' => 'required',
@@ -42,8 +43,12 @@ class CheckoutDelivery extends Component
             ->section('content');
     }
 
-    public function boot()
+    public function booted()
     {
+        if(request()->has('cref')) {
+            session()->put('session_cref', request()->get('cref'));
+        }
+
         $this->checkValidCart();
         $this->checkCartRefererSource();
     }
