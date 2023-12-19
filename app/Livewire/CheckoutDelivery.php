@@ -42,7 +42,7 @@ class CheckoutDelivery extends Component
             ->section('content');
     }
 
-    public function boot(): RedirectResponse|bool|null
+    public function boot()
     {
         $this->checkValidCart();
         $this->checkCartRefererSource();

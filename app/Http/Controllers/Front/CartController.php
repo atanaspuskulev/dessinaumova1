@@ -35,7 +35,13 @@ class CartController extends Controller
             $categories = Category::all();
         }
 
-        return view('front.cart.index', compact('products', 'totalPrice', 'categories'));
+        if(!session()->has('cref')) {
+            session()->put('cref', time());
+        }
+
+        $cref = session()->get('cref');
+
+        return view('front.cart.index', compact('cref', 'products', 'totalPrice', 'categories'));
     }
     public function store(CartAddRequest $request): JsonResponse
     {

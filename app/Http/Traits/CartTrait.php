@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Traits;
 
-use Illuminate\Http\RedirectResponse;
-
 trait CartTrait
 {
-    public function checkValidCart(): RedirectResponse|null
+    public function checkValidCart()
     {
         if (session()->get('cart') === null) {
             return redirect()->to(route('front.index'));
@@ -16,27 +14,24 @@ trait CartTrait
         return null;
     }
 
-    public function checkCartRefererSource(): RedirectResponse|bool
+    public function checkCartRefererSource()
     {
-        $cref = session()->get('cref');
-        $configCref = config('app.cart_referer');
         $returnTo = route('front.cart.index');
 
-        if(!request()->has('cref')) {
-            if ($cref && $cref === $configCref) {
-                return true;
-            }
+        $cref = session()->has('cref')
+            ? (int) session()->get('cref')
+            : null;
 
-            if($cref && $cref !== $configCref) {
-                session()->forget('cref');
-                return redirect()->to($returnTo);
-            }
-        } elseif(request()->get('cref') === $configCref) {
+        $requestCref = request()->has('cref')
+            ? (int) request()->get('cref')
+            : null;
+
+        if(($cref && $requestCref) && ($cref === $requestCref)) {
             return true;
-        } elseif(request()->get('cref') !== $configCref) {
-            session()->forget('cref');
-            return redirect()->to($returnTo);
         }
+
+        session()->forget('cref');
+        return redirect()->to($returnTo);
     }
 
 }
