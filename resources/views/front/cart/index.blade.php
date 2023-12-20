@@ -58,7 +58,7 @@
                         <tr>
                             <td colspan="5" class="text-end total-price">Total: {{ $totalPrice }}&euro;</td>
                         </tr>
-                        <tr>
+                        <tr id="btn-checkout-container">
                             <td colspan="5" class="text-end">
                                 <a href="{{ route('front.delivery', compact('cref')) }}" class="btn btn-success">Proceed
                                     To Checkout</a>

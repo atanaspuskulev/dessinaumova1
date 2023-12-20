@@ -22,7 +22,6 @@ class CheckoutDelivery extends Component
     public string $email = '';
     public string $phone = '';
     public string $additional_information = '';
-    public ?int $cref = null;
 
     protected $rules = [
         'country' => 'required',
@@ -35,6 +34,19 @@ class CheckoutDelivery extends Component
         'phone' => 'nullable|numeric',
         'additional_information' => 'nullable|string',
     ];
+
+    public function mount()
+    {
+        if(session()->has('delivery-information')) {
+            $current = session()->get('delivery-information');
+
+            foreach($current as $key => $data) {
+                if(property_exists($this, $key)) {
+                    $this->$key = $data;
+                }
+            }
+        }
+    }
 
     public function render(): View
     {
@@ -53,7 +65,7 @@ class CheckoutDelivery extends Component
         $this->checkCartRefererSource();
     }
 
-    public function saveDeliveryInformation(): RedirectResponse
+    public function saveDeliveryInformation()
     {
         $data = $this->validate();
 
@@ -63,7 +75,7 @@ class CheckoutDelivery extends Component
 
         $this->resetFormFields();
 
-        return redirect()->to('front.payment');
+        return redirect()->to(route('front.payment'));
     }
 
     private function resetFormFields(): void

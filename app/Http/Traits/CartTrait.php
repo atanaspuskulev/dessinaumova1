@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Traits;
 
+use App\Models\Product;
+
 trait CartTrait
 {
     public function checkValidCart()
@@ -34,4 +36,21 @@ trait CartTrait
         return redirect()->to($returnTo);
     }
 
+    public function calculateCartAmount(array $productsIds): float
+    {
+        $amount = 0.00;
+
+        Product::whereIn('id', $productsIds)
+            ->get()
+            ->map(static function($record) use (&$amount) {
+                $amount += $record->price;
+            });
+
+        return $amount;
+    }
+
+    public function clearCrefKeys(): void
+    {
+        session()->forget(['cref', 'session_cref']);
+    }
 }

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CartAddRequest;
+use App\Http\Traits\CartTrait;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
@@ -16,6 +17,9 @@ use Psr\Container\NotFoundExceptionInterface;
 
 class CartController extends Controller
 {
+
+    use CartTrait;
+
     public function index(): View
     {
         $cart = session()->get('cart', []);
@@ -102,18 +106,20 @@ class CartController extends Controller
             session()->put('cart', $cart);
         }
 
-        $cart = session()->get('cart', []);
+        $cart = session()->get('cart');
         $price = 0.00;
 
-        if(!empty($cart)) {
-            Product::whereIn('id', $cart)
-                ->get()
-                ->map(static function($record) use (&$price) {
-                    $price += $record->price;
-                });
+        if($cart !== null) {
+            $price = $this->calculateCartAmount($cart);
+        } else {
+            $this->clearCrefKeys();
         }
 
-        return response()->json(['success' => true, 'total_price' => $price]);
+        return response()->json([
+            'success' => true,
+            'total_price' => $price,
+            'total_products' => count($cart)
+        ]);
     }
 
     private function _verifyProduct(int $productId): bool

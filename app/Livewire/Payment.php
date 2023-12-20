@@ -8,6 +8,7 @@ class Payment extends Component
 {
     public function render()
     {
+        die("EEEE");
         return view('livewire.payment');
     }
 }

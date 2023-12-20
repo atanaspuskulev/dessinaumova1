@@ -55,6 +55,10 @@ function confirmRemove(productId) {
                 if(response.data.success) {
                     $(`tr#${productId}`).fadeOut();
                     $('.total-price').html(`Total: ${response.data.total_price}&euro;`);
+
+                    if(response.data.total_products < 1) {
+                        $('#btn-checkout-container').remove();
+                    }
                 } else {
                     Swal.fire({
                         title: 'Error Updating Cart!',
