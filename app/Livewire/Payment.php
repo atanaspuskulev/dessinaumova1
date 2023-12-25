@@ -8,7 +8,8 @@ class Payment extends Component
 {
     public function render()
     {
-        die("EEEE");
-        return view('livewire.payment');
+        return view('livewire.checkout.payment')
+            ->extends('layouts.front')
+            ->section('content');
     }
 }

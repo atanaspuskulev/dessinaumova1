@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b17dbc8b7d164ab9039674cbfd1923cd",
+    "content-hash": "b5be23fdfc9f10c926069a3a41abea37",
     "packages": [
         {
             "name": "brick/math",
@@ -3343,16 +3343,16 @@
         },
         {
             "name": "srmklive/paypal",
-            "version": "3.0.27",
+            "version": "3.0.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/srmklive/laravel-paypal.git",
-                "reference": "79560c59d8efd3bfab4dcdc141f7f1477c2f95eb"
+                "reference": "6bde2b232a38c413f730115743cc9dcc29d4228e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/srmklive/laravel-paypal/zipball/79560c59d8efd3bfab4dcdc141f7f1477c2f95eb",
-                "reference": "79560c59d8efd3bfab4dcdc141f7f1477c2f95eb",
+                "url": "https://api.github.com/repos/srmklive/laravel-paypal/zipball/6bde2b232a38c413f730115743cc9dcc29d4228e",
+                "reference": "6bde2b232a38c413f730115743cc9dcc29d4228e",
                 "shasum": ""
             },
             "require": {
@@ -3403,9 +3403,9 @@
             ],
             "support": {
                 "issues": "https://github.com/srmklive/laravel-paypal/issues",
-                "source": "https://github.com/srmklive/laravel-paypal/tree/3.0.27"
+                "source": "https://github.com/srmklive/laravel-paypal/tree/3.0.28"
             },
-            "time": "2023-11-09T22:02:55+00:00"
+            "time": "2023-12-20T18:57:16+00:00"
         },
         {
             "name": "symfony/console",
