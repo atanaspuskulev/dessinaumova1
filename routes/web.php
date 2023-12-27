@@ -11,12 +11,6 @@ Route::name('front.')->group(function () {
     Route::get('/cart/checkout/delivery-information', \App\Livewire\CheckoutDelivery::class)->name('delivery');
     Route::get('/cart/checkout/payment', \App\Livewire\Payment::class)->name('payment');
 
-
-    Route::get('paypal', [PayPalController::class, 'index'])->name('paypal');
-    Route::get('paypal/payment', [\App\Livewire\PayPal::class, 'payment'])->name('paypal.payment');
-    Route::get('paypal/payment/success', [\App\Livewire\PayPalSuccess::class, 'success'])->name('paypal.payment.success');
-    Route::get('paypal/payment/cancel', [\App\Livewire\PayPalCancel::class, 'cancel'])->name('paypal.payment.cancel');
-
     Route::resource('cart',Front\CartController::class);
 
     Route::get('/{category}', [Front\ProductsController::class, 'byCategory'])

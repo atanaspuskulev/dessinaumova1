@@ -25,18 +25,7 @@ class PayPal extends Component
 
     public function payment()
     {
-        $cart = session()->get('cart');
-        $purchaseUnits = [];
 
-        Product::whereIn('id', $cart)->get()
-            ->map(function($item) use (&$purchaseUnits) {
-                $purchaseUnits[] = [
-                    'amount' => [
-                        'value' => $item->price,
-                        'currency_code' => 'EUR'
-                    ]
-                ];
-            });
 
         $provider = new PayPalClient();
         $provider->setApiCredentials(config('paypal'));

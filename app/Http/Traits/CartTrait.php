@@ -16,6 +16,13 @@ trait CartTrait
         return null;
     }
 
+    public function checkDeliveryAddress()
+    {
+        return session()->get('delivery-address') === null
+            ? redirect()->to(route('front.index'))
+            : null;
+    }
+
     public function checkCartRefererSource()
     {
         $returnTo = route('front.cart.index');
