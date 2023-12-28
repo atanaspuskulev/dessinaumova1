@@ -22,6 +22,7 @@ class Payment extends Component
      */
     public function mount()
     {
+        $this->createOrder();
         $this->cartToJson();
     }
 
@@ -88,5 +89,10 @@ class Payment extends Component
                 : ''
         ];
         $this->order = json_encode($purchaseUnits, JSON_THROW_ON_ERROR);
+    }
+
+    private function createOrder()
+    {
+
     }
 }
