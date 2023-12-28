@@ -15,7 +15,7 @@
                           <select wire:model="country" class="form-select form-select-lg mb-3" aria-label=".form-select-lg">
                               <option>* Choose Your Country</option>
                               @foreach(\App\Helpers\CountriesHelper::getCountries() as $country)
-                                  <option value="{{ $country['name'] }}">{{ $country['name'] }}</option>
+                                  <option value="{{ $country['code'] }}">{{ $country['name'] }}</option>
                               @endforeach
                           </select>
                           @error('country')
