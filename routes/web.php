@@ -7,9 +7,10 @@ Route::name('front.')->group(function () {
     Route::get('/', [Front\HomeController::class, 'index'])->name('index');
 
     Route::post('/cart/remove-product', [Front\CartController::class, 'removeFromCart'])->name('remove_product_from_cart');
-//    Route::get('/cart/checkout/choose-payment', [Front\CheckoutController::class, 'paymentMethod'])->name('payment_method');
     Route::get('/cart/checkout/delivery-information', \App\Livewire\CheckoutDelivery::class)->name('delivery');
     Route::get('/cart/checkout/payment', \App\Livewire\Payment::class)->name('payment');
+    Route::get('/cart/checkout/payment/paypal/success', \App\Livewire\PayPalComplete::class)->name('payment.paypal.success');
+    Route::get('/cart/checkout/payment/paypal/cancel', \App\Livewire\PayPalCancel::class)->name('payment.paypal.cancel');
 
     Route::resource('cart',Front\CartController::class);
 
