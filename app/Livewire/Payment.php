@@ -13,7 +13,11 @@ class Payment extends Component
     use CartTrait;
 
     public string $order;
+    public string $paypalClientId = '';
+    public string $paypalBrandName = '';
     public string $noteToMerchant = '';
+
+    protected $listeners = ['failedTransaction', 'completedTransaction'];
 
     /**
      * @throws ContainerExceptionInterface
@@ -22,7 +26,6 @@ class Payment extends Component
      */
     public function mount()
     {
-        $this->createOrder();
         $this->cartToJson();
     }
 
@@ -30,6 +33,12 @@ class Payment extends Component
     {
         $this->checkValidCart();
         $this->checkDeliveryAddress();
+
+        $this->paypalClientId = config('paypal.mode') === 'sandbox'
+            ? config('paypal.sandbox.client_id')
+            : config('paypal.live.client_id');
+
+        $this->paypalBrandName = config('paypal.brand_name');
     }
 
     public function render()
@@ -91,8 +100,8 @@ class Payment extends Component
         $this->order = json_encode($purchaseUnits, JSON_THROW_ON_ERROR);
     }
 
-    private function createOrder()
+    public function failedTransaction(string $reason)
     {
-
+        return $this->redirect(route('front.payment.paypal.cancel'));
     }
 }
