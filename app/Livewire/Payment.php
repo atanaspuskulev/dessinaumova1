@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire;
 
 use App\Http\Traits\CartTrait;
@@ -15,7 +17,6 @@ class Payment extends Component
     public string $order;
     public string $paypalClientId = '';
     public string $paypalBrandName = '';
-    public string $noteToMerchant = '';
 
     protected $listeners = ['failedTransaction', 'completedTransaction'];
 
@@ -102,6 +103,13 @@ class Payment extends Component
 
     public function failedTransaction(string $reason)
     {
+        session()->put('cancel_reason', $reason);
+
         return $this->redirect(route('front.payment.paypal.cancel'));
+    }
+
+    public function completedTransaction()
+    {
+        return $this->redirect(route('front.payment.paypal.success'));
     }
 }

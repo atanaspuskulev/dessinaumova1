@@ -4,7 +4,6 @@
     </script>
     <script>
         let paypalBrandName = '{!! $paypalBrandName !!}';
-        let paypalCompleteUrl = "{{ route('front.payment.paypal.success') }}";
         let orderInfo = JSON.parse('{!! $order !!}');
     </script>
     <script src="{{ asset('assets/js/payment.js') }}"></script>

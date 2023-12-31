@@ -15,7 +15,29 @@ paypal.Buttons({
 
         return actions.order.capture().then(function(response) {
             if(response.id && response.intent === 'CAPTURE' && response.status === 'COMPLETED') {
-
+                return fetch('/api/paypal-capture-payment', {
+                    method: 'post',
+                    headers: {
+                        'content-type': 'application/json',
+                        "Accept": "application/json, text-plain, */*",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRF-TOKEN": token
+                    },
+                    body: JSON.stringify({
+                        orderId     : data.orderID,
+                        id : response.id,
+                        status: response.status,
+                        payerEmail: response.payer.email_address,
+                    })
+                })
+                    .then(status)
+                    .then(function(response) {
+                        window.location.href = '';
+                        Livewire.emit('completedTransaction');
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                        Livewire.emit('failedTransaction', 'Failed to capture PayPal order payment');                    });
             } else {
                 Livewire.emit('failedTransaction', 'Failed to capture PayPal order payment');
             }
