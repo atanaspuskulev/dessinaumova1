@@ -9,8 +9,8 @@ Route::name('front.')->group(function () {
     Route::post('/cart/remove-product', [Front\CartController::class, 'removeFromCart'])->name('remove_product_from_cart');
     Route::get('/cart/checkout/delivery-information', \App\Livewire\CheckoutDelivery::class)->name('delivery');
     Route::get('/cart/checkout/payment', \App\Livewire\Payment::class)->name('payment');
-    Route::get('/cart/checkout/payment/paypal/success', \App\Livewire\PayPalComplete::class)->name('payment.paypal.success');
-    Route::get('/cart/checkout/payment/paypal/cancel', \App\Livewire\PayPalCancel::class)->name('payment.paypal.cancel');
+    Route::get('/order/success', [Front\OrdersController::class, 'captureAndComplete'])->name('payment.order.success');
+    Route::get('/order/cancel', [Front\OrdersController::class, 'captureAndCancel'])->name('payment.order.cancel');
 
     Route::resource('cart',Front\CartController::class);
 

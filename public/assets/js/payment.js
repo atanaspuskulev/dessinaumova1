@@ -30,16 +30,16 @@ paypal.Buttons({
                         payerEmail: response.payer.email_address,
                     })
                 })
-                    .then(status)
-                    .then(function(response) {
-                        window.location.href = '';
-                        Livewire.emit('completedTransaction');
-                    })
-                    .catch(function(error) {
-                        console.log(error);
-                        Livewire.emit('failedTransaction', 'Failed to capture PayPal order payment');                    });
+                .then(status)
+                .then(function(response) {
+                    window.location.href = paypalSuccessUrl;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                    window.location.href = paypalCancelUrl
+                });
             } else {
-                Livewire.emit('failedTransaction', 'Failed to capture PayPal order payment');
+                window.location.href = paypalCancelUrl
             }
         });
     },

@@ -18,8 +18,6 @@ class Payment extends Component
     public string $paypalClientId = '';
     public string $paypalBrandName = '';
 
-    protected $listeners = ['failedTransaction', 'completedTransaction'];
-
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -78,7 +76,6 @@ class Payment extends Component
             'purchase_units' => $purchaseUnits
         ];
 
-        // Add shipping information
         $purchaseUnits['shipping']['name']['full_name'] = $deliveryInformation['name'];
         $purchaseUnits['shipping']['address'] = [
             'address_line_1' => $deliveryInformation['delivery_address'],
@@ -88,28 +85,15 @@ class Payment extends Component
             'admin_area_2' => $deliveryInformation['city']
         ];
 
-        // Add payer information
         $purchaseUnits['payer']['email_address'] = $deliveryInformation['email'];
         $purchaseUnits['payer']['phone']['phone_number']['national_number'] = $deliveryInformation['phone'];
 
-        // Add note to merchant
         $purchaseUnits['merchant_preferences'] = [
             'note_to_merchant' => !empty($deliveryInformation['additional_information'])
                 ? strip_tags(htmlentities($deliveryInformation['additional_information']))
                 : ''
         ];
+
         $this->order = json_encode($purchaseUnits, JSON_THROW_ON_ERROR);
-    }
-
-    public function failedTransaction(string $reason)
-    {
-        session()->put('cancel_reason', $reason);
-
-        return $this->redirect(route('front.payment.paypal.cancel'));
-    }
-
-    public function completedTransaction()
-    {
-        return $this->redirect(route('front.payment.paypal.success'));
     }
 }
