@@ -1,5 +1,23 @@
+let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
 paypal.Buttons({
     createOrder: function(data, actions) {
+        // axios.post(orderCreateUrl, {
+        //     _token: $('input[name=_token]').val(),
+        //     orderData: orderInfo
+        // });
+
+        fetch(orderCreateUrl, {
+            method: 'post',
+            headers: {
+            'content-type': 'application/json',
+                "Accept": "application/json, text-plain, */*",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": token
+            },
+            body: JSON.stringify(orderInfo)
+        });
+
         return actions.order.create({
             application_context: {
                 brand_name : paypalBrandName,
@@ -11,8 +29,6 @@ paypal.Buttons({
         });
     },
     onApprove: function(data, actions) {
-        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
         return actions.order.capture().then(function(response) {
             if(response.id && response.intent === 'CAPTURE' && response.status === 'COMPLETED') {
                 return fetch('/api/paypal-capture-payment', {

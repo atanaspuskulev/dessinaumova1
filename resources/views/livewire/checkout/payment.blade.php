@@ -6,8 +6,11 @@
         let paypalBrandName = '{!! $paypalBrandName !!}';
         let paypalSuccessUrl = '{{ route('front.payment.order.success') }}';
         let paypalCancelUrl = '{{ route('front.payment.order.cancel') }}';
+        let orderCreateUrl = '{{ route('front.payment.order.create') }}';
+        let orderUpdateUrl = '{{ route('front.payment.order.update') }}';
         let orderInfo = JSON.parse('{!! $order !!}');
     </script>
+
     <script src="{{ asset('assets/js/payment.js') }}"></script>
 @endsection
 

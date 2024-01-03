@@ -12,6 +12,9 @@ Route::name('front.')->group(function () {
     Route::get('/order/success', [Front\OrdersController::class, 'captureAndComplete'])->name('payment.order.success');
     Route::get('/order/cancel', [Front\OrdersController::class, 'captureAndCancel'])->name('payment.order.cancel');
 
+    Route::post('/order/create', [Front\OrdersController::class, 'createOrder'])->name('payment.order.create');
+    Route::post('/order/update', [Front\OrdersController::class, 'updateOrder'])->name('payment.order.update');
+
     Route::resource('cart',Front\CartController::class);
 
     Route::get('/{category}', [Front\ProductsController::class, 'byCategory'])

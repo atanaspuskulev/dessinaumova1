@@ -16,4 +16,9 @@ class OrdersController extends Controller
     {
         return view('front.orders.cancel');
     }
+
+    public function createOrder(Request $request)
+    {
+        print_r($request->all());exit;
+    }
 }
