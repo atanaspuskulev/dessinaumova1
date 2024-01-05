@@ -12,8 +12,9 @@ Route::name('front.')->group(function () {
     Route::get('/order/success', [Front\OrdersController::class, 'captureAndComplete'])->name('payment.order.success');
     Route::get('/order/cancel', [Front\OrdersController::class, 'captureAndCancel'])->name('payment.order.cancel');
 
-    Route::post('/order/create', [Front\OrdersController::class, 'createOrder'])->name('payment.order.create');
-    Route::post('/order/update', [Front\OrdersController::class, 'updateOrder'])->name('payment.order.update');
+    Route::post('/api/order/create', [Front\OrdersController::class, 'createOrder'])->name('payment.api.order.create');
+    Route::post('/api/order/update', [Front\OrdersController::class, 'updateOrder'])->name('payment.api.order.update');
+    Route::post('/api/order/cancel', [Front\OrdersController::class, 'cancelOrder'])->name('payment.api.order.cancel');
 
     Route::resource('cart',Front\CartController::class);
 

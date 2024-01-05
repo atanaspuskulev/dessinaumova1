@@ -2,11 +2,6 @@ let token = document.querySelector('meta[name="csrf-token"]').getAttribute('cont
 
 paypal.Buttons({
     createOrder: function(data, actions) {
-        // axios.post(orderCreateUrl, {
-        //     _token: $('input[name=_token]').val(),
-        //     orderData: orderInfo
-        // });
-
         fetch(orderCreateUrl, {
             method: 'post',
             headers: {
@@ -16,13 +11,19 @@ paypal.Buttons({
                 "X-CSRF-TOKEN": token
             },
             body: JSON.stringify(orderInfo)
+        }).then(response => {
+            if (!response.ok) {
+                window.location.href = paypalCancelUrl;
+            }
+        }).catch(error => {
+            window.location.href = paypalCancelUrl;
         });
 
         return actions.order.create({
             application_context: {
                 brand_name : paypalBrandName,
                 user_action : 'PAY_NOW',
-                locale: 'en-US',
+                locale: paypalDefaultLocale,
                 merchant_preferences: orderInfo.merchant_preferences
             },
             purchase_units: orderInfo.purchase_units,
@@ -51,15 +52,34 @@ paypal.Buttons({
                     window.location.href = paypalSuccessUrl;
                 })
                 .catch(function(error) {
-                    console.log(error);
-                    window.location.href = paypalCancelUrl
+                    cancelOrder(response);
+                   // window.location.href = paypalCancelUrl
                 });
             } else {
-                window.location.href = paypalCancelUrl
+                cancelOrder(response);
+                //window.location.href = paypalCancelUrl
             }
         });
     },
-    onCancel: function(data) {
-
+    onCancel: function(orderId) {
+        cancelOrder(orderId);
+        window.location.href = paypalCancelUrl
     }
 }).render('#paypal-button-container');
+
+function cancelOrder(data) {
+    fetch(apiCancelUrl, {
+        method: 'post',
+        headers: {
+            'content-type': 'application/json',
+            "Accept": "application/json, text-plain, */*",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-TOKEN": token
+        },
+        body: JSON.stringify(data)
+    });
+}
+
+function completeOrder(data) {
+    console.log(data);
+}

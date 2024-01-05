@@ -17,6 +17,8 @@ class Payment extends Component
     public string $order;
     public string $paypalClientId = '';
     public string $paypalBrandName = '';
+    public string $paypalCurrency = '';
+    public string $paypalLocale = '';
 
     /**
      * @throws ContainerExceptionInterface
@@ -25,19 +27,20 @@ class Payment extends Component
      */
     public function mount()
     {
+        $this->checkValidCart();
+        $this->checkDeliveryAddress();
         $this->cartToJson();
     }
 
     public function booted()
     {
-        $this->checkValidCart();
-        $this->checkDeliveryAddress();
-
         $this->paypalClientId = config('paypal.mode') === 'sandbox'
             ? config('paypal.sandbox.client_id')
             : config('paypal.live.client_id');
 
+        $this->paypalCurrency = config('paypal.currency');
         $this->paypalBrandName = config('paypal.brand_name');
+        $this->paypalLocale = config('paypal.locale');
     }
 
     public function render()

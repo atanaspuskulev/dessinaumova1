@@ -249,9 +249,20 @@ class CountriesHelper
         ['name' =>'Zambia', 'code' =>  'ZM'],
         ['name' =>'Zimbabwe', 'code' =>  'ZW']
     ];
-    
+
     public static function getCountries(): array
     {
         return self::$countries;
+    }
+
+    public static function getCountryNameByCode(string $code): string|null
+    {
+        foreach(self::$countries as $country) {
+            if($country['code'] === $code) {
+                return $country['name'];
+            }
+        }
+
+        return null;
     }
 }

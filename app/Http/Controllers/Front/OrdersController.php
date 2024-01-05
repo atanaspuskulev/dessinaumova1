@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Helpers\CountriesHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Enums\OrderEnum;
+use App\Http\Traits\CartTrait;
+use App\Models\Orders;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
 {
+    use CartTrait;
+
     public function captureAndComplete(Request $request)
     {
         return view('front.orders.complete');
@@ -17,8 +24,69 @@ class OrdersController extends Controller
         return view('front.orders.cancel');
     }
 
-    public function createOrder(Request $request)
+    public function cancelOrder(Request $request)
     {
-        print_r($request->all());exit;
+        if($request->has('orderID') && session()->has('current_payment_order_id')) {
+            $order = Orders::find(session()->get('current_payment_order_id'));
+            $order->order_id = $request->orderID;
+            $order->status = OrderEnum::CANCELED->value;
+            $order->cancelled_at = now()->toDateString();
+            $order->save();
+        }
+
+        session()->forget([
+            'current_payment_order_id',
+            'cart',
+            'cref',
+            'session_cref',
+            'delivery-informatio'
+        ]);
+
+        return response()->json([]);
+    }
+
+    public function createOrder(Request $request): JsonResponse
+    {
+        $status = true;
+
+        if(session()->has('current_payment_order_id')) {
+            return response()->json(compact('status'));
+        }
+
+        try {
+            $productsIds = [];
+
+            foreach($request['purchase_units'] as $unit) {
+                $productsIds[] = $unit['reference_id'];
+            }
+
+            $orderData = [
+                'order_id' => '',
+                'status' => OrderEnum::PENDING->value,
+                'amount' => $this->calculateCartAmount($productsIds),
+                'currency' => config('paypal.currency'),
+                'payer_name' => $request['shipping']['name']['full_name'],
+                'payer_email' => $request['payer']['email_address'],
+                'payer_phone' => $request['payer']['phone']['phone_number']['national_number'],
+                'payer_country' => CountriesHelper::getCountryNameByCode($request['shipping']['address']['country_code']),
+                'payer_country_code' => $request['shipping']['address']['country_code'],
+                'payer_state' => $request['shipping']['address']['admin_area_1'],
+                'payer_city' => $request['shipping']['address']['admin_area_2'],
+                'payer_address' => $request['shipping']['address']['address_line_1'],
+                'additional_information' => $request['merchant_preferences']['note_to_merchant']
+            ];
+
+            $order = Orders::create($orderData);
+
+            foreach($productsIds as $productId) {
+                $order->items()->create(['product_id' => $productId]);
+            }
+
+            session()->put('current_payment_order_id', $order->id);
+        } catch(\Exception $e) {
+            $status = false;
+        }
+
+        return response()->json(compact('status'));
     }
 }

@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 
 class Orders extends Model
 {
     protected $fillable = [
         'order_id',
+        'status',
         'amount',
         'currency',
         'payer_name',
@@ -41,6 +42,6 @@ class Orders extends Model
 
     public function items(): HasMany
     {
-        return $this->hasMany(OrdersItems::class);
+        return $this->hasMany(OrdersItems::class, 'order_id', 'id');
     }
 }

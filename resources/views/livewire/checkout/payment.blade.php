@@ -1,14 +1,16 @@
 @section('head_js')
     <script
-        src="https://www.paypal.com/sdk/js?client-id={{ $paypalClientId }}&currency=EUR">
+        src="https://www.paypal.com/sdk/js?client-id={{ $paypalClientId }}&currency={{ $paypalCurrency }}">
     </script>
     <script>
         let paypalBrandName = '{!! $paypalBrandName !!}';
         let paypalSuccessUrl = '{{ route('front.payment.order.success') }}';
         let paypalCancelUrl = '{{ route('front.payment.order.cancel') }}';
-        let orderCreateUrl = '{{ route('front.payment.order.create') }}';
-        let orderUpdateUrl = '{{ route('front.payment.order.update') }}';
+        let orderCreateUrl = '{{ route('front.payment.api.order.create') }}';
+        let orderUpdateUrl = '{{ route('front.payment.api.order.update') }}';
+        let apiCancelUrl = '{{ route('front.payment.api.order.cancel') }}';
         let orderInfo = JSON.parse('{!! $order !!}');
+        let paypalDefaultLocale = '{{ $paypalLocale }}';
     </script>
 
     <script src="{{ asset('assets/js/payment.js') }}"></script>
