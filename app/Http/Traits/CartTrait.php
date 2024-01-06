@@ -60,4 +60,15 @@ trait CartTrait
     {
         session()->forget(['cref', 'session_cref']);
     }
+
+    public function clearCartSession(): void
+    {
+        session()->forget([
+            'current_payment_order_id',
+            'cart',
+            'cref',
+            'session_cref',
+            'delivery-information'
+        ]);
+    }
 }

@@ -27,13 +27,13 @@ class Payment extends Component
      */
     public function mount()
     {
-        $this->checkValidCart();
-        $this->checkDeliveryAddress();
         $this->cartToJson();
     }
 
     public function booted()
     {
+        $this->checkValidCart();
+        $this->checkDeliveryAddress();
         $this->paypalClientId = config('paypal.mode') === 'sandbox'
             ? config('paypal.sandbox.client_id')
             : config('paypal.live.client_id');
@@ -50,15 +50,15 @@ class Payment extends Component
             ->section('content');
     }
 
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     * @throws \JsonException
-     */
-    private function cartToJson(): void
+    private function cartToJson()
     {
         $cart = session()->get('cart');
         $deliveryInformation = session()->get('delivery-information');
+
+        if(empty($cart) || empty($deliveryInformation)) {
+            $this->clearCartSession();
+            return redirect()->to(route('front.index'));
+        }
 
         $purchaseUnits = [];
 

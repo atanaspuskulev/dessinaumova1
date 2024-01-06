@@ -34,13 +34,7 @@ class OrdersController extends Controller
             $order->save();
         }
 
-        session()->forget([
-            'current_payment_order_id',
-            'cart',
-            'cref',
-            'session_cref',
-            'delivery-informatio'
-        ]);
+        $this->clearCartSession();
 
         return response()->json([]);
     }
@@ -88,5 +82,21 @@ class OrdersController extends Controller
         }
 
         return response()->json(compact('status'));
+    }
+
+    public function updateOrder(Request $request)
+    {
+        $this->clearCartSession();
+
+        if(session()->has('current_payment_order_id')) {
+            $currentOrder = Orders::find(session()->get('current_payment_order_id'));
+            $currentOrder->status = OrderEnum::COMPLETED->value;
+            $currentOrder->order_id = $request['id'];
+            $currentOrder->confirmed_at = now()->toDateString();
+            $currentOrder->save();
+            return response()->json([]);
+        }
+
+        return response()->json([], 417);
     }
 }

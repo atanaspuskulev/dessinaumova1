@@ -32,32 +32,10 @@ paypal.Buttons({
     onApprove: function(data, actions) {
         return actions.order.capture().then(function(response) {
             if(response.id && response.intent === 'CAPTURE' && response.status === 'COMPLETED') {
-                return fetch('/api/paypal-capture-payment', {
-                    method: 'post',
-                    headers: {
-                        'content-type': 'application/json',
-                        "Accept": "application/json, text-plain, */*",
-                        "X-Requested-With": "XMLHttpRequest",
-                        "X-CSRF-TOKEN": token
-                    },
-                    body: JSON.stringify({
-                        orderId     : data.orderID,
-                        id : response.id,
-                        status: response.status,
-                        payerEmail: response.payer.email_address,
-                    })
-                })
-                .then(status)
-                .then(function(response) {
-                    window.location.href = paypalSuccessUrl;
-                })
-                .catch(function(error) {
-                    cancelOrder(response);
-                   // window.location.href = paypalCancelUrl
-                });
+                completeOrder(response);
             } else {
                 cancelOrder(response);
-                //window.location.href = paypalCancelUrl
+                window.location.href = paypalCancelUrl
             }
         });
     },
@@ -81,5 +59,21 @@ function cancelOrder(data) {
 }
 
 function completeOrder(data) {
-    console.log(data);
+    fetch(orderUpdateUrl, {
+        method: 'post',
+        headers: {
+            'content-type': 'application/json',
+            "Accept": "application/json, text-plain, */*",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRF-TOKEN": token
+        },
+        body: JSON.stringify(data)
+    }).then(response => {
+        if(!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        window.location.href = paypalSuccessUrl;
+    }).catch(error => {
+        console.error('Fetch error:', error);
+    });
 }
