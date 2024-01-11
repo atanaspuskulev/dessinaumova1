@@ -16,6 +16,8 @@ Route::name('front.')->group(function () {
     Route::post('/api/order/update', [Front\OrdersController::class, 'updateOrder'])->name('payment.api.order.update');
     Route::post('/api/order/cancel', [Front\OrdersController::class, 'cancelOrder'])->name('payment.api.order.cancel');
 
+    Route::get('/contact-me', [Front\ContactController::class, 'index'])->name('contact');
+
     Route::resource('cart',Front\CartController::class);
 
     Route::get('/{category}', [Front\ProductsController::class, 'byCategory'])
@@ -23,6 +25,6 @@ Route::name('front.')->group(function () {
         ->name('to_category');
 
     Route::get('/{category_slug}/{product_slug}', [Front\ProductsController::class, 'view'])
-        ->where(['category_slug' => '^(?!cart$)[\w-]+$', 'product_slug' => '^(?!cart$)[\w-]+$']) // Exclude 'cart' and allow word characters and hyphens
+        ->where(['category_slug' => '^(?!cart$)[\w-]+$', 'product_slug' => '^(?!cart$)[\w-]+$'])
         ->name('product_view');
 });
