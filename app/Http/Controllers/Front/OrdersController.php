@@ -9,22 +9,25 @@ use App\Http\Traits\CartTrait;
 use App\Models\Orders;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class OrdersController extends Controller
 {
     use CartTrait;
 
-    public function captureAndComplete(Request $request)
+    public function captureAndComplete(): View
     {
         return view('front.orders.complete');
     }
 
-    public function captureAndCancel(Request $request)
+    public function captureAndCancel(): View
     {
         return view('front.orders.cancel');
     }
 
-    public function cancelOrder(Request $request)
+    public function cancelOrder(Request $request): JsonResponse
     {
         if($request->has('orderID') && session()->has('current_payment_order_id')) {
             $order = Orders::find(session()->get('current_payment_order_id'));
@@ -84,9 +87,14 @@ class OrdersController extends Controller
         return response()->json(compact('status'));
     }
 
-    public function updateOrder(Request $request)
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function updateOrder(Request $request): JsonResponse
     {
         $this->clearCartSession();
+        $status = 417;
 
         if(session()->has('current_payment_order_id')) {
             $currentOrder = Orders::find(session()->get('current_payment_order_id'));
@@ -94,9 +102,9 @@ class OrdersController extends Controller
             $currentOrder->order_id = $request['id'];
             $currentOrder->confirmed_at = now()->toDateString();
             $currentOrder->save();
-            return response()->json([]);
+            $status = 200;
         }
 
-        return response()->json([], 417);
+        return response()->json([], $status);
     }
 }
