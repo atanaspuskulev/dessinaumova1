@@ -2,7 +2,7 @@ version: '3'
 services:
     desi.test:
         build:
-            context: ./vendor/laravel/sail/runtimes/8.2
+            context: ./docker-files
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
@@ -40,8 +40,8 @@ services:
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
             - 'sail-mysql:/var/lib/mysql'
-            - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
-            - './dockerconf/mysql-custom.cnf:/etc/mysql/conf.d/mysql-custom.cnf'  # Add this line to mount a custom MySQL configuration file
+            - './docker-files/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
+            - './docker-files/mysql-custom.cnf:/etc/mysql/conf.d/mysql-custom.cnf'  # Add this line to mount a custom MySQL configuration file
         networks:
             - sail
         healthcheck:
