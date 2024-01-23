@@ -10,7 +10,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=UTC
 ENV SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80"
 ENV SUPERVISOR_PHP_COMMAND_EMAIL_QUEUES="/usr/bin/php /var/www/html/artisan queue:work --sleep=3 --tries=3 --max-time=3600"
-ENV SUPERVISOR_EMAIL_QUEUE_LOG_FILE="/var/www/html/app/storage/logs/email-queue-worker.log"
+ENV SUPERVISOR_EMAIL_QUEUE_LOG_FILE="/var/log/supervisor/email-queue-worker.log"
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
