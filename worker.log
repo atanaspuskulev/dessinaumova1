@@ -1,0 +1,24 @@
+  2024-01-24 18:26:09 App\Mail\OrderCreated  2024-01-24 18:26:09 App\Mail\OrderCreated .......................... RUNNING
+ .......................... RUNNING
+  2024-01-24 18:26:09 App\Mail\OrderCreated .......................... RUNNING
+  2024-01-24 18:26:09 App\Mail\OrderCreated  2024-01-24 18:26:09 App\Mail\OrderCreated ..................... 95.30ms FAIL
+ ..................... 95.57ms FAIL
+  2024-01-24 18:26:09 App\Mail\OrderCreated ..................... 94.63ms FAIL
+  2024-01-24 18:26:11 App\Mail\OrderCreated  2024-01-24 18:26:11 App\Mail\OrderCreated  2024-01-24 18:26:11 App\Mail\OrderCreated .......................... RUNNING
+ .......................... RUNNING
+ .......................... RUNNING
+  2024-01-24 18:26:11 App\Mail\OrderCreated ..................... 85.45ms FAIL
+  2024-01-24 18:26:11 App\Mail\OrderCreated  2024-01-24 18:26:11 App\Mail\OrderCreated ..................... 85.70ms FAIL
+ ..................... 85.72ms FAIL
+  2024-01-24 18:26:12 App\Mail\OrderCreated  2024-01-24 18:26:12 App\Mail\OrderCreated  2024-01-24 18:26:12 App\Mail\OrderCreated .......................... .......................... .......................... RUNNING
+ RUNNING
+ RUNNING
+  2024-01-24 18:26:12 App\Mail\OrderCreated  2024-01-24 18:26:12 App\Mail\OrderCreated ..................... 92.59ms FAIL
+ ..................... 92.52ms FAIL
+  2024-01-24 18:26:12 App\Mail\OrderCreated ..................... 92.53ms FAIL
+  2024-01-24 18:26:57 App\Mail\OrderCreated .......................... RUNNING
+  2024-01-24 18:26:58 App\Mail\OrderCreated ..................... 90.99ms FAIL
+  2024-01-24 18:26:58 App\Mail\OrderCreated .......................... RUNNING
+  2024-01-24 18:26:58 App\Mail\OrderCreated ..................... 89.22ms FAIL
+  2024-01-24 18:26:58 App\Mail\OrderCreated .......................... RUNNING
+  2024-01-24 18:26:58 App\Mail\OrderCreated ..................... 91.97ms FAIL

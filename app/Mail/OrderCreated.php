@@ -10,16 +10,10 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class OrderCreatedEmail extends Mailable implements ShouldQueue
+class OrderCreated extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-
-    /**
-     * Create a new message instance.
-     */
-    public function __construct(public Orders $order)
-    {}
 
     /**
      * Get the message envelope.
@@ -27,7 +21,7 @@ class OrderCreatedEmail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: config('app.name') . ': New order created'
+            subject: config('app.name') . ' - New Order Created',
         );
     }
 
@@ -37,17 +31,7 @@ class OrderCreatedEmail extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            markdown: 'mail.orders.new'
         );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
     }
 }

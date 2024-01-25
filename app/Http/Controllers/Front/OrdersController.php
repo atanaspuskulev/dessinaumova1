@@ -6,9 +6,11 @@ use App\Helpers\CountriesHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Enums\OrderEnum;
 use App\Http\Traits\CartTrait;
+use App\Mail\OrderCreated;
 use App\Models\Orders;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -42,7 +44,7 @@ class OrdersController extends Controller
         return response()->json([]);
     }
 
-    public function createOrder(Request $request): JsonResponse
+    public function createOrder(Request $request)//: JsonResponse
     {
         $status = true;
 
@@ -73,11 +75,14 @@ class OrdersController extends Controller
                 'additional_information' => $request['merchant_preferences']['note_to_merchant']
             ];
 
+
             $order = Orders::create($orderData);
 
             foreach($productsIds as $productId) {
                 $order->items()->create(['product_id' => $productId]);
             }
+
+            Mail::to($orderData['payer_email'])->queue(new OrderCreated());
 
             session()->put('current_payment_order_id', $order->id);
         } catch(\Exception $e) {
