@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\Orders;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -10,10 +9,9 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class OrderCreated extends Mailable implements ShouldQueue
+class OrderCreatedToBuyer extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
-
 
     /**
      * Get the message envelope.

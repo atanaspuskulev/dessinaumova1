@@ -6,7 +6,7 @@ use App\Helpers\CountriesHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Enums\OrderEnum;
 use App\Http\Traits\CartTrait;
-use App\Mail\OrderCreated;
+use App\Mail\OrderCreatedToBuyer;
 use App\Models\Orders;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -31,7 +31,7 @@ class OrdersController extends Controller
 
     public function cancelOrder(Request $request): JsonResponse
     {
-        if($request->has('orderID') && session()->has('current_payment_order_id')) {
+        if ($request->has('orderID') && session()->has('current_payment_order_id')) {
             $order = Orders::find(session()->get('current_payment_order_id'));
             $order->order_id = $request->orderID;
             $order->status = OrderEnum::CANCELED->value;
@@ -44,18 +44,18 @@ class OrdersController extends Controller
         return response()->json([]);
     }
 
-    public function createOrder(Request $request)//: JsonResponse
+    public function createOrder(Request $request): JsonResponse
     {
         $status = true;
 
-        if(session()->has('current_payment_order_id')) {
+        if (session()->has('current_payment_order_id')) {
             return response()->json(compact('status'));
         }
 
         try {
             $productsIds = [];
 
-            foreach($request['purchase_units'] as $unit) {
+            foreach ($request['purchase_units'] as $unit) {
                 $productsIds[] = $unit['reference_id'];
             }
 
@@ -75,17 +75,16 @@ class OrdersController extends Controller
                 'additional_information' => $request['merchant_preferences']['note_to_merchant']
             ];
 
-
             $order = Orders::create($orderData);
 
-            foreach($productsIds as $productId) {
+            foreach ($productsIds as $productId) {
                 $order->items()->create(['product_id' => $productId]);
             }
 
-            Mail::to($orderData['payer_email'])->queue(new OrderCreated());
+            Mail::to($request['payer']['email_address'])->queue(new OrderCreatedToBuyer());
 
             session()->put('current_payment_order_id', $order->id);
-        } catch(\Exception $e) {
+        } catch (\Exception) {
             $status = false;
         }
 
@@ -98,10 +97,9 @@ class OrdersController extends Controller
      */
     public function updateOrder(Request $request): JsonResponse
     {
-        $this->clearCartSession();
         $status = 417;
 
-        if(session()->has('current_payment_order_id')) {
+        if (session()->has('current_payment_order_id')) {
             $currentOrder = Orders::find(session()->get('current_payment_order_id'));
             $currentOrder->status = OrderEnum::COMPLETED->value;
             $currentOrder->order_id = $request['id'];
@@ -109,6 +107,8 @@ class OrdersController extends Controller
             $currentOrder->save();
             $status = 200;
         }
+
+        $this->clearCartSession();
 
         return response()->json([], $status);
     }
