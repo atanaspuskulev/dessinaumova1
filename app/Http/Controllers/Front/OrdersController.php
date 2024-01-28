@@ -7,9 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Enums\OrderEnum;
 use App\Http\Traits\CartTrait;
 use App\Mail\OrderCreatedToBuyer;
+use App\Mail\OrderCreatedToSeller;
 use App\Models\Orders;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use Psr\Container\ContainerExceptionInterface;
@@ -71,6 +73,7 @@ class OrdersController extends Controller
                 'payer_country_code' => $request['shipping']['address']['country_code'],
                 'payer_state' => $request['shipping']['address']['admin_area_1'],
                 'payer_city' => $request['shipping']['address']['admin_area_2'],
+                'payer_zip' => $request['shipping']['address']['postal_code'],
                 'payer_address' => $request['shipping']['address']['address_line_1'],
                 'additional_information' => $request['merchant_preferences']['note_to_merchant']
             ];
@@ -84,7 +87,14 @@ class OrdersController extends Controller
             Mail::to($request['payer']['email_address'])->queue(new OrderCreatedToBuyer());
 
             session()->put('current_payment_order_id', $order->id);
-        } catch (\Exception) {
+        } catch (\Exception $e) {
+            $message = sprintf(
+                'An error occurred while trying to create user order and send email: %s',
+                $e->getMessage()
+            );
+
+            Log::emergency($message);
+
             $status = false;
         }
 
@@ -106,10 +116,26 @@ class OrdersController extends Controller
             $currentOrder->confirmed_at = now()->toDateString();
             $currentOrder->save();
             $status = 200;
+
+            $order = Orders::with([
+                'items.product',
+                'items.product.category'
+            ])->firstOrFail($currentOrder->id);
+
+            Mail::to(config('mail.to_admin_email'))->queue(new OrderCreatedToSeller($order));
         }
 
         $this->clearCartSession();
 
         return response()->json([], $status);
+    }
+
+    public function test()
+    {
+
+        $order = Orders::with('items.product', 'items.product.category')->latest()->first();
+
+        return new OrderCreatedToSeller($order);
+
     }
 }

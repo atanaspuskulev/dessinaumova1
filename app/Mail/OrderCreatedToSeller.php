@@ -36,7 +36,7 @@ class OrderCreatedToSeller extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.orders.to-seller',
+            markdown: 'mail.orders.new-to-seller',
         );
     }
 

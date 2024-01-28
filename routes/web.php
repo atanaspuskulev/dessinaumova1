@@ -11,6 +11,7 @@ Route::name('front.')->group(function () {
     Route::get('/cart/checkout/payment', \App\Livewire\Payment::class)->name('payment');
     Route::get('/order/success', [Front\OrdersController::class, 'captureAndComplete'])->name('payment.order.success');
     Route::get('/order/cancel', [Front\OrdersController::class, 'captureAndCancel'])->name('payment.order.cancel');
+    Route::get('/order/test', [Front\OrdersController::class, 'test']);
 
     Route::post('/api/order/create', [Front\OrdersController::class, 'createOrder'])->name('payment.api.order.create');
     Route::post('/api/order/update', [Front\OrdersController::class, 'updateOrder'])->name('payment.api.order.update');
