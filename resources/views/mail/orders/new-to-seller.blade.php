@@ -13,7 +13,8 @@
 <b>State:</b> {{ $order->payer_state }}<br />
 <b>City:</b> {{ $order->payer_city }}<br />
 <b>Zip/Postal code:</b> {{ $order->payer_zip }}<br />
-<b>Address:</b> {{ $order->payer_address }}
+<b>Address:</b> {{ $order->payer_address }}<br />
+<b>Additional information:</b> {{ $order->additional_information ?? 'N/A' }}
 <hr>
 <h2>Order Items:</h2>
 <table class="table table-striped" style="width:100%;">

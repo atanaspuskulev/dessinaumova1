@@ -21,8 +21,6 @@ class Payment extends Component
     public string $paypalLocale = '';
 
     /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @throws \JsonException
      */
     public function mount()
@@ -74,7 +72,6 @@ class Payment extends Component
                 ];
             });
 
-        // Initialize purchase_units as an array
         $purchaseUnits = [
             'purchase_units' => $purchaseUnits
         ];

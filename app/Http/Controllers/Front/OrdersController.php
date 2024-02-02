@@ -125,7 +125,7 @@ class OrdersController extends Controller
             Mail::to(config('mail.to_admin_email'))->queue(new OrderCreatedToSeller($order));
         }
 
-        $this->clearCartSession();
+        //$this->clearCartSession();
 
         return response()->json([], $status);
     }

@@ -39,14 +39,4 @@ class OrderCreatedToSeller extends Mailable implements ShouldQueue
             markdown: 'mail.orders.new-to-seller',
         );
     }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
-    }
 }

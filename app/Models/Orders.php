@@ -21,6 +21,7 @@ class Orders extends Model
         'payer_state',
         'payer_city',
         'payer_address',
+        'payer_zip',
         'additional_information',
         'confirmed_at',
         'cancelled_at',
