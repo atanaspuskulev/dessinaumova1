@@ -6,6 +6,7 @@ use App\Helpers\CountriesHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Enums\OrderEnum;
 use App\Http\Traits\CartTrait;
+use App\Mail\OrderCompletedToBuyer;
 use App\Mail\OrderCreatedToBuyer;
 use App\Mail\OrderCreatedToSeller;
 use App\Models\Orders;
@@ -135,7 +136,7 @@ class OrdersController extends Controller
 
         $order = Orders::with('items.product', 'items.product.category')->latest()->first();
 
-        return new OrderCreatedToSeller($order);
+        return new OrderCompletedToBuyer($order);
 
     }
 }
