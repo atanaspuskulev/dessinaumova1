@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Traits;
 
 use App\Models\Product;
+use Illuminate\Support\Collection;
 
 trait CartTrait
 {
@@ -43,17 +44,35 @@ trait CartTrait
         return redirect()->to($returnTo);
     }
 
-    public function calculateCartAmount(array $productsIds): float
+    public function calculateCartAmount(
+        Collection $prices,
+        bool|null  $applyTaxRate = null,
+        float|null $taxRate = 0.15
+    ): float
     {
+        $applyTaxRate ??= false;
         $amount = 0.00;
 
-        Product::whereIn('id', $productsIds)
-            ->get()
-            ->map(static function($record) use (&$amount) {
-                $amount += $record->price;
-            });
+        foreach($prices as $price) {
+            $amount += $price;
+        }
 
-        return $amount;
+        if($applyTaxRate && $taxRate) {
+            $taxAmount = $amount * $taxRate;
+            $amount += $taxAmount;
+        }
+
+        return round($amount);
+    }
+
+    public function getProductsFromCart(bool|null $withRelationships = null, array $relationships = []): Collection
+    {
+        $withRelationships ??= true;
+        return Product::when($withRelationships && !empty($relationships), static function($query) use ($relationships) {
+            $query->with($relationships);
+        })
+        ->whereIn('id', session()->get('cart', []))
+        ->get();
     }
 
     public function clearCrefKeys(): void

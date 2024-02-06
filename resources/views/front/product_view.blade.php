@@ -75,6 +75,12 @@
                 @endif
 
                 @if(!$product?->sold && !in_array($product?->id, session()->get('cart', [])))
+                    <p class="small">
+                        <i>
+                            <b>Note:</b> This is the price without a tax applied.<br />The tax
+                            is 15% and is applied at the total of the order.
+                        </i>
+                    </p>
                     <form
                         onsubmit="return false"
                         method="post"

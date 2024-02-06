@@ -22,19 +22,15 @@ class CartController extends Controller
 
     public function index(): View
     {
-        $cart = session()->get('cart', []);
-        $totalPrice = 0.00;
+        $products = $this->getProductsFromCart(true, ['category', 'thumbnail']);
 
-        $products = Product::with([
-            'category',
-            'thumbnail'
-        ])->whereIn('id', $cart)
-        ->get()
-        ->each(static function($product) use (&$totalPrice) {
-            $totalPrice += $product->price;
-        });
+        $totalPrice = $this->calculateCartAmount($products->pluck('price'), true);
+        $priceWithoutTax = $this->calculateCartAmount($products->pluck('price'), false);
+
+        $taxAmount = $totalPrice - $priceWithoutTax;
 
         $categories = null;
+
         if(!$products->count()) {
             $categories = Category::all();
         }
@@ -45,7 +41,7 @@ class CartController extends Controller
 
         $cref = session()->get('cref');
 
-        return view('front.cart.index', compact('cref', 'products', 'totalPrice', 'categories'));
+        return view('front.cart.index', compact('cref', 'products', 'totalPrice', 'categories', 'taxAmount'));
     }
     public function store(CartAddRequest $request): JsonResponse
     {

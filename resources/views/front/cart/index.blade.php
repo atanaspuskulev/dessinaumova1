@@ -35,35 +35,38 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($products as $product)
-                            <tr id="{{ $product->id }}">
-                                <td>{{ $loop->iteration }}</td>
-                                <td>
-                                    <img src="{{ displayImage($product->id, $product->thumbnail?->path, true) }}"
-                                         width="50"/>
-                                    <a target="_new"
-                                       href="{{ route('front.product_view', ['category_slug' => $product->category->slug, 'product_slug' => $product->slug]) }}"
-                                       class="text-black-50">
-                                        {!! $product->title !!}
-                                    </a>
-                                </td>
-                                <td>{!! $product->category->title !!}</td>
-                                <td>{!! $product->price !!}&euro;</td>
-                                <td>
-                                    <a href="javascript:void(0);"
-                                       onclick="confirmRemove({{ $product->id }});">Remove</a>
+                            @foreach($products as $product)
+                                <tr id="{{ $product->id }}">
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>
+                                        <img src="{{ displayImage($product->id, $product->thumbnail?->path, true) }}"
+                                             width="50"/>
+                                        <a target="_new"
+                                           href="{{ route('front.product_view', ['category_slug' => $product->category->slug, 'product_slug' => $product->slug]) }}"
+                                           class="text-black-50">
+                                            {!! $product->title !!}
+                                        </a>
+                                    </td>
+                                    <td>{!! $product->category->title !!}</td>
+                                    <td>{!! $product->price !!}&euro;</td>
+                                    <td>
+                                        <a href="javascript:void(0);"
+                                           onclick="confirmRemove({{ $product->id }});">Remove</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            <tr>
+                                <td colspan="5" class="text-end total-price">Tax 15%: {{ $taxAmount }}&euro;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="text-end total-price">Total: {{ $totalPrice }}&euro;</td>
+                            </tr>
+                            <tr id="btn-checkout-container">
+                                <td colspan="5" class="text-end">
+                                    <a href="{{ route('front.delivery', compact('cref')) }}" class="btn btn-success">Proceed
+                                        To Checkout</a>
                                 </td>
                             </tr>
-                        @endforeach
-                        <tr>
-                            <td colspan="5" class="text-end total-price">Total: {{ $totalPrice }}&euro;</td>
-                        </tr>
-                        <tr id="btn-checkout-container">
-                            <td colspan="5" class="text-end">
-                                <a href="{{ route('front.delivery', compact('cref')) }}" class="btn btn-success">Proceed
-                                    To Checkout</a>
-                            </td>
-                        </tr>
                         </tbody>
                     </table>
                 @else
