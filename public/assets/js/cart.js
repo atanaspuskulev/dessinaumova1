@@ -21,7 +21,7 @@ $(function() {
                         if (result.isConfirmed) {
                             window.location.href = response.data.cart_url;
                         } else if (result.isDenied) {
-                            window.location.href = '/'; // Example: Redirect to the home page
+                            window.location.href = '/';
                         } else if(result.isDismissed) {
                             window.location.reload();
                         }

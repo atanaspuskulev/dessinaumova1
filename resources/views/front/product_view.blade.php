@@ -24,7 +24,7 @@
 @section('head_js')
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-        let cart_add_url = "{{ route('front.cart.store') }}";
+        let cart_add_url = "{{ route('api.add_to_cart') }}";
     </script>
 @endsection
 
