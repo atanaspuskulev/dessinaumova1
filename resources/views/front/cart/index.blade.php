@@ -48,7 +48,7 @@
                                         </a>
                                     </td>
                                     <td>{!! $product->category->title !!}</td>
-                                    <td>{!! $product->price !!}&euro;</td>
+                                    <td>{!! number_format($product->price, 2, '.', '') !!}&euro;</td>
                                     <td>
                                         <a href="javascript:void(0);"
                                            onclick="confirmRemove({{ $product->id }});">Remove</a>
@@ -56,14 +56,14 @@
                                 </tr>
                             @endforeach
                             <tr>
-                                <td colspan="5" class="text-end total-price">Tax 15%: {{ $taxAmount }}&euro;</td>
+                                <td colspan="5" class="text-end total-price">Tax 20%: {{ number_format($taxAmount, 2, '.', '') }}&euro;</td>
                             </tr>
                             <tr>
-                                <td colspan="5" class="text-end total-price">Total: {{ $totalPrice }}&euro;</td>
+                                <td colspan="5" class="text-end total-price">Total: {{ number_format($totalPrice, 2, '.', '') }}&euro;</td>
                             </tr>
                             <tr id="btn-checkout-container">
                                 <td colspan="5" class="text-end">
-                                    <a href="{{ route('front.delivery', compact('cref')) }}" class="btn btn-success">Proceed
+                                    <a href="{{ route('front.delivery', compact('cart_reference_key')) }}" class="btn btn-success">Proceed
                                         To Checkout</a>
                                 </td>
                             </tr>

@@ -84,7 +84,7 @@
                     <form
                         onsubmit="return false"
                         method="post"
-                        action="{{ route('front.cart.store') }}"
+                        action="{{ route('api.add_to_cart') }}"
                         class="mt-4 mb-sm-4"
                         id="__PRODUCT__"
                     >

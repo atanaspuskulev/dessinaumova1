@@ -17,6 +17,26 @@ class CartService
         }
     }
 
+    public function hasCartReferenceKey(): bool
+    {
+        return $this->hasCartSession(self::CART_REFERENCE_KEY);
+    }
+
+    public function createReferenceKey(): void
+    {
+        session()->put(self::CART_REFERENCE_KEY, time());
+    }
+
+    public function getCartReferenceKey(): mixed
+    {
+        return session()->get(self::CART_REFERENCE_KEY);
+    }
+
+    public function hasCartSession(string $key): bool
+    {
+        return session()->has($key);
+    }
+
     public function has(mixed $searchValue): bool
     {
         $items = session()->get(self::CART_KEY, []);

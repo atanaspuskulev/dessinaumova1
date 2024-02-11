@@ -21,9 +21,6 @@ class CartController extends Controller
 
    // use CartTrait;
 
-    public function __construct(protected ProductsService $productsService, protected )
-    {}
-
     public function index(): View
     {
         $products = $this->getProductsFromCart(true, ['category', 'thumbnail']);

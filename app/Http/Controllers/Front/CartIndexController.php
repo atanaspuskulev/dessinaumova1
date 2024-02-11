@@ -26,10 +26,24 @@ class CartIndexController extends Controller
 
         $taxAmount = $totalPrice - $priceWithoutTax;
 
+        $categories = null;
+
         if(!$products->count()) {
             $categories = Category::all();
         }
 
+        if(!$this->cartService->hasCartReferenceKey()) {
+            $this->cartService->createReferenceKey();
+        }
 
+        $cart_reference_key = $this->cartService->getCartReferenceKey();
+
+        return view('front.cart.index', compact(
+            'cart_reference_key',
+            'products',
+            'totalPrice',
+            'categories',
+            'taxAmount'
+        ));
     }
 }

@@ -6,7 +6,7 @@ use App\Http\Controllers\Front;
 Route::name('front.')->middleware('web')->group(function () {
     Route::get('/', [Front\HomeController::class, 'index'])->name('index');
 
-    Route::get('/cart', Front\CartIndexController::class)->name('front.cart.index');
+    Route::get('/cart', Front\CartIndexController::class)->name('cart.index');
 
     Route::post('/cart/remove-product', [Front\CartController::class, 'removeFromCart'])->name('remove_product_from_cart');
     Route::get('/cart/checkout/delivery-information', \App\Livewire\CheckoutDelivery::class)->name('delivery');
