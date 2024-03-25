@@ -24,15 +24,7 @@ class CheckoutDelivery extends Component
     public string $additional_information = '';
 
     protected $rules = [
-        'country' => 'required',
-        'state' => 'required',
-        'city' => 'required',
-        'zip' => 'required',
-        'delivery_address' => 'required',
-        'name' => 'required',
-        'email' => 'required|email',
-        'phone' => 'nullable|numeric',
-        'additional_information' => 'nullable|string',
+
     ];
 
     public function mount()

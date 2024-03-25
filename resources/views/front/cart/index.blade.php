@@ -63,7 +63,7 @@
                             </tr>
                             <tr id="btn-checkout-container">
                                 <td colspan="5" class="text-end">
-                                    <a href="{{ route('front.delivery', compact('cart_reference_key')) }}" class="btn btn-success">Proceed
+                                    <a href="{{ route('front.delivery_form', compact('cart_reference_key')) }}" class="btn btn-success">Proceed
                                         To Checkout</a>
                                 </td>
                             </tr>
