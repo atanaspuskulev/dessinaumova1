@@ -5,16 +5,14 @@ declare(strict_types=1);
 namespace App\Http\Traits;
 
 use App\Models\Product;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 
 trait CartTrait
 {
-    public function checkValidCart()
+    public function checkValidCart(): bool
     {
-        if (session()->get('cart') === null) {
-            return redirect()->to(route('front.index'));
-        }
-        return null;
+        return session()->has('cart');
     }
 
     public function checkDeliveryAddress()
