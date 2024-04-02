@@ -33,7 +33,7 @@ class DeliveryInformationController extends Controller
 
         session()->put('delivery-information', $data);
 
-        return redirect()->to(route('front.payment'));
+        return redirect()->to(route('front.checkout_cart_index_payment'));
     }
 
     private function verifyCart()

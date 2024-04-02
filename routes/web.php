@@ -9,7 +9,7 @@ Route::name('front.')->middleware('web')->group(function () {
     Route::get('/cart', Front\CartIndexController::class)->name('cart.index');
 
     Route::post('/cart/remove-product', [Front\CartController::class, 'removeFromCart'])->name('remove_product_from_cart');
-    Route::get('/cart/checkout/payment', \App\Livewire\Payment::class)->name('payment');
+//    Route::get('/cart/checkout/payment', \App\Livewire\Payment::class)->name('payment');
     Route::get('/order/success', [Front\OrdersController::class, 'captureAndComplete'])->name('payment.order.success');
     Route::get('/order/cancel', [Front\OrdersController::class, 'captureAndCancel'])->name('payment.order.cancel');
     Route::get('/order/test', [Front\OrdersController::class, 'test']);
@@ -33,4 +33,6 @@ Route::name('front.')->middleware('web')->group(function () {
     Route::get('/{category_slug}/{product_slug}', [Front\ProductsController::class, 'view'])
         ->where(['category_slug' => '^(?!cart$)[\w-]+$', 'product_slug' => '^(?!cart$)[\w-]+$'])
         ->name('product_view');
+
+    Route::get('/cart/checkout/payment', [Front\PaymentController::class, 'index'])->name('checkout_cart_index_payment');
 });

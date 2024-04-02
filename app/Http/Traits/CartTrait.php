@@ -17,9 +17,7 @@ trait CartTrait
 
     public function checkDeliveryAddress()
     {
-        return session()->get('delivery-information') === null
-            ? redirect()->to(route('front.index'))
-            : null;
+        return session()->has('delivery-information');
     }
 
     public function checkCartRefererSource()
