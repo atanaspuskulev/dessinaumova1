@@ -19,7 +19,7 @@
                     <option value="">* Choose Your Country</option>
                     @foreach(\App\Helpers\CountriesHelper::getCountries() as $country)
                         <option
-                            @selected(old('country') == $country['code'] || $deliveryInformation['country'] === $country['code'])
+                            @selected(old('country') == $country['code'] || (isset($deliveryInformation['country']) && $deliveryInformation['country'] === $country['code']))
                             value="{{ $country['code'] }}">
                                 {{ $country['name'] }}
                         </option>
@@ -38,7 +38,7 @@
                         class="form-control"
                         id="state"
                         autocomplete="off"
-                        value="{{ old('state', $deliveryInformation['state']) }}"
+                        value="{{ old('state', $deliveryInformation['state'] ?? '') }}"
                     >
                     <label for="state">* State/County</label>
                     @error('state')
@@ -55,7 +55,7 @@
                         class="form-control"
                         id="city"
                         autocomplete="off"
-                        value="{{ old('city', $deliveryInformation['city']) }}"
+                        value="{{ old('city', $deliveryInformation['city'] ?? '') }}"
                     >
                     <label for="city">* City/Residential</label>
                     @error('city')
@@ -72,7 +72,7 @@
                         class="form-control"
                         id="zip"
                         autocomplete="off"
-                        value="{{ old('zip', $deliveryInformation['zip']) }}"
+                        value="{{ old('zip', $deliveryInformation['zip'] ?? '') }}"
                     >
                     <label for="zip">* ZIP/Postal Code</label>
                     @error('zip')
@@ -89,7 +89,7 @@
                         class="form-control"
                         id="delivery_address"
                         autocomplete="off"
-                        value="{{ old('delivery_address', $deliveryInformation['delivery_address']) }}"
+                        value="{{ old('delivery_address', $deliveryInformation['delivery_address'] ?? '') }}"
                     >
                     <label for="delivery_address">* Delivery Address</label>
                     @error('delivery_address')
@@ -110,7 +110,7 @@
                         class="form-control"
                         id="name"
                         autocomplete="off"
-                        value="{{ old('name', $deliveryInformation['name']) }}"
+                        value="{{ old('name', $deliveryInformation['name'] ?? '') }}"
                     >
                     <label for="name">* Full Name</label>
                     @error('name')
@@ -127,7 +127,7 @@
                         class="form-control"
                         id="email"
                         autocomplete="off"
-                        value="{{ old('email', $deliveryInformation['email']) }}"
+                        value="{{ old('email', $deliveryInformation['email'] ?? '') }}"
                     >
                     <label for="email">* E-Mail Address</label>
                     @error('email')
@@ -144,7 +144,7 @@
                         class="form-control"
                         id="phone"
                         autocomplete="off"
-                        value="{{ old('phone', $deliveryInformation['phone']) }}"
+                        value="{{ old('phone', $deliveryInformation['phone'] ?? '') }}"
                     >
                     <label for="phone">Your Phone (Optional)</label>
                     @error('phone')
@@ -162,7 +162,7 @@
                         class="form-control form-floating"
                         id="additional_information"
                         autocomplete="off"
-                    >{{ old('additional_information', $deliveryInformation['additional_information']) }}</textarea>
+                    >{{ old('additional_information', $deliveryInformation['additional_information'] ?? '') }}</textarea>
                 </div>
             </fieldset>
             <button type="submit" class="btn btn-success">Continue</button>

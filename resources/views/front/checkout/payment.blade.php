@@ -1,3 +1,5 @@
+@extends('layouts.front')
+
 @section('head_js')
     <script
         src="https://www.paypal.com/sdk/js?client-id={{ $paypalClientId }}&currency={{ $paypalCurrency }}">
@@ -16,7 +18,7 @@
     <script src="{{ asset('assets/js/payment.js') }}"></script>
 @endsection
 
-<div>
+@section('content')
     <div class="container-fluid mt-5">
         <div class="row">
             <div class="col">
@@ -28,4 +30,4 @@
     <div class="d-flex align-items-center justify-content-center mt-3 mb-4">
         <div id="paypal-button-container"></div>
     </div>
-</div>
+@endsection

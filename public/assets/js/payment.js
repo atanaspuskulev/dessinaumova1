@@ -35,7 +35,7 @@ paypal.Buttons({
                 completeOrder(response);
             } else {
                 cancelOrder(response);
-                window.location.href = paypalCancelUrl
+                //window.location.href = paypalCancelUrl
             }
         });
     },

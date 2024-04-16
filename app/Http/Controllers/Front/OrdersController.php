@@ -57,15 +57,17 @@ class OrdersController extends Controller
 
         try {
             $productsIds = [];
+            $prices = collect();
 
             foreach ($request['purchase_units'] as $unit) {
                 $productsIds[] = $unit['reference_id'];
+                $prices->push($unit['amount']['value']);
             }
 
             $orderData = [
                 'order_id' => '',
                 'status' => OrderEnum::PENDING->value,
-                'amount' => $this->calculateCartAmount($productsIds),
+                'amount' => $this->calculateCartAmount($prices),
                 'currency' => config('paypal.currency'),
                 'payer_name' => $request['shipping']['name']['full_name'],
                 'payer_email' => $request['payer']['email_address'],
@@ -106,12 +108,12 @@ class OrdersController extends Controller
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function updateOrder(Request $request): JsonResponse
+    public function updateOrder(Request $request)
     {
         $status = 417;
 
         if (session()->has('current_payment_order_id')) {
-            $currentOrder = Orders::find(session()->get('current_payment_order_id'));
+            $currentOrder = Orders::findOrFail(session()->get('current_payment_order_id'));
             $currentOrder->status = OrderEnum::COMPLETED->value;
             $currentOrder->order_id = $request['id'];
             $currentOrder->confirmed_at = now()->toDateString();
@@ -121,7 +123,7 @@ class OrdersController extends Controller
             $order = Orders::with([
                 'items.product',
                 'items.product.category'
-            ])->firstOrFail($currentOrder->id);
+            ])->findOrFail($currentOrder->id);
 
             Mail::to(config('mail.to_admin_email'))->queue(new OrderCreatedToSeller($order));
         }
