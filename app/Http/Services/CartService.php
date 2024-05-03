@@ -2,6 +2,8 @@
 
 namespace App\Http\Services;
 
+use App\Models\Product;
+
 class CartService
 {
     private const CART_KEY = 'cart';
@@ -51,8 +53,54 @@ class CartService
         return !$count ? $cartItems : count($cartItems);
     }
 
+    public function remove(array|int $products): bool
+    {
+        if(!is_array($products)) {
+            $products = [$products];
+        }
+
+        if(!$this->verifyCartProducts($products)) {
+            return false;
+        }
+
+        $cart = $this->getCart();
+
+        foreach($products as $product) {
+            $searchIndex = array_search($product, $cart);
+
+            if($searchIndex !== false) {
+                unset($cart[$searchIndex]);
+                $cart = array_values($cart);
+            }
+        }
+
+        $this->flushWith($cart);
+
+        return true;
+    }
+
+    public function flushWith(array|int $products): void
+    {
+        if(!is_array($products)) {
+            $products = [$products];
+        }
+
+        $this->empty();
+
+        session()->put(self::CART_KEY, $products);
+    }
+
     public function empty(): void
     {
         session()->forget(self::CART_KEY);
+    }
+
+    public function verifyCartProducts(array|int $products)
+    {
+        if(!is_array($products)) {
+            $products = [$products];
+        }
+
+        return Product::whereIn('id', $products)->count() > 0;
     }
 }

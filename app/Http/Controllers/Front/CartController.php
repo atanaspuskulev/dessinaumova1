@@ -6,6 +6,8 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CartAddRequest;
+use App\Http\Services\CartService;
+use App\Http\Services\PriceService;
 use App\Http\Services\ProductsService;
 use App\Http\Traits\CartTrait;
 use App\Models\Category;
@@ -19,7 +21,10 @@ use Psr\Container\NotFoundExceptionInterface;
 class CartController extends Controller
 {
 
-   // use CartTrait;
+    use CartTrait;
+
+    public function __construct(private readonly CartService $cartService, private readonly ProductsService $productsService, private readonly PriceService $priceService)
+    {}
 
     public function index(): View
     {
@@ -45,47 +50,24 @@ class CartController extends Controller
         return view('front.cart.index', compact('cref', 'products', 'totalPrice', 'categories', 'taxAmount'));
     }
 
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
     public function removeFromCart(Request $request): JsonResponse
     {
         $productId = (int) $request->input('productId');
 
-        if(!$this->_verifyProduct($productId)) {
-            return response()->json(['success' => false]);
-        }
+        $this->cartService->remove($productId);
 
-        $cart = session()->get('cart', []);
+        $data = $this->getCartPreviewData($this->cartService, $this->productsService, $this->priceService);
 
-        $searchIndex = array_search($productId, $cart);
-
-        if($searchIndex !== false) {
-            unset($cart[$searchIndex]);
-
-            $cart = array_values($cart);
-            session()->put('cart', $cart);
-        }
-
-        $cart = session()->get('cart');
-        $price = 0.00;
-
-        if($cart !== null) {
-            $price = $this->calculateCartAmount($cart);
-        } else {
-            $this->clearCrefKeys();
-        }
+        $html = view('front.partials.cart-list', $data)->render();
 
         return response()->json([
             'success' => true,
-            'total_price' => $price,
-            'total_products' => count($cart)
+            'html' => $html,
         ]);
     }
 
     private function _verifyProduct(int $productId): bool
     {
-        return (bool) Product::find($productId);
+        return Product::find($productId);
     }
 }
