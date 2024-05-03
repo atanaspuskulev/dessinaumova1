@@ -9,7 +9,6 @@ use App\Http\Services\PriceService;
 use App\Http\Services\ProductsService;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 
 trait CartTrait
@@ -91,7 +90,7 @@ trait CartTrait
         ]);
     }
 
-    public function getCartPreviewData(CartService $cartService, ProductsService $productsService, PriceService $priceService)
+    public function getCartPreviewData(CartService $cartService, ProductsService $productsService, PriceService $priceService): array
     {
         $productsIds = $cartService->getCart();
         $products = $productsService->getByIds($productsIds, ['category', 'thumbnail']);

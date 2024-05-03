@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CartAddRequest;
 use App\Http\Services\CartService;
 use App\Http\Services\PriceService;
 use App\Http\Services\ProductsService;
@@ -15,12 +14,9 @@ use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
 class CartController extends Controller
 {
-
     use CartTrait;
 
     public function __construct(private readonly CartService $cartService, private readonly ProductsService $productsService, private readonly PriceService $priceService)
@@ -54,7 +50,12 @@ class CartController extends Controller
     {
         $productId = (int) $request->input('productId');
 
-        $this->cartService->remove($productId);
+        if(!$this->cartService->remove($productId)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Product not found in cart',
+            ]);
+        }
 
         $data = $this->getCartPreviewData($this->cartService, $this->productsService, $this->priceService);
 
