@@ -15,8 +15,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
+use LaravelDaily\Invoices\Classes\Party;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use LaravelDaily\Invoices\Invoice;
+use LaravelDaily\Invoices\Classes\Buyer;
+use LaravelDaily\Invoices\Classes\InvoiceItem;
 
 class OrdersController extends Controller
 {
@@ -112,8 +116,16 @@ class OrdersController extends Controller
     {
         $status = 417;
 
-        if (session()->has('current_payment_order_id')) {
-            $currentOrder = Orders::findOrFail(session()->get('current_payment_order_id'));
+        if (session()->has('current_payment_order_id') && $request->get('intent') === 'CAPTURE' && $request->get('status') === 'COMPLETED') {
+
+            $currentOrder = Orders::where('order_id', $request->id)
+                ->where('id', session()->get('current_payment_order_id'))
+                ->firstOrFail();
+
+//            if($currentOrder->status === OrderEnum::COMPLETED->value) {
+//                return response()->json([], 417);
+//            }
+
             $currentOrder->status = OrderEnum::COMPLETED->value;
             $currentOrder->order_id = $request['id'];
             $currentOrder->confirmed_at = now()->toDateString();
@@ -128,7 +140,7 @@ class OrdersController extends Controller
             Mail::to(config('mail.to_admin_email'))->queue(new OrderCreatedToSeller($order));
         }
 
-        //$this->clearCartSession();
+        $this->clearCartSession();
 
         return response()->json([], $status);
     }
@@ -137,8 +149,64 @@ class OrdersController extends Controller
     {
 
         $order = Orders::with('items.product', 'items.product.category')->latest()->first();
-
+        $this->makeInvoice($order);
         return new OrderCompletedToBuyer($order);
 
+    }
+
+    public function makeInvoice($order)
+    {
+        $items = [];
+
+        $client = new Party([
+            'name'          => 'Desislava Naumova',
+            'phone'         => '(520) 318-9486',
+            'custom_fields' => [
+                'note'        => 'IDDQD',
+                'business id' => '365#GG',
+            ],
+        ]);
+
+        $customer = new Buyer([
+            'name' => $order->payer_name,
+            'custom_fields' => [
+                'order number' => '> 33 <',
+                'email' => $order->payer_email,
+                'phone' => $order->payer_phone,
+                'country' => $order->payer_country,
+                'state' => $order->payer_state,
+                'city' => $order->payer_city,
+                'zip' => $order->payer_zip,
+                'address' => $order->payer_address,
+            ],
+        ]);
+
+        foreach($order->items as $orderItem) {
+            $items[] = InvoiceItem::make($orderItem->product->title)
+                ->quantity(1)
+                ->pricePerUnit($orderItem->product->price);
+        }
+
+        $invoice = Invoice::make('receipt')
+            ->series('BIG')
+            ->sequence(667)
+            ->serialNumberFormat('{SEQUENCE}/{SERIES}')
+            ->seller($client)
+            ->buyer($customer)
+            ->date(now())
+            ->dateFormat('m/d/Y')
+            ->payUntilDays(5)
+            ->currencySymbol('$')
+            ->currencyCode('USD')
+            ->currencyFormat('{SYMBOL}{VALUE}')
+            ->currencyThousandsSeparator(',')
+            ->currencyDecimalPoint('.')
+            ->filename($order->order_id)
+            ->taxRate(20)
+            ->addItems($items)
+            ->save('invoices')
+            ->logo(public_path('vendor/invoices/sample-logo.png'));
+dd($invoice->url());
+        return $invoice->url();
     }
 }

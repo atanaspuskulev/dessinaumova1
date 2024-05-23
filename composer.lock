@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "444aed19f826a987b739bc568192e10c",
+    "content-hash": "0a07252c75be19e10fa980074ee1dfd7",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -2070,24 +2070,24 @@
         },
         {
             "name": "laraveldaily/laravel-invoices",
-            "version": "3.3.1",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LaravelDaily/laravel-invoices.git",
-                "reference": "c36b1cb20721a6b291e3a9562aa99c34aff1007b"
+                "reference": "d9fa7eca22a7836fb9b09ee7fc2a97b4dfd7b228"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LaravelDaily/laravel-invoices/zipball/c36b1cb20721a6b291e3a9562aa99c34aff1007b",
-                "reference": "c36b1cb20721a6b291e3a9562aa99c34aff1007b",
+                "url": "https://api.github.com/repos/LaravelDaily/laravel-invoices/zipball/d9fa7eca22a7836fb9b09ee7fc2a97b4dfd7b228",
+                "reference": "d9fa7eca22a7836fb9b09ee7fc2a97b4dfd7b228",
                 "shasum": ""
             },
             "require": {
                 "barryvdh/laravel-dompdf": "^v2.0",
-                "illuminate/http": "^9|^10",
-                "illuminate/support": "^9|^10",
-                "php": "^8.0",
-                "symfony/http-foundation": "^6.0"
+                "illuminate/http": "^10|^11",
+                "illuminate/support": "^10|^11",
+                "php": ">=8.2",
+                "symfony/http-foundation": "^6|^7"
             },
             "require-dev": {
                 "phpunit/phpunit": "^10.1"
@@ -2130,9 +2130,9 @@
             ],
             "support": {
                 "issues": "https://github.com/LaravelDaily/laravel-invoices/issues",
-                "source": "https://github.com/LaravelDaily/laravel-invoices/tree/3.3.1"
+                "source": "https://github.com/LaravelDaily/laravel-invoices/tree/4.0.0"
             },
-            "time": "2024-01-07T17:00:05+00:00"
+            "time": "2024-03-14T08:31:01+00:00"
         },
         {
             "name": "league/commonmark",

@@ -13,10 +13,10 @@ paypal.Buttons({
             body: JSON.stringify(orderInfo)
         }).then(response => {
             if (!response.ok) {
-                window.location.href = paypalCancelUrl;
+               window.location.href = paypalCancelUrl;
             }
         }).catch(error => {
-            window.location.href = paypalCancelUrl;
+           window.location.href = paypalCancelUrl;
         });
 
         return actions.order.create({
@@ -35,11 +35,11 @@ paypal.Buttons({
                 completeOrder(response);
             } else {
                 cancelOrder(response);
-                //window.location.href = paypalCancelUrl
+                window.location.href = paypalCancelUrl
             }
         });
     },
-    onCancel: function(orderId) {
+    onCancel: function(orderId, data, data2, data3) {
         cancelOrder(orderId);
         window.location.href = paypalCancelUrl
     }
@@ -72,7 +72,7 @@ function completeOrder(data) {
         if(!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        window.location.href = paypalSuccessUrl;
+        //window.location.href = paypalSuccessUrl;
     }).catch(error => {
         console.error('Fetch error:', error);
     });
