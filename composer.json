@@ -39,7 +39,8 @@
         "files": [
             "app/Helpers/Html.php",
             "app/Helpers/Cart.php",
-            "app/Helpers/CountriesHelper.php"
+            "app/Helpers/CountriesHelper.php",
+            "app/Helpers/Order.php"
         ]
     },
     "autoload-dev": {

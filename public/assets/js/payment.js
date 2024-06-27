@@ -1,6 +1,7 @@
 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 paypal.Buttons({
+    fundingSource: paypal.FUNDING.PAYPAL,
     createOrder: function(data, actions) {
         fetch(orderCreateUrl, {
             method: 'post',
@@ -76,4 +77,12 @@ function completeOrder(data) {
     }).catch(error => {
         console.error('Fetch error:', error);
     });
+}
+
+
+
+
+function showCardForm() {
+   document.querySelector('.pp-ccpay').classList.remove('d-none');
+   document.querySelector('.pp-fastpay').classList.add('d-none');
 }

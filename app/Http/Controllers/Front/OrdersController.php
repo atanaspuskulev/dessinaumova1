@@ -10,6 +10,7 @@ use App\Mail\OrderCompletedToBuyer;
 use App\Mail\OrderCreatedToBuyer;
 use App\Mail\OrderCreatedToSeller;
 use App\Models\Orders;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -21,6 +22,7 @@ use Psr\Container\NotFoundExceptionInterface;
 use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
+use App\Helpers\Order as OrderHelper;
 
 class OrdersController extends Controller
 {
@@ -154,13 +156,16 @@ class OrdersController extends Controller
 
     }
 
+    /**
+     * @throws BindingResolutionException
+     */
     public function makeInvoice($order)
     {
         $items = [];
 
         $client = new Party([
             'name'          => 'Desislava Naumova',
-            'phone'         => '(520) 318-9486',
+            'phone'         => '(359) 318-9486',
             'custom_fields' => [
                 'note'        => 'IDDQD',
                 'business id' => '365#GG',
@@ -170,7 +175,7 @@ class OrdersController extends Controller
         $customer = new Buyer([
             'name' => $order->payer_name,
             'custom_fields' => [
-                'order number' => '> 33 <',
+                'order number' => '> ' . OrderHelper::generateInvoiceNumber($order->id) . ' <',
                 'email' => $order->payer_email,
                 'phone' => $order->payer_phone,
                 'country' => $order->payer_country,

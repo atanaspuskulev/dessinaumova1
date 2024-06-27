@@ -33,6 +33,5 @@ class AddToCartController extends Controller
         $cart_count = $this->cartService->getCart(true);
 
         return response()->json(compact('success', 'message', 'continue', 'cart_url', 'cart_count'));
-
     }
 }
