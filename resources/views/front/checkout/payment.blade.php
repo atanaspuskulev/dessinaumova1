@@ -2,18 +2,21 @@
 
 @section('head_js')
     <script
-        src="https://www.paypal.com/sdk/js?client-id={{ $paypalClientId }}&currency={{ $paypalCurrency }}">
+        src="https://www.paypal.com/sdk/js?client-id={{ $paypalClientId }}&currency={{ $paypalCurrency }}&components=buttons,card-fields">
     </script>
     <script>
         let paypalBrandName = '{!! $paypalBrandName !!}';
-        let paypalSuccessUrl = '{{ route('front.payment.order.success') }}';
-        let paypalCancelUrl = '{{ route('front.payment.order.cancel') }}';
-        let orderCreateUrl = '{{ route('front.payment.api.order.create') }}';
-        let orderUpdateUrl = '{{ route('front.payment.api.order.update') }}';
-        let apiCancelUrl = '{{ route('front.payment.api.order.cancel') }}';
+        let paypalSuccessUrl = '{{ route("front.payment.order.success") }}';
+        let paypalCancelUrl = '{{ route('front.payment.order.cancel") }}';
+        let orderCreateUrl = '{{ route("front.payment.api.order.create") }}';
+        let orderUpdateUrl = '{{ route("front.payment.api.order.update") }}';
+        let apiCancelUrl = '{{ route("front.payment.api.order.cancel") }}';
         let orderInfo = JSON.parse('{!! $order !!}');
         let paypalDefaultLocale = '{{ $paypalLocale }}';
+        let paypalCCCapturePaymentUrl = '{{ route("payment.api.payment.pp-cc-payment-capture") }}';
     </script>
+
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
 
     <script src="{{ asset('assets/js/payment.js') }}"></script>
 @endsection
@@ -41,7 +44,7 @@
                         <div id="paypal-button-container"></div>
                     </div>
                 </div>
-                <div class="row justify-content-center text-center">
+                <div class="row justify-content-center text-center show-cc-payment">
                     <div class="col-md-6">
                         <a href="javascript:showCardForm();">
                             Pay with Credit/Debit Card
@@ -58,7 +61,7 @@
                                 <label for="cardholder-name">Cardholder Name</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="card-number" placeholder="Card Number" required>
+                                <input autocomplete="off" type="text" class="form-control" id="card-number" placeholder="Card Number" required>
                                 <label for="card-number">Card Number</label>
                             </div>
                             <div class="form-floating mb-3">
@@ -66,30 +69,32 @@
                                 <label for="expiry-date">Expiry Date (MM/YY)</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="cvv" placeholder="CVV" required>
+                                <input autocomplete="off" type="text" class="form-control" id="cvv" placeholder="CVV" required>
                                 <label for="cvv">CVV</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="billing-address" placeholder="Billing Address" required>
+                                <input autocomplete="off" value="{{ $deliveryInformation ? $deliveryInformation['delivery_address'] : '' }}" type="text" class="form-control" id="billing-address" placeholder="Billing Address" required>
                                 <label for="billing-address">Billing Address</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="billing-city" placeholder="City" required>
+                                <input autocomplete="off" value="{{ $deliveryInformation ? $deliveryInformation['city'] : '' }}" type="text" class="form-control" id="billing-city" placeholder="City" required>
                                 <label for="billing-city">City</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="billing-state" placeholder="State" required>
+                                <input autocomplete="off" value="{{ $deliveryInformation ? $deliveryInformation['state'] : '' }}" type="text" class="form-control" id="billing-state" placeholder="State" required>
                                 <label for="billing-state">State</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="billing-zip" placeholder="ZIP Code" required>
+                                <input autocomplete="off" value="{{ $deliveryInformation ? $deliveryInformation['zip'] : '' }}" type="text" class="form-control" id="billing-zip" placeholder="ZIP Code" required>
                                 <label for="billing-zip">ZIP Code</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="billing-country" placeholder="Country" required>
+                                <input autocomplete="off" value="{{ $deliveryInformation ? $deliveryInformation['country'] : '' }}" type="text" class="form-control" id="billing-country" placeholder="Country" required>
                                 <label for="billing-country">Country</label>
                             </div>
-                            <button type="submit" class="btn btn-primary">Pay Now</button>
+                            <button type="submit" class="btn btn-primary">Make PayPal Payment</button>
+                            <br>
+                            <a href="javascript:showFastPay();">Switch to PayPal FastPay</a>
                         </form>
                     </div>
                 </div>

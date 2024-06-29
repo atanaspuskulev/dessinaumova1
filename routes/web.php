@@ -17,6 +17,7 @@ Route::name('front.')->middleware('web')->group(function () {
     Route::post('/api/order/create', [Front\OrdersController::class, 'createOrder'])->name('payment.api.order.create');
     Route::post('/api/order/update', [Front\OrdersController::class, 'updateOrder'])->name('payment.api.order.update');
     Route::post('/api/order/cancel', [Front\OrdersController::class, 'cancelOrder'])->name('payment.api.order.cancel');
+    Route::post('/api/payment/ppcc-payment', [Front\PaymentController::class, 'makePaypalCCCapturePayment'])->name('payment.api.payment.pp-cc-payment-capture');
 
     Route::get('/contact-me', [Front\ContactController::class, 'index'])->name('contact');
 

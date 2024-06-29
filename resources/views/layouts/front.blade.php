@@ -13,8 +13,6 @@
         <link href="{{ asset('assets/css/custom.css') }}" type="text/css" rel="stylesheet"/>
         @yield('css_files')
         @yield('head_js')
-
-        @livewireStyles
     </head>
     <body>
 

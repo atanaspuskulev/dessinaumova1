@@ -46,6 +46,24 @@ paypal.Buttons({
     }
 }).render('#paypal-button-container');
 
+$(function() {
+    $('#credit-card-form').on('submit', function(event) {
+        event.preventDefault();
+
+        const billingData = {
+            address_line_1: $('billing-address').val(),
+            admin_area_1: $('billing-state').val(),
+            admin_area_2: $('billing-city').val(),
+            postal_code: $('billing-zip').val(),
+            country_code: $('billing-country').val()
+        };
+
+        const createOrder = (data, actions) => {
+
+        }
+    });
+})
+
 function cancelOrder(data) {
     fetch(apiCancelUrl, {
         method: 'post',
@@ -85,4 +103,11 @@ function completeOrder(data) {
 function showCardForm() {
    document.querySelector('.pp-ccpay').classList.remove('d-none');
    document.querySelector('.pp-fastpay').classList.add('d-none');
+   document.querySelector('.show-cc-payment').classList.add('d-none');
+}
+
+function showFastPay() {
+    document.querySelector('.pp-ccpay').classList.add('d-none');
+    document.querySelector('.pp-fastpay').classList.remove('d-none');
+    document.querySelector('.show-cc-payment').classList.remove('d-none');
 }

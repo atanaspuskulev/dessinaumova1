@@ -77,8 +77,8 @@ class PaymentController extends Controller
         ];
 
         $order = json_encode($purchaseUnits, JSON_THROW_ON_ERROR);
-
-        return view('front.checkout.payment', compact('order', 'paypalClientId', 'paypalCurrency', 'paypalBrandName', 'paypalLocale'));
+        $deliveryInformation = session()->get('delivery-information');
+        return view('front.checkout.payment', compact('order', 'paypalClientId', 'paypalCurrency', 'paypalBrandName', 'paypalLocale', 'deliveryInformation'));
     }
 
     /**
