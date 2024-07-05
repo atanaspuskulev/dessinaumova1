@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Helpers\CountriesHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Enums\OrderEnum;
+use App\Http\Services\OrderService;
 use App\Http\Traits\CartTrait;
 use App\Mail\OrderCompletedToBuyer;
 use App\Mail\OrderCreatedToBuyer;
@@ -13,6 +14,7 @@ use App\Models\Orders;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
@@ -27,6 +29,9 @@ use App\Helpers\Order as OrderHelper;
 class OrdersController extends Controller
 {
     use CartTrait;
+
+    public function __construct(protected OrderService $orderService)
+    {}
 
     public function captureAndComplete(): View
     {
@@ -57,15 +62,17 @@ class OrdersController extends Controller
     {
         $status = true;
 
-        if (session()->has('current_payment_order_id')) {
-            return response()->json(compact('status'));
-        }
+//        if (session()->has('current_payment_order_id')) {
+//            return response()->json(compact('status'));
+//        }
 
         try {
             $productsIds = [];
             $prices = collect();
 
-            foreach ($request['purchase_units'] as $unit) {
+            $requestOrder = $request['order'];
+
+            foreach ($requestOrder['purchase_units'] as $unit) {
                 $productsIds[] = $unit['reference_id'];
                 $prices->push($unit['amount']['value']);
             }
@@ -75,17 +82,19 @@ class OrdersController extends Controller
                 'status' => OrderEnum::PENDING->value,
                 'amount' => $this->calculateCartAmount($prices),
                 'currency' => config('paypal.currency'),
-                'payer_name' => $request['shipping']['name']['full_name'],
-                'payer_email' => $request['payer']['email_address'],
-                'payer_phone' => $request['payer']['phone']['phone_number']['national_number'],
-                'payer_country' => CountriesHelper::getCountryNameByCode($request['shipping']['address']['country_code']),
-                'payer_country_code' => $request['shipping']['address']['country_code'],
-                'payer_state' => $request['shipping']['address']['admin_area_1'],
-                'payer_city' => $request['shipping']['address']['admin_area_2'],
-                'payer_zip' => $request['shipping']['address']['postal_code'],
-                'payer_address' => $request['shipping']['address']['address_line_1'],
-                'additional_information' => $request['merchant_preferences']['note_to_merchant']
+                'payer_name' => $requestOrder['shipping']['name']['full_name'],
+                'payer_email' => $requestOrder['payer']['email_address'],
+                'payer_phone' => $requestOrder['payer']['phone']['phone_number']['national_number'],
+                'payer_country' => CountriesHelper::getCountryNameByCode($requestOrder['shipping']['address']['country_code']),
+                'payer_country_code' => $requestOrder['shipping']['address']['country_code'],
+                'payer_state' => $requestOrder['shipping']['address']['admin_area_1'],
+                'payer_city' => $requestOrder['shipping']['address']['admin_area_2'],
+                'payer_zip' => $requestOrder['shipping']['address']['postal_code'],
+                'payer_address' => $requestOrder['shipping']['address']['address_line_1'],
+                'additional_information' => $requestOrder['merchant_preferences']['note_to_merchant']
             ];
+
+            $this->orderService->getPaymentGateway($request->paymentMethod);
 
             $order = Orders::create($orderData);
 
@@ -93,9 +102,10 @@ class OrdersController extends Controller
                 $order->items()->create(['product_id' => $productId]);
             }
 
-            Mail::to($request['payer']['email_address'])->queue(new OrderCreatedToBuyer());
-
             session()->put('current_payment_order_id', $order->id);
+
+            Mail::to($orderData['payer_email'])->queue(new OrderCreatedToBuyer());
+            Mail::to($requestOrder['payer']['email_address'])->queue(new OrderCreatedToBuyer());
         } catch (\Exception $e) {
             $message = sprintf(
                 'An error occurred while trying to create user order and send email: %s',
@@ -115,7 +125,7 @@ class OrdersController extends Controller
      * @throws NotFoundExceptionInterface
      */
     public function updateOrder(Request $request)
-    {
+    {die("DA");
         $status = 417;
 
         if (session()->has('current_payment_order_id') && $request->get('intent') === 'CAPTURE' && $request->get('status') === 'COMPLETED') {

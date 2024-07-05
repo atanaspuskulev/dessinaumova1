@@ -36,6 +36,10 @@ class Orders extends Model
             $builder->orderBy('created_at', 'DESC');
         });
 
+        static::deleting(function($item) {
+            $item->items()->delete();
+        });
+
         static::creating(function($item) {
             $item->created_at = now()->toDateString();
         });

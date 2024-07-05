@@ -1,113 +1,117 @@
-let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-paypal.Buttons({
-    fundingSource: paypal.FUNDING.PAYPAL,
-    createOrder: function(data, actions) {
-        fetch(orderCreateUrl, {
-            method: 'post',
-            headers: {
-            'content-type': 'application/json',
-                "Accept": "application/json, text-plain, */*",
-                "X-Requested-With": "XMLHttpRequest",
-                "X-CSRF-TOKEN": token
-            },
-            body: JSON.stringify(orderInfo)
-        }).then(response => {
-            if (!response.ok) {
-               window.location.href = paypalCancelUrl;
-            }
-        }).catch(error => {
-           window.location.href = paypalCancelUrl;
-        });
-
-        return actions.order.create({
-            application_context: {
-                brand_name : paypalBrandName,
-                user_action : 'PAY_NOW',
-                locale: paypalDefaultLocale,
-                merchant_preferences: orderInfo.merchant_preferences
-            },
-            purchase_units: orderInfo.purchase_units,
-        });
-    },
-    onApprove: function(data, actions) {
-        return actions.order.capture().then(function(response) {
-            if(response.id && response.intent === 'CAPTURE' && response.status === 'COMPLETED') {
-                completeOrder(response);
-            } else {
-                cancelOrder(response);
-                window.location.href = paypalCancelUrl
-            }
-        });
-    },
-    onCancel: function(orderId, data, data2, data3) {
-        cancelOrder(orderId);
-        window.location.href = paypalCancelUrl
-    }
-}).render('#paypal-button-container');
-
 $(function() {
-    $('#credit-card-form').on('submit', function(event) {
-        event.preventDefault();
+    let csrfToken = $('meta[name="csrf-token"]').attr('content');
+    let acceptPostHeaders = {
+        "Accept": "application/json, text-plain, */*",
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": csrfToken,
+    };
 
-        const billingData = {
-            address_line_1: $('billing-address').val(),
-            admin_area_1: $('billing-state').val(),
-            admin_area_2: $('billing-city').val(),
-            postal_code: $('billing-zip').val(),
-            country_code: $('billing-country').val()
-        };
-
-        const createOrder = (data, actions) => {
-
-        }
-    });
-})
-
-function cancelOrder(data) {
-    fetch(apiCancelUrl, {
-        method: 'post',
-        headers: {
-            'content-type': 'application/json',
-            "Accept": "application/json, text-plain, */*",
-            "X-Requested-With": "XMLHttpRequest",
-            "X-CSRF-TOKEN": token
+    paypal.Buttons({
+        createOrder: function (data) {
+console.log(data, orderInfo);
+            return fetch(orderCreateUrl, {
+                method: "POST",
+                headers: acceptPostHeaders,
+                // Use the "body" parameter to optionally pass additional order information
+                // such as product ID or amount
+                body: JSON.stringify({
+                    paymentMethod: 'paypal',
+                    paymentSource: data.paymentSource,  // Payment method ID
+                    order: orderInfo
+                })
+            })
+            .then(response => {
+                // if (!response.ok) {
+                //     window.location.href = paypalCancelUrl;
+                // } else {
+                //     alert("DA");
+                // }
+            }).catch(error => {
+                window.location.href = paypalCancelUrl;
+            });
         },
-        body: JSON.stringify(data)
-    });
-}
-
-function completeOrder(data) {
-    fetch(orderUpdateUrl, {
-        method: 'post',
-        headers: {
-            'content-type': 'application/json',
-            "Accept": "application/json, text-plain, */*",
-            "X-Requested-With": "XMLHttpRequest",
-            "X-CSRF-TOKEN": token
+// Finalize the transaction after payer approval
+        onApprove: function (data) {
+            return fetch(paypalCancelUrl, {
+                method: "POST",
+            })
+                .then((response) => response.json())
+                .then((orderData) => {
+                    // Successful capture! For dev/demo purposes:
+                    console.log(
+                        "Capture result",
+                        orderData,
+                        JSON.stringify(orderData, null, 2),
+                    );
+                    var transaction = orderData.purchase_units[0].payments.captures[0];
+                    // Show a success message within this page. For example:
+                    // var element = document.getElementById('paypal-button-container');
+                    // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                    // Or go to another URL: actions.redirect('thank_you.html');
+                });
         },
-        body: JSON.stringify(data)
-    }).then(response => {
-        if(!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        //window.location.href = paypalSuccessUrl;
-    }).catch(error => {
-        console.error('Fetch error:', error);
+        onError: function (error) {
+// Do something with the error from the SDK
+        },
+    })
+        .render("#paypal-button-container");
+
+// Create the Card Fields Component and define callbacks
+    const cardField = paypal.CardFields({
+        createOrder: function (data) {
+            console.log(data);
+            return fetch(paypalCancelUrl, {
+                method: "POST",
+                body: {
+                    paymentSource: data.paymentSource,
+                },
+            })
+                .then((res) => {
+                    return res.json();
+                })
+                .then((orderData) => {
+                    return orderData.id;
+                });
+        },
+        onApprove: function (data) {
+            const {orderID} = data;
+            return fetch(paypalCancelUrl, {
+                method: "POST",
+            })
+                .then((res) => {
+                    return res.json();
+                })
+                .then((orderData) => {
+                    // Redirect to success page
+                });
+        },
+        onError: function (error) {
+// Do something with the error from the SDK
+        },
     });
-}
+// Render each field after checking for eligibility
+    if (cardField.isEligible()) {
+        const nameField = cardField.NameField();
+        nameField.render("#card-name-field-container");
+
+        const numberField = cardField.NumberField();
+        numberField.render("#card-number-field-container");
+
+        const cvvField = cardField.CVVField();
+        cvvField.render("#card-cvv-field-container");
+
+        const expiryField = cardField.ExpiryField();
+        expiryField.render("#card-expiry-field-container");
+
+        $("#card-field-submit-button").on("click", function() {
+            cardField.submit({
+                // From your billing address fields
+                billingAddress: {}
+            }).then(() => {
+                // submit successful
+            });
+        });
+    }
+});
 
 
-
-
-function showCardForm() {
-   document.querySelector('.pp-ccpay').classList.remove('d-none');
-   document.querySelector('.pp-fastpay').classList.add('d-none');
-   document.querySelector('.show-cc-payment').classList.add('d-none');
-}
-
-function showFastPay() {
-    document.querySelector('.pp-ccpay').classList.add('d-none');
-    document.querySelector('.pp-fastpay').classList.remove('d-none');
-    document.querySelector('.show-cc-payment').classList.remove('d-none');
-}
