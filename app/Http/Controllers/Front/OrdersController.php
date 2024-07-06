@@ -94,7 +94,7 @@ class OrdersController extends Controller
                 'additional_information' => $requestOrder['merchant_preferences']['note_to_merchant']
             ];
 
-            $this->orderService->getPaymentGateway($request->paymentMethod);
+            $this->orderService->getPaymentGateway($request->paymentMethod)->getAuthToken();
 
             $order = Orders::create($orderData);
 

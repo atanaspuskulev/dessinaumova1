@@ -36,10 +36,24 @@
         .paypal-button:hover {
             background-color: #FFA31A;
         }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 1050;
+            display: none;
+        }
     </style>
 @endsection
 
 @section('content')
+    <div id="overlay" class="d-flex justify-content-center align-items-center d-none">
+        <div class="spinner-border text-primary" role="status"></div>
+    </div>
     <div class="container-fluid mt-5">
         <div class="row">
             <div class="col">
@@ -55,16 +69,25 @@
                 <p>You can use the secure and convenient payment options through PayPal. Choose the method that best suits you:</p>
             </div>
             <div class="col-md-6">
-                <div id="paypal-button-container" class="paypal-button-container"></div>
-                <div id="checkout-form">
-                    <!-- Containers for Card Fields hosted by PayPal -->
-                    <div id="card-name-field-container"></div>
-                    <div id="card-number-field-container"></div>
-                    <div id="card-expiry-field-container"></div>
-                    <div id="card-cvv-field-container"></div>
-                    <button id="card-field-submit-button" type="button">
-                        Pay Now
-                    </button>
+                <div class="row">
+                    <div class="col">
+                        <div id="paypal-button-container" class="paypal-button-container"></div>
+                        <div id="paymentResponse" class="b-none"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div id="checkout-form">
+                            <!-- Containers for Card Fields hosted by PayPal -->
+                            <div id="card-name-field-container"></div>
+                            <div id="card-number-field-container"></div>
+                            <div id="card-expiry-field-container"></div>
+                            <div id="card-cvv-field-container"></div>
+                            <button id="card-field-submit-button" type="button">
+                                Pay Now
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

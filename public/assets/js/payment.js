@@ -6,29 +6,45 @@ $(function() {
         "X-CSRF-TOKEN": csrfToken,
     };
 
+    const showLoading = (show) => {
+        if(show) {
+            $('#loading').removeClass('d-none');
+        } else {
+            $('#loading').addClass('d-none');
+        }
+    }
+
+    const message = (msg) => {
+        $('#paymentResponse').text(msg);
+        setTimeout(() => {
+            $('#paymentResponse').addClass('d-none').text('');
+        }, 5000);
+    }
+
     paypal.Buttons({
         createOrder: function (data) {
-console.log(data, orderInfo);
+            showLoading(true);
             return fetch(orderCreateUrl, {
                 method: "POST",
                 headers: acceptPostHeaders,
-                // Use the "body" parameter to optionally pass additional order information
-                // such as product ID or amount
                 body: JSON.stringify({
                     paymentMethod: 'paypal',
-                    paymentSource: data.paymentSource,  // Payment method ID
+                    paymentSource: data.paymentSource,
                     order: orderInfo
                 })
             })
-            .then(response => {
-                // if (!response.ok) {
-                //     window.location.href = paypalCancelUrl;
-                // } else {
-                //     alert("DA");
-                // }
-            }).catch(error => {
-                window.location.href = paypalCancelUrl;
-            });
+                .then((res) => {
+                    return res.json();
+                })
+                .then((result) => {
+                    showLoading(false);
+                    if(result.status == 1){
+                        return result.data.id;
+                    }else{
+                        message(result.message);
+                        return false;
+                    }
+                });
         },
 // Finalize the transaction after payer approval
         onApprove: function (data) {

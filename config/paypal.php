@@ -4,10 +4,12 @@ return [
     'sandbox' => [
         'client_id'     => env('PAYPAL_SANDBOX_CLIENT_ID', ''),
         'client_secret' => env('PAYPAL_SANDBOX_CLIENT_SECRET', ''),
+        'access_token_url' => env('PAYPAL_SANDBOX_TOKEN_URL', '')
     ],
     'live' => [
         'client_id'     => env('PAYPAL_LIVE_CLIENT_ID', ''),
         'client_secret' => env('PAYPAL_LIVE_CLIENT_SECRET', ''),
+        'access_token_url' => env('PAYPAL_LIVE_TOKEN_URL', '')
     ],
     'mode'    => env('PAYPAL_MODE', 'sandbox'),
     'currency'       => env('PAYPAL_CURRENCY', 'USD'),

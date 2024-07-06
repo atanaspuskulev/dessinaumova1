@@ -14,6 +14,6 @@ class PaymentGateway
     {
         $factoryClass = '\\App\\Http\\Services\\Payment\\Gateway\\Factory\\' . Str::ucfirst(Str::lower($this->requestGateway)) . 'Factory';
 
-        return (new $factoryClass)->make();
+        return (new $factoryClass())->make();
     }
 }
