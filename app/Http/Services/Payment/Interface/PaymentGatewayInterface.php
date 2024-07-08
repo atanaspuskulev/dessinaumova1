@@ -8,5 +8,5 @@ interface PaymentGatewayInterface
 
     public function getAuthToken(bool $refreshToken = false): string;
 
-    public function createOrder();
+    public function createOrder(array $orderInfo, string|null $accessToken = null);
 }

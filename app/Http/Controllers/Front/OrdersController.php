@@ -61,6 +61,7 @@ class OrdersController extends Controller
     public function createOrder(Request $request): JsonResponse
     {
         $status = true;
+        $data = [];
 
 //        if (session()->has('current_payment_order_id')) {
 //            return response()->json(compact('status'));
@@ -94,7 +95,16 @@ class OrdersController extends Controller
                 'additional_information' => $requestOrder['merchant_preferences']['note_to_merchant']
             ];
 
-            $this->orderService->getPaymentGateway($request->paymentMethod)->getAuthToken();
+            $gateway = $this->orderService->getPaymentGateway($request->paymentMethod);
+            $token = $gateway->getAuthToken();
+            $capture = $gateway->createOrder(['products' => $productsIds, 'order' => $orderData], $token);
+
+            if($capture['status'] !== 'CREATED' || empty($capture['id'])) {
+                throw new \RuntimeException('Failed to create Order');
+            }
+
+            $data['id'] = $capture['id'];
+            $orderData['order_id'] = $capture['id'];
 
             $order = Orders::create($orderData);
 
@@ -117,7 +127,7 @@ class OrdersController extends Controller
             $status = false;
         }
 
-        return response()->json(compact('status'));
+        return response()->json(compact('status', 'data'));
     }
 
     /**

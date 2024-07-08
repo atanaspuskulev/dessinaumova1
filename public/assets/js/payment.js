@@ -38,15 +38,15 @@ $(function() {
                 })
                 .then((result) => {
                     showLoading(false);
-                    if(result.status == 1){
+                    if(result.status == true){
                         return result.data.id;
-                    }else{
+                    } else {
                         message(result.message);
                         return false;
                     }
                 });
         },
-// Finalize the transaction after payer approval
+
         onApprove: function (data) {
             return fetch(paypalCancelUrl, {
                 method: "POST",
