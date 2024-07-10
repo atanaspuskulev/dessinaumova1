@@ -2,22 +2,28 @@
 
 namespace App\Http\Services;
 
-use App\Http\Services\Interfaces\StorageServiceInterface;
 
-class SessionStorageService implements StorageServiceInterface
+use App\Http\Services\Payment\Interface\StorageInterface;
+
+class SessionStorageService implements StorageInterface
 {
-    public function store(string $key, mixed $value)
+    public function store(string $key, mixed $value): void
     {
         session()->put($key, $value);
     }
 
-    public function get(string $key, mixed $default = null)
+    public function get(string $key, mixed $default = null): mixed
     {
         return session()->get($key, $default);
     }
 
-    public function invalidate(string $key)
+    public function invalidate(string $key): void
     {
         session()->forget($key);
+    }
+
+    public function check($key): bool
+    {
+        return session()->has($key);
     }
 }

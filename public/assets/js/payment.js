@@ -46,10 +46,14 @@ $(function() {
                     }
                 });
         },
-
         onApprove: function (data) {
-            return fetch(paypalCancelUrl, {
+            return fetch(orderUpdateUrl, {
                 method: "POST",
+                headers: acceptPostHeaders,
+                body: JSON.stringify({
+                    orderId: data.orderID,
+                    paymentSource: data.paymentSource
+                })
             })
                 .then((response) => response.json())
                 .then((orderData) => {

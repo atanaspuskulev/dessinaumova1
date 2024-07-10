@@ -9,4 +9,6 @@ interface PaymentGatewayInterface
     public function getAuthToken(bool $refreshToken = false): string;
 
     public function createOrder(array $orderInfo, string|null $accessToken = null);
+
+    public function captureAndPay(array $data, string|null $accessToken = null);
 }

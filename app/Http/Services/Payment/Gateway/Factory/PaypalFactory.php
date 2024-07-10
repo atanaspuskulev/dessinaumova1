@@ -5,7 +5,6 @@ namespace App\Http\Services\Payment\Gateway\Factory;
 use App\Http\Services\Payment\Gateway\AbstractPaymentGateway;
 use App\Http\Services\Payment\Interface\PaymentGatewayInterface;
 use App\Http\Traits\CartTrait;
-use http\Exception\InvalidArgumentException;
 use http\Exception\RuntimeException;
 use Illuminate\Support\Facades\Http;
 
@@ -86,5 +85,14 @@ class PaypalFactory extends AbstractPaymentGateway implements PaymentGatewayInte
         } catch(\Exception $e) {
             throw $e;
         }
+    }
+
+    public function captureAndPay(array $data, string|null $accessToken = null)
+    {
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . $accessToken,
+        ])->post($this->paypalAPI . '/orders/' . $data['orderId'] . '/capture');
+
     }
 }
