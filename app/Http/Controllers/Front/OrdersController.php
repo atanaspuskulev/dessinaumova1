@@ -145,35 +145,38 @@ class OrdersController extends Controller
     public function updateOrder(Request $request)
     {
         $status = 417;
-
+        //$this->sessionStorageService->invalidate('current_payment_order_id');
         if ($this->sessionStorageService->check('current_payment_order_id')) {
             $currentOrder = Orders::where('id', $this->sessionStorageService->get('current_payment_order_id'))
                 ->where('order_id', $request->orderId)
                 ->firstOrFail();
 
-            $payResult = $this->gateway->captureAndPay(['orderId' => $request->orderId], $this->accessToken);
+            $this->gateway = $this->orderService->getPaymentGateway($request->paymentMethod);
+            $this->accessToken = $this->gateway->getAuthToken();
+            try {
+                $payResult = $this->gateway->captureAndPay(['orderId' => $request->orderId], $this->accessToken);
 
-//            if($currentOrder->status === OrderEnum::COMPLETED->value) {
-//                return response()->json([], 417);
-//            }
+                if(isset($payResult['status']) && $payResult['status'] === 'COMPLETED') {
+                    $currentOrder->status = OrderEnum::COMPLETED->value;
+                    $currentOrder->order_id = $payResult['id'];
+                    $currentOrder->confirmed_at = now()->toDateString();
+                    $currentOrder->save();
+                    $status = 200;
 
-            $currentOrder->status = OrderEnum::COMPLETED->value;
-            $currentOrder->order_id = $request['id'];
-            $currentOrder->confirmed_at = now()->toDateString();
-            $currentOrder->save();
-            $status = 200;
+                    $order = Orders::with([
+                        'items.product',
+                        'items.product.category'
+                    ])->findOrFail($currentOrder->id);
 
-//            $order = Orders::with([
-//                'items.product',
-//                'items.product.category'
-//            ])->findOrFail($currentOrder->id);
-            $currentOrder->load('items.product', 'items.product.category');
-            //Mail::to(config('mail.to_admin_email'))->queue(new OrderCreatedToSeller($order));
+                    $currentOrder->load('items.product', 'items.product.category');
+                    Mail::to(config('mail.to_admin_email'))->queue(new OrderCreatedToSeller($order));
+                }
+                $this->clearCartSession();
+                return response()->json($payResult, $status);
+            } catch(\RuntimeException $e) {
+                throw $e;
+            }
         }
-
-        $this->clearCartSession();
-
-        return response()->json([], $status);
     }
 
     public function test()

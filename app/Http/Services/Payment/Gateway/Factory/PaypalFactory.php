@@ -79,9 +79,9 @@ class PaypalFactory extends AbstractPaymentGateway implements PaymentGatewayInte
 
             if ($response->successful()) {
                 return $response->json();
-            } else {
-                throw new \RuntimeException('Failed to create Order (' . $response->status() . '): ' . $response->body());
             }
+
+            throw new \RuntimeException('Failed to create Order (' . $response->status() . '): ' . $response->body());
         } catch(\Exception $e) {
             throw $e;
         }
@@ -89,10 +89,23 @@ class PaypalFactory extends AbstractPaymentGateway implements PaymentGatewayInte
 
     public function captureAndPay(array $data, string|null $accessToken = null)
     {
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $accessToken,
-        ])->post($this->paypalAPI . '/orders/' . $data['orderId'] . '/capture');
+        $paypalApi = $this->isSandbox ? config('paypal.sandbox.paypal_api_url') : config('paypal.live.paypal_api_url');
+
+        try {
+            $response = Http::withToken($accessToken)
+                ->withHeaders([
+                    'Content-Type' => 'application/json',
+                ])->post($paypalApi . '/orders/' . $data['orderId'] . '/capture', ['context' => '']);
+
+            if ($response->successful()) {
+                return $response->json();
+            }
+
+            throw new \RuntimeException('Failed to capture payment for Order (' . $response->status() . '): ' . $response->body());
+        } catch(\Exception $e) {
+            throw $e;
+        }
+
 
     }
 }

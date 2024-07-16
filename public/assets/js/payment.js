@@ -52,29 +52,18 @@ $(function() {
                 headers: acceptPostHeaders,
                 body: JSON.stringify({
                     orderId: data.orderID,
-                    paymentSource: data.paymentSource
+                    paymentMethod: data.paymentSource
                 })
             })
                 .then((response) => response.json())
                 .then((orderData) => {
-                    // Successful capture! For dev/demo purposes:
-                    console.log(
-                        "Capture result",
-                        orderData,
-                        JSON.stringify(orderData, null, 2),
-                    );
-                    var transaction = orderData.purchase_units[0].payments.captures[0];
-                    // Show a success message within this page. For example:
-                    // var element = document.getElementById('paypal-button-container');
-                    // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-                    // Or go to another URL: actions.redirect('thank_you.html');
+                    window.location.href = paypalSuccessUrl;
                 });
         },
         onError: function (error) {
-// Do something with the error from the SDK
+            message(error);
         },
-    })
-        .render("#paypal-button-container");
+    }).render("#paypal-button-container");
 
 // Create the Card Fields Component and define callbacks
     const cardField = paypal.CardFields({
