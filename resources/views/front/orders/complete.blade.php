@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="d-flex align-items-center justify-content-center mt-3 mb-4 p-5">
-        Dear [Customer's Name],<br /><br />
+        Dear {{ $order->payer_name }},<br /><br />
 
         Thank you for your purchase! We are delighted to inform you that your payment has been successfully processed
         and your order has been received.<br /><br />
@@ -24,9 +24,9 @@
         Thank you for choosing our service. We hope you enjoy your new artworks and look forward to serving you again
         in the future.<br /><br />
 
-        Best regards,<br />
+        Best regards,<br /><br />
 
-        [Your Name]<br />
-        [Your Contact Information]<br />
+        Desi Naumova<br />
+        info@dessinaumova.com<br />
     </div>
 @endsection

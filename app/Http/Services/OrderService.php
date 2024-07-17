@@ -56,4 +56,14 @@ class OrderService
 
         return $order;
     }
+
+    public function setOrderIdSession(string $key, int $orderId): void
+    {
+        session()->put($key, $orderId);
+    }
+
+    public function clearOrderSession(string $key): void
+    {
+        session()->forget($key);
+    }
 }

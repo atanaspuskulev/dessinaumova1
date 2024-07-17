@@ -15,8 +15,11 @@ use App\Mail\OrderCreatedToBuyer;
 use App\Mail\OrderCreatedToSeller;
 use App\Models\Orders;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
@@ -41,9 +44,20 @@ class OrdersController extends Controller
     )
     {}
 
-    public function captureAndComplete(): View
+    public function captureAndComplete(): View|RedirectResponse
     {
-        return view('front.orders.complete');
+        if(!$this->sessionStorageService->check('current_payment_order_id') || !$this->sessionStorageService->check('payment_id')) {
+            return redirect(route('front.index'));
+        }
+
+        $order = Orders::where('id', $this->sessionStorageService->get('current_payment_order_id'))
+            ->where('order_id', $this->sessionStorageService->get('payment_id'))
+            ->first();
+
+        $this->orderService->clearOrderSession('current_payment_order_id');
+        $this->orderService->clearOrderSession('current_order_id');
+
+        return view('front.orders.complete', compact('order'));
     }
 
     public function captureAndCancel(): View
@@ -67,8 +81,10 @@ class OrdersController extends Controller
         $status = true;
         $data = [];
 
-        if (session()->has('current_payment_order_id')) {
-            return response()->json(compact('status'));
+        if ($this->sessionStorageService->check('current_payment_order_id')) {
+            $order = Orders::find($this->sessionStorageService->get('current_payment_order_id'));
+            $data['id'] = $order->order_id;
+            return response()->json(compact('status', 'data'));
         }
 
         try {
@@ -152,6 +168,8 @@ class OrdersController extends Controller
 
                 if(isset($payResult['status']) && $payResult['status'] === 'COMPLETED') {
                     $order = $this->orderService->updateOrderPaymentSuccess($currentOrder, $payResult['id']);
+                    $this->sessionStorageService->store('payment_id', $payResult['id']);
+
                     $status = 200;
                     Mail::to(config('mail.to_admin_email'))->queue(new OrderCreatedToSeller($order));
                 }
