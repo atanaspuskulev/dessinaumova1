@@ -32,19 +32,17 @@ $(function() {
                     paymentSource: data.paymentSource,
                     order: orderInfo
                 })
-            })
-                .then((res) => {
-                    return res.json();
-                })
-                .then((result) => {
-                    showLoading(false);
-                    if(result.status == true){
-                        return result.data.id;
-                    } else {
-                        message(result.message);
-                        return false;
-                    }
-                });
+            }).then((res) => {
+                return res.json();
+            }).then((result) => {
+                showLoading(false);
+                if(result.status == true){
+                    return result.data.id;
+                } else {
+                    message(result.message);
+                    return false;
+                }
+            });
         },
         onApprove: function (data) {
             return fetch(orderUpdateUrl, {
@@ -54,11 +52,9 @@ $(function() {
                     orderId: data.orderID,
                     paymentMethod: data.paymentSource
                 })
-            })
-                .then((response) => response.json())
-                .then((orderData) => {
-                    window.location.href = paypalSuccessUrl;
-                });
+            }).then((response) => response.json()).then((orderData) => {
+                window.location.href = paypalSuccessUrl;
+            });
         },
         onError: function (error) {
             message(error);

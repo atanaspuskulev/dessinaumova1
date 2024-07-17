@@ -22,7 +22,6 @@
 
     <script src="{{ asset('assets/bootstrap-5.0.2/js/bootstrap.bundle.js') }}"></script>
         @yield('js_files')
-        @livewireScripts
     </body>
     <footer>
         <div class="container">

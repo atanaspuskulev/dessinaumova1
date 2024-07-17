@@ -10,9 +10,23 @@
         </div>
     </div>
     <div class="d-flex align-items-center justify-content-center mt-3 mb-4 p-5">
-        Your payment has been successfully processed and your order has been received.
-        Your artworks will be send to you in short time. <br />
-        Meanwhile, if you have any questions or remarks, please
-        do not hesitate to contact me.
+        Dear [Customer's Name],<br /><br />
+
+        Thank you for your purchase! We are delighted to inform you that your payment has been successfully processed
+        and your order has been received.<br /><br />
+
+        Your chosen artworks are now being prepared for shipment and will be sent to you shortly.
+        You can expect to receive a confirmation email with tracking details once your order has been dispatched.<br /><br />
+
+        In the meantime, should you have any questions, concerns, or special requests, please do not hesitate to
+        contact us. We are here to assist you and ensure your complete satisfaction with your purchase.<br /><br />
+
+        Thank you for choosing our service. We hope you enjoy your new artworks and look forward to serving you again
+        in the future.<br /><br />
+
+        Best regards,<br />
+
+        [Your Name]<br />
+        [Your Contact Information]<br />
     </div>
 @endsection

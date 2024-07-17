@@ -54,11 +54,7 @@ class OrdersController extends Controller
     public function cancelOrder(Request $request): JsonResponse
     {
         if ($request->has('orderID') && $this->sessionStorageService->check('current_payment_order_id')) {
-            $order = Orders::find($this->sessionStorageService->get('current_payment_order_id'));
-            $order->order_id = $request->orderID;
-            $order->status = OrderEnum::CANCELED->value;
-            $order->cancelled_at = now()->toDateString();
-            $order->save();
+            $this->orderService->cancelOrder($this->sessionStorageService->get('current_payment_order_id'), $request->orderID);
         }
 
         $this->clearCartSession();
@@ -71,9 +67,9 @@ class OrdersController extends Controller
         $status = true;
         $data = [];
 
-//        if (session()->has('current_payment_order_id')) {
-//            return response()->json(compact('status'));
-//        }
+        if (session()->has('current_payment_order_id')) {
+            return response()->json(compact('status'));
+        }
 
         try {
             $productsIds = [];
@@ -114,11 +110,7 @@ class OrdersController extends Controller
             $data['id'] = $capture['id'];
             $orderData['order_id'] = $capture['id'];
 
-            $order = Orders::create($orderData);
-
-            foreach ($productsIds as $productId) {
-                $order->items()->create(['product_id' => $productId]);
-            }
+            $order = $this->orderService->createOrderWithItems($orderData, $productsIds);
 
             $this->sessionStorageService->store('current_payment_order_id', $order->id);
 
@@ -147,28 +139,20 @@ class OrdersController extends Controller
         $status = 417;
         //$this->sessionStorageService->invalidate('current_payment_order_id');
         if ($this->sessionStorageService->check('current_payment_order_id')) {
-            $currentOrder = Orders::where('id', $this->sessionStorageService->get('current_payment_order_id'))
-                ->where('order_id', $request->orderId)
-                ->firstOrFail();
+            $currentOrder = $this->orderService->findOrderByIdAndPaymentId(
+                $this->sessionStorageService->get('current_payment_order_id'),
+                $request->orderId
+            );
 
             $this->gateway = $this->orderService->getPaymentGateway($request->paymentMethod);
             $this->accessToken = $this->gateway->getAuthToken();
+
             try {
                 $payResult = $this->gateway->captureAndPay(['orderId' => $request->orderId], $this->accessToken);
 
                 if(isset($payResult['status']) && $payResult['status'] === 'COMPLETED') {
-                    $currentOrder->status = OrderEnum::COMPLETED->value;
-                    $currentOrder->order_id = $payResult['id'];
-                    $currentOrder->confirmed_at = now()->toDateString();
-                    $currentOrder->save();
+                    $order = $this->orderService->updateOrderPaymentSuccess($currentOrder, $payResult['id']);
                     $status = 200;
-
-                    $order = Orders::with([
-                        'items.product',
-                        'items.product.category'
-                    ])->findOrFail($currentOrder->id);
-
-                    $currentOrder->load('items.product', 'items.product.category');
                     Mail::to(config('mail.to_admin_email'))->queue(new OrderCreatedToSeller($order));
                 }
                 $this->clearCartSession();
