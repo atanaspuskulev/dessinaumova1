@@ -47,6 +47,32 @@
             z-index: 1050;
             display: none;
         }
+
+        .payment-option {
+            margin-bottom: 20px;
+        }
+
+        .payment-option h5 {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .payment-option p {
+            margin-bottom: 10px;
+        }
+
+        .payment-option ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .payment-option li {
+            margin-bottom: 5px;
+        }
+
+        #paypal-button-container {
+            margin-top: 20px;
+        }
     </style>
 @endsection
 
@@ -63,37 +89,34 @@
         </div>
     </div>
     <div class="container-fluid mt-3 mb-4">
-        <div class="row mb-3">
-            <div class="col-md-6 text-left">
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-10">
                 <h3>Payment Options</h3>
-                <p>You can use the secure and convenient payment options through PayPal. Choose the method that best suits you:</p>
-            </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col">
-                        <div id="paypal-button-container" class="paypal-button-container"></div>
-                        <div id="paymentResponse" class="b-none"></div>
-                    </div>
+                <p>We offer secure and convenient payment options through PayPal. Choose the method that best suits you:</p>
+                <div class="payment-option">
+                    <h5>PayPal Fast Payment</h5>
+                    <p>Quickly and securely make payments using your PayPal account. Simply click the PayPal button to proceed with your payment.</p>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <div id="checkout-form">
-                            <!-- Containers for Card Fields hosted by PayPal -->
-                            <div id="card-name-field-container"></div>
-                            <div id="card-number-field-container"></div>
-                            <div id="card-expiry-field-container"></div>
-                            <div id="card-cvv-field-container"></div>
-                            <button id="card-field-submit-button" type="button">
-                                Pay Now
-                            </button>
-                        </div>
-                    </div>
+                <div class="payment-option">
+                    <h5>Use Your Credit or Debit Card</h5>
+                    <p>Don't have a PayPal account? No problem! You can still use your credit or debit card to make payments. Just select the PayPal option and follow the instructions to pay with your card. PayPal ensures that your card details are kept safe and secure.</p>
                 </div>
+                <div class="payment-option">
+                    <h5>Benefits of Using PayPal</h5>
+                    <ul>
+                        <li><strong>Security:</strong> PayPal uses advanced encryption and fraud prevention tools to keep your financial information secure.</li>
+                        <li><strong>Speed:</strong> Make payments quickly without the need to enter your card details each time.</li>
+                        <li><strong>Flexibility:</strong> PayPal accepts a wide range of payment methods, including credit cards, debit cards, and bank transfers.</li>
+                    </ul>
+                </div>
+
             </div>
         </div>
-
-        <div class="row">
-
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-4">
+                <div id="paypal-button-container" class="paypal-button-container"></div>
+                <div id="paymentResponse" class="b-none"></div>
+            </div>
         </div>
     </div>
 @endsection
