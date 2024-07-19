@@ -19,10 +19,13 @@ class OrderService
     public function cancelOrder(int $orderId, string $paymentOrderId): void
     {
         $order = Orders::find($orderId);
-        $order->order_id = $paymentOrderId;
-        $order->status = OrderEnum::CANCELED->value;
-        $order->cancelled_at = now()->toDateString();
-        $order->save();
+
+        if($order) {
+            $order->order_id = $paymentOrderId;
+            $order->status = OrderEnum::CANCELED->value;
+            $order->cancelled_at = now()->toDateString();
+            $order->save();
+        }
     }
 
     public function createOrderWithItems(array $orderData, array $productsIds = []): Orders

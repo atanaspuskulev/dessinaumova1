@@ -56,6 +56,9 @@ $(function() {
                 window.location.href = paypalSuccessUrl;
             });
         },
+        onCancel: function(data) {
+            window.location.href = paypalCancelUrl + '?orderID= ' + data.orderID;
+        },
         onError: function (error) {
             message(error);
         },

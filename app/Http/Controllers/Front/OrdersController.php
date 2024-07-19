@@ -60,8 +60,11 @@ class OrdersController extends Controller
         return view('front.orders.complete', compact('order'));
     }
 
-    public function captureAndCancel(): View
+    public function captureAndCancel(Request $request): View
     {
+        if($request->has('orderID') && $this->sessionStorageService->check('current_payment_order_id')) {
+            $this->orderService->cancelOrder($this->sessionStorageService->get('current_payment_order_id'), $request->orderID);
+        }
         return view('front.orders.cancel');
     }
 
