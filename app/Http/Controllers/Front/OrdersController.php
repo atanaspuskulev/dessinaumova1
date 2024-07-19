@@ -10,6 +10,7 @@ use App\Http\Services\Payment\Gateway\PaymentGateway;
 use App\Http\Services\Payment\Interface\PaymentGatewayInterface;
 use App\Http\Services\SessionStorageService;
 use App\Http\Traits\CartTrait;
+use App\Mail\OrderCancelled;
 use App\Mail\OrderCompletedToBuyer;
 use App\Mail\OrderCreatedToBuyer;
 use App\Mail\OrderCreatedToSeller;
@@ -60,7 +61,7 @@ class OrdersController extends Controller
         return view('front.orders.complete', compact('order'));
     }
 
-    public function captureAndCancel(Request $request): View
+    public function captureAndCancel(Request $request)
     {
         if($request->has('orderID') && $this->sessionStorageService->check('current_payment_order_id')) {
             $this->orderService->cancelOrder($this->sessionStorageService->get('current_payment_order_id'), $request->orderID);

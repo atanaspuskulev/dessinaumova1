@@ -16,7 +16,7 @@ class OrderService
         return (new PaymentGateway($gateway))->make();
     }
 
-    public function cancelOrder(int $orderId, string $paymentOrderId): void
+    public function cancelOrder(int $orderId, string $paymentOrderId): Orders
     {
         $order = Orders::find($orderId);
 
@@ -26,6 +26,8 @@ class OrderService
             $order->cancelled_at = now()->toDateString();
             $order->save();
         }
+
+        return $order;
     }
 
     public function createOrderWithItems(array $orderData, array $productsIds = []): Orders
