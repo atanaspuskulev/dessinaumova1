@@ -154,7 +154,7 @@ class OrdersController extends Controller
     public function updateOrder(Request $request)
     {
         $status = 417;
-        //$this->sessionStorageService->invalidate('current_payment_order_id');
+
         if ($this->sessionStorageService->check('current_payment_order_id')) {
             $currentOrder = $this->orderService->findOrderByIdAndPaymentId(
                 $this->sessionStorageService->get('current_payment_order_id'),
@@ -180,14 +180,5 @@ class OrdersController extends Controller
                 throw $e;
             }
         }
-    }
-
-    public function test()
-    {
-
-        $order = Orders::with('items.product', 'items.product.category')->latest()->first();
-        dd($this->orderService->makeInvoice($order));
-        return new OrderCompletedToBuyer($order);
-
     }
 }
