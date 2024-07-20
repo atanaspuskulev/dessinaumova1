@@ -1,13 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Services;
 
-use App\Helpers\Order;
+use App\Helpers\Order as OrderHelper;
 use App\Http\Enums\OrderEnum;
 use App\Http\Services\Payment\Gateway\PaymentGateway;
 use App\Http\Services\Payment\Interface\PaymentGatewayInterface;
 use App\Models\Orders;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use LaravelDaily\Invoices\Classes\Buyer;
+use LaravelDaily\Invoices\Classes\InvoiceItem;
+use LaravelDaily\Invoices\Classes\Party;
+use LaravelDaily\Invoices\Invoice;
 
 class OrderService
 {
@@ -70,5 +78,67 @@ class OrderService
     public function clearOrderSession(string $key): void
     {
         session()->forget($key);
+    }
+
+    /**
+     * @throws BindingResolutionException
+     */
+    public function makeInvoice(Orders $order): array
+    {
+        $items = [];
+
+        $client = new Party([
+            'name'          => 'Desislava Naumova',
+            'phone'         => '(359) 318-9486',
+            'custom_fields' => [
+                'note'        => 'IDDQD',
+                'business id' => '365#GG',
+            ],
+        ]);
+
+        $customer = new Buyer([
+            'name' => $order->payer_name,
+            'custom_fields' => [
+                'order number' => '> ' . OrderHelper::generateInvoiceNumber($order->id) . ' <',
+                'email' => $order->payer_email,
+                'phone' => $order->payer_phone,
+                'country' => $order->payer_country,
+                'state' => $order->payer_state,
+                'city' => $order->payer_city,
+                'zip' => $order->payer_zip,
+                'address' => $order->payer_address,
+            ],
+        ]);
+
+        foreach($order->items as $orderItem) {
+            $items[] = InvoiceItem::make($orderItem->product->title)
+                ->quantity(1)
+                ->pricePerUnit($orderItem->product->price);
+        }
+
+        $invoice = Invoice::make('receipt')
+            ->series('BIG')
+            ->sequence(667)
+            ->serialNumberFormat('{SEQUENCE}/{SERIES}')
+            ->seller($client)
+            ->buyer($customer)
+            ->date(now())
+            ->dateFormat('m/d/Y')
+            ->payUntilDays(5)
+            ->currencySymbol('$')
+            ->currencyCode('USD')
+            ->currencyFormat('{SYMBOL}{VALUE}')
+            ->currencyThousandsSeparator(',')
+            ->currencyDecimalPoint('.')
+            ->filename($order->order_id)
+            ->taxRate(20)
+            ->addItems($items)
+            ->save('invoices')
+            ->logo(public_path('vendor/invoices/sample-logo.png'));
+
+        return [
+            'url' => $invoice->url(),
+            'filepath' => Storage::disk('invoices')->path($invoice->filename)
+        ];
     }
 }

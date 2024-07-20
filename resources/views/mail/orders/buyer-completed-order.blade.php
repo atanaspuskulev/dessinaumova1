@@ -17,6 +17,10 @@ completed. Below you will find detailed information for your order.
     | Total      | {{ $order->amount }} | {{ $order->currency }} |
 </x-mail::table>
 
+<br /><br />
+You can download your <a href="{{ $invoice['url'] }}">invoice from here</a>.<br/><br/>
+Also you can find it as attachment in this email.
+
 Thanks,<br>
 {{ config('app.name') }}
 </x-mail::message>

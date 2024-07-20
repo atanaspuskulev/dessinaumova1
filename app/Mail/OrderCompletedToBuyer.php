@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mail;
 
 use App\Models\Orders;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Attachment;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -17,7 +20,7 @@ class OrderCompletedToBuyer extends Mailable implements ShouldQueue
     /**
      * Create a new message instance.
      */
-    public function __construct(public Orders $order)
+    public function __construct(public Orders $order, public array $invoice)
     {}
 
     /**
@@ -47,6 +50,8 @@ class OrderCompletedToBuyer extends Mailable implements ShouldQueue
      */
     public function attachments(): array
     {
-        return [];
+        return [
+            Attachment::fromStorage()
+        ];
     }
 }
