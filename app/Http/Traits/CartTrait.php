@@ -13,16 +13,6 @@ use Illuminate\Support\Collection;
 
 trait CartTrait
 {
-    public function checkValidCart(): bool
-    {
-        return session()->has('cart');
-    }
-
-    public function checkDeliveryAddress()
-    {
-        return session()->has('delivery-information');
-    }
-
     public function checkCartRefererSource()
     {
         $returnTo = route('front.cart.index');

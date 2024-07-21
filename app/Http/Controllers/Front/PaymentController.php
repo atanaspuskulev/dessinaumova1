@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\Payment\PaymentService;
+use App\Http\Services\SessionStorageService;
 use App\Http\Traits\CartTrait;
 use App\Models\Product;
 use Psr\Container\ContainerExceptionInterface;
@@ -12,6 +14,12 @@ class PaymentController extends Controller
 {
     use CartTrait;
 
+    public function __construct(
+        private readonly PaymentService $paymentService,
+        private readonly SessionStorageService $sessionStorageService)
+    {
+    }
+
     /**
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface
@@ -19,64 +27,44 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        if(!$this->checkValidCart() || !$this->checkDeliveryAddress()) {
+        if(
+            !$this->sessionStorageService->check('cart')
+            || !$this->sessionStorageService->check('delivery-information')
+        ) {
             return redirect()->to(route('front.index'));
         }
 
-        $paypalClientId = config('paypal.mode') === 'sandbox'
-            ? config('paypal.sandbox.client_id')
-            : config('paypal.live.client_id');
-
-        $paypalCurrency = config('paypal.currency');
-        $paypalBrandName = config('paypal.brand_name');
-        $paypalLocale = config('paypal.locale');
-
-        $cart = session()->get('cart');
-        $deliveryInformation = session()->get('delivery-information');
+        $cart = $this->sessionStorageService->get('cart');
+        $deliveryInformation = $this->sessionStorageService->get('delivery-information');
 
         if(empty($cart) || empty($deliveryInformation)) {
             $this->clearCartSession();
             return redirect()->to(route('front.index'));
         }
 
-        $purchaseUnits = [];
+        $paypalClientId = $this->paymentService->getPaypalClientId();
+        $paypalCurrency = $this->paymentService->getPaymentConfigKey('paypal', 'currency');
+        $paypalBrandName = $this->paymentService->getPaymentConfigKey('paypal', 'brand_name');
+        $paypalLocale = $this->paymentService->getPaymentConfigKey('paypal', 'locale');
+
+        $purchases = [];
 
         Product::whereIn('id', $cart)->get()
-            ->map(static function ($item) use (&$purchaseUnits) {
-                $purchaseUnits[] = [
+            ->map(static function ($item) use (&$purchases, $paypalCurrency) {
+                $purchases[] = [
                     'reference_id' => $item->id,
                     'description' => $item->title,
                     'amount' => [
                         'value' => $item->price,
-                        'currency_code' => 'EUR'
+                        'currency_code' => $item->currency ?? $paypalCurrency
                     ]
                 ];
             });
 
-        $purchaseUnits = [
-            'purchase_units' => $purchaseUnits
-        ];
-
-        $purchaseUnits['shipping']['name']['full_name'] = $deliveryInformation['name'];
-        $purchaseUnits['shipping']['address'] = [
-            'address_line_1' => $deliveryInformation['delivery_address'],
-            'country_code' => $deliveryInformation['country'],
-            'postal_code' => $deliveryInformation['zip'],
-            'admin_area_1' => $deliveryInformation['state'],
-            'admin_area_2' => $deliveryInformation['city']
-        ];
-
-        $purchaseUnits['payer']['email_address'] = $deliveryInformation['email'];
-        $purchaseUnits['payer']['phone']['phone_number']['national_number'] = $deliveryInformation['phone'];
-
-        $purchaseUnits['merchant_preferences'] = [
-            'note_to_merchant' => !empty($deliveryInformation['additional_information'])
-                ? strip_tags(htmlentities($deliveryInformation['additional_information']))
-                : ''
-        ];
+        $purchaseUnits = $this->paymentService->assemblePurchaseUnitsForPaypal($purchases, $deliveryInformation);
 
         $order = json_encode($purchaseUnits, JSON_THROW_ON_ERROR);
-        $deliveryInformation = session()->get('delivery-information');
+
         return view('front.checkout.payment', compact('order', 'paypalClientId', 'paypalCurrency', 'paypalBrandName', 'paypalLocale', 'deliveryInformation'));
     }
 }

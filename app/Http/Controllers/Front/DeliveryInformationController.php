@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DeliveryInformationRequest;
+use App\Http\Services\SessionStorageService;
 use App\Http\Traits\CartTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,14 +14,23 @@ class DeliveryInformationController extends Controller
 {
     use CartTrait;
 
-    public function deliveryForm(): View
+    public function __construct(private SessionStorageService $sessionStorageService)
     {
-        if(request()->has('cref')) {
-            session()->put('session_cref', request()->get('cart_reference_key'));
+    }
+
+    public function deliveryForm(Request $request): View|RedirectResponse
+    {
+        if($request->has('cref')) {
+            $this->sessionStorageService->store('session_cref', $request->cart_reference_key);
         }
 
         $this->verifyCart();
-        $deliveryInformation = session()->get('delivery-information');
+
+        if(!$this->sessionStorageService->check('cart')) {
+            return redirect(route('front.index'));
+        }
+
+        $deliveryInformation = $this->sessionStorageService->get('delivery-information');
 
         return view('front.cart.delivery-information', compact('deliveryInformation'));
     }
@@ -29,16 +39,15 @@ class DeliveryInformationController extends Controller
     {
         $data = $request->validated();
 
-        session()->forget('delivery-information');
-
-        session()->put('delivery-information', $data);
+        $this->sessionStorageService->invalidate('delivery-information');
+        $this->sessionStorageService->store('delivery-information', $data);
 
         return redirect()->to(route('front.checkout_cart_index_payment'));
     }
 
     private function verifyCart()
     {
-        if(!$this->checkValidCart()) {
+        if(!$this->sessionStorageService->check('cart')) {
             return redirect()->to(route('front.index'))->send();
         }
         $this->checkCartRefererSource();
