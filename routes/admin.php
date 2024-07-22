@@ -8,6 +8,8 @@ Route::prefix('admin')->group(function () {
     Route::post('makeauth', [Admin\AuthController::class, 'authUser'])->name('admin.login_user');
 
     Route::middleware('admin.auth')->group(function () {
+        Route::resource('orders', Admin\OrdersController::class);
+
         Route::get('logout', [Admin\AuthController::class, 'logout'])->name('admin.logout');
         Route::get('/', [Admin\IndexController::class, 'index'])->name('admin.home');
 

@@ -52,7 +52,7 @@
     </li>
 
     <li class="{{ admin_link_active_class('/^admin\/orders(\/|$)/') }}">
-        <a class="nav-link" href="#" >
+        <a class="nav-link" href="{{ route('orders.index') }}" >
             <i class="fas fa-fw fa-cog"></i>
             <span>Orders</span>
         </a>

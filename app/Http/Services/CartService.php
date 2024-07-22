@@ -103,4 +103,9 @@ class CartService
 
         return Product::whereIn('id', $products)->count() > 0;
     }
+
+    public function hasGeneratedKeys(): bool
+    {
+
+    }
 }
