@@ -4,7 +4,7 @@ namespace App\Http\Services;
 
 use App\Http\Services\Interfaces\StorageServiceInterface;
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 class ProductsService
 {
@@ -20,5 +20,10 @@ class ProductsService
         })
         ->whereIn('id', $ids)
         ->get();
+    }
+
+    public function getProductItemsWithTemplate(Collection $items): string
+    {
+        return view('admin.partials.order_view_item', compact('items'))->render();
     }
 }

@@ -29,6 +29,8 @@
         var productId = {{ isset($product) ? $product->id : 0 }};
         var currentPage = {{ request()->page ?? 1 }};
     </script>
+
+    @yield('head_content')
 </head>
 
 <body id="page-top">

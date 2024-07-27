@@ -10,6 +10,8 @@ Route::prefix('admin')->group(function () {
     Route::middleware('admin.auth')->group(function () {
         Route::resource('orders', Admin\OrdersController::class);
 
+        Route::post('view_order', [Admin\OrdersController::class, 'viewOrder'])->name('admin.view_order');
+
         Route::get('logout', [Admin\AuthController::class, 'logout'])->name('admin.logout');
         Route::get('/', [Admin\IndexController::class, 'index'])->name('admin.home');
 
