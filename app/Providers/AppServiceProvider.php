@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Http\View\Composers\CartCurrentContentComposer;
+use App\Http\View\Composers\CartItemsComposer;
+use App\Http\View\Composers\CategoriesComposer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -29,5 +31,7 @@ class AppServiceProvider extends ServiceProvider
         Model::preventAccessingMissingAttributes(!$this->app->isProduction());
         Model::preventLazyLoading(!$this->app->isProduction());
         View::composer(['front.products', 'front.product_view'], CartCurrentContentComposer::class);
+        View::composer(['layouts.front'], CategoriesComposer::class);
+        View::composer(['layouts.front'], CartItemsComposer::class);
     }
 }

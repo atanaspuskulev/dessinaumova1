@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\View\Composers;
 
 use App\Http\Services\CartService;
 use Illuminate\View\View;
 
-class CartCurrentContentComposer
+readonly class CartCurrentContentComposer
 {
-    public function __construct(private readonly CartService $cartService)
+    public function __construct(private CartService $cartService)
     {
     }
 
