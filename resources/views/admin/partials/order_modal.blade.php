@@ -9,9 +9,10 @@
 
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-5 col-sm-12">
+                    <div class="col-md-6 col-sm-12">
                         <div class="card ">
                             <div class="card-body small bg-gray-200">
+                                <h3 class="ml-2 mt-2 mb-2">Order Info</h3>
                                 <div class="row">
                                     <div class="col"><b>Order #</b></div>
                                 </div>
@@ -61,11 +62,16 @@
                                     <div class="col updated_date_col"></div>
                                 </div>
                             </div>
-                            <h3 class="ml-2 mt-2 mb-2">Items</h3>
-                            <div class="card-body small items-content bg-gray-100"></div>
                         </div>
                     </div>
-                </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="card ">
+                            <div class="card-body small items-content bg-gray-100">
+                                <h3 class="ml-2 mt-2 mb-2">Items</h3>
+                                <div class="items-container"></div>
+                            </div>
+                        </div>
+                    </div>
             </div>
 
             <div class="modal-footer">

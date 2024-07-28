@@ -305,7 +305,7 @@ function viewOrder(id, orderId, url) {
             $(".updated_date_col").text(formatDateString(new Date(response.order.updated_at)));
 
             // Render items
-            $('.items-content').html(response.items);
+            $('.items-container').html(response.items);
 
             orderModal.modal('show');
         },
