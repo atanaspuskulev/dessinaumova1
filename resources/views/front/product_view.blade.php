@@ -92,11 +92,8 @@
                         <input type="hidden" name="product_id" value="{{ $product->id }}" />
                         <button type="submit" class="buy-button" id="buy-button">Buy this item</button>
                     </form>
-                @elseif(!$product?->sold && in_array($product?->id, session()->get('cart', [])))
-                    <div class="alert alert-warning">
-                        This product is already in your cart. You can go directly to the cart and proceed with the order
-                        from <a href="{{ route('front.cart.index') }}">here</a>.
-                    </div>
+                @elseif(!$product?->sold && in_array($product?->id, $cartItems, true))
+                    @include('front.partials.item-in-cart')
                 @endif
             </div>
         </div>

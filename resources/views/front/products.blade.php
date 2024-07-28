@@ -25,6 +25,9 @@
                                     - This product is sold!
                                 @endif
                             </h3>
+                            @if(in_array($product->id, $cartItems, true))
+                                @include('front.partials.item-in-cart')
+                            @endif
                             <a href="{{ route('front.product_view', ['category_slug' => $categoryData->slug, 'product_slug' => $product->slug]) }}" class="product-button mb-3 position-absolute bottom-0 end-0 me-3">View More</a>
                         </div>
                     </div>

@@ -15,7 +15,7 @@ class ProductsController extends Controller
         $categoryData = Category::where('slug', $category)->first();
 
         if (!$categoryData) {
-            abort(404); // Handle the case where the category is not found
+            abort(404);
         }
 
         $products = $categoryData->products()->with('thumbnail')->paginate(10);
