@@ -297,7 +297,7 @@ function viewOrder(id, orderId, url) {
         },
         success: function (response) {
             $('.order_id_col').text(response.order.order_id);
-            $('.amount_col').text(`${response.order.amount} $ ${response.order.currency}`);
+            $('.total_amount_col').text(`${response.order.amount} ${response.order.currency}`);
             $('.customer_name_col').text(response.order.payer_name);
             $('.customer_email_col').text(response.order.payer_email);
             $('.status_col').text(response.order.status);

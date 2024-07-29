@@ -26,6 +26,20 @@
                                 <div class="row mb-3">
                                     <div class="col amount_col"></div>
                                 </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col"><b>Tax</b></div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col tax_col"></div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col"><b>Total Amount</b></div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col total_amount_col"></div>
+                                </div>
                                 <hr>
                                 <div class="row">
                                     <div class="col"><b>Customer</b></div>

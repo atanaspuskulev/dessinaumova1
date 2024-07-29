@@ -28,7 +28,8 @@ class OrdersController extends Controller
 
         $order = Orders::with([
             'items',
-            'items.product'
+            'items.product',
+            'items.product.thumbnail'
         ])
         ->where('order_id', $validated['order_id'])
         ->where('id', $validated['id'])
