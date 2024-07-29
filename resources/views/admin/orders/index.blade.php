@@ -35,7 +35,7 @@
                                                     <div class="col"><b>Amount</b></div>
                                                 </div>
                                                 <div class="row mb-3">
-                                                    <div class="col">{{ $order->amount }} {{ $order->currency }}</div>
+                                                    <div class="col">{{ $order->totalPrice }} {{ $order->currency }}</div>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
@@ -95,7 +95,7 @@
                                         @forelse($orders as $order)
                                             <tr>
                                                 <td><a href="javascript:viewOrder({{ $order->id }}, '{{ $order->order_id }}', '{{ route("admin.view_order") }}');">{{ $order->order_id }}</a></td>
-                                                <th>{{ $order->amount }} {{ $order->currency }}</th>
+                                                <th>{{ $order->totalPrice }} {{ $order->currency }}</th>
                                                 <td>{{ $order->payer_name }}</td>
                                                 <td>{{ $order->payer_email }}</td>
                                                 <td>{{ $order->status }}</td>

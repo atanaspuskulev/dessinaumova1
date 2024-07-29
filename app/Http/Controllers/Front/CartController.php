@@ -26,8 +26,10 @@ class CartController extends Controller
     {
         $products = $this->getProductsFromCart(true, ['category', 'thumbnail']);
 
-        $totalPrice = $this->calculateCartAmount($products->pluck('price'), true);
-        $priceWithoutTax = $this->calculateCartAmount($products->pluck('price'), false);
+        $prices = $products->pluck('price');
+
+        $totalPrice = $this->calculateCartAmount($prices, true);
+        $priceWithoutTax = $this->calculateCartAmount($prices, false);
 
         $taxAmount = $totalPrice - $priceWithoutTax;
 
@@ -65,10 +67,5 @@ class CartController extends Controller
             'success' => true,
             'html' => $html,
         ]);
-    }
-
-    private function _verifyProduct(int $productId): bool
-    {
-        return Product::find($productId);
     }
 }

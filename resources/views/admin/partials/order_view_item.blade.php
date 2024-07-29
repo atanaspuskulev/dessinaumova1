@@ -5,7 +5,9 @@
                 <div class="col"><b>Item</b></div>
             </div>
             <div class="row mb-3">
-                <div class="col order_id_col"><a href="">{{ $item->title }}</a></div>
+                <div class="col order_id_col">
+                    <a target="_blank" href="{{ route('front.product_view', ['category_slug' => $item->category()->first()->slug, 'product_slug' => $item->slug]) }}">{{ $item->title }}</a>
+                </div>
             </div>
             <div class="row mb-3">
                 <div class="col">
