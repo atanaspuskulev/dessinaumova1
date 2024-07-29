@@ -111,6 +111,10 @@ class OrderService
         ]);
 
         foreach($order->items as $orderItem) {
+            if(!$orderItem->relationLoaded('product')) {
+                $orderItem->load('product');
+            }
+
             $items[] = InvoiceItem::make($orderItem->product->title)
                 ->quantity(1)
                 ->pricePerUnit($orderItem->product->price);

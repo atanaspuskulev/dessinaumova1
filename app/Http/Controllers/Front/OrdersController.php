@@ -131,8 +131,7 @@ class OrdersController extends Controller
 
             $this->sessionStorageService->store('current_payment_order_id', $order->id);
 
-            Mail::to($orderData['payer_email'])->queue(new OrderCreatedToBuyer());
-            Mail::to($requestOrder['payer']['email_address'])->queue(new OrderCreatedToBuyer());
+            Mail::to($requestOrder['payer']['email_address'])->queue(new OrderCreatedToBuyer($order));
         } catch (\Exception $e) {
             $message = sprintf(
                 'An error occurred while trying to create user order and send email: %s',

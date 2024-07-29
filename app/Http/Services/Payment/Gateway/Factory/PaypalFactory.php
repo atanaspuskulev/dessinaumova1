@@ -58,6 +58,7 @@ class PaypalFactory extends AbstractPaymentGateway implements PaymentGatewayInte
         $this->getProductsFromCart()->each(static function($product) use (&$purchaseUnits) {
             $purchaseUnits[] = [
                 'custom_id' => $product->id,
+                'reference_id' => $product->id,
                 'description' => $product->short_description,
                 'amount' => [
                     'currency_code' => config('paypal.currency'),

@@ -14,7 +14,7 @@ class OrderCreatedToBuyer extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public readonly Orders $order, public string $invoiceUrl)
+    public function __construct(public readonly Orders $order)
     {
     }
 

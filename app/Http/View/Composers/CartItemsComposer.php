@@ -7,7 +7,7 @@ namespace App\Http\View\Composers;
 use App\Helpers\Cart;
 use Illuminate\View\View;
 
-class CartItemsComposer
+readonly class CartItemsComposer
 {
     public function compose(View $view)
     {
