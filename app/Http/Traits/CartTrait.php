@@ -13,47 +13,6 @@ use Illuminate\Support\Collection;
 
 trait CartTrait
 {
-    public function checkCartRefererSource()
-    {
-        $returnTo = route('front.cart.index');
-
-        $cref = session()->has('cref')
-            ? (int) session()->get('cref')
-            : null;
-
-        $requestCref = request()->has('cref')
-            ? (int) request()->get('cref')
-            : (session()->has('session_cref') ? (int) session()->get('session_cref') : null);
-
-        if(($cref && $requestCref) && ($cref === $requestCref)) {
-            return true;
-        }
-
-        session()->forget('cref');
-        return redirect()->to($returnTo);
-    }
-
-    public function calculateCartAmount(
-        Collection $prices,
-        bool|null  $applyTaxRate = null,
-        float|null $taxRate = 0.15
-    ): float
-    {
-        $applyTaxRate ??= false;
-        $amount = 0.00;
-
-        foreach($prices as $price) {
-            $amount += $price;
-        }
-
-        if($applyTaxRate && $taxRate) {
-            $taxAmount = $amount * $taxRate;
-            $amount += $taxAmount;
-        }
-
-        return round($amount);
-    }
-
     public function getProductsFromCart(bool|null $withRelationships = null, array $relationships = []): Collection
     {
         $withRelationships ??= true;

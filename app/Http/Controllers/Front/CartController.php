@@ -28,8 +28,8 @@ class CartController extends Controller
 
         $prices = $products->pluck('price');
 
-        $totalPrice = $this->calculateCartAmount($prices, true);
-        $priceWithoutTax = $this->calculateCartAmount($prices, false);
+        $totalPrice = $this->priceService->calculatePrice($prices, true, 0.20);
+        $priceWithoutTax = $this->priceService->calculatePrice($prices, false);
 
         $taxAmount = $totalPrice - $priceWithoutTax;
 

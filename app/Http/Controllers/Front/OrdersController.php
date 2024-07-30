@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Enums\OrderEnum;
 use App\Http\Services\OrderService;
 use App\Http\Services\Payment\Interface\PaymentGatewayInterface;
+use App\Http\Services\PriceService;
 use App\Http\Services\SessionStorageService;
 use App\Http\Traits\CartTrait;
 use App\Mail\OrderCancelled;
@@ -99,10 +100,12 @@ class OrdersController extends Controller
                 $prices->push($unit['amount']['value']);
             }
 
+            $pricesService = new PriceService();
+
             $orderData = [
                 'order_id' => '',
                 'status' => OrderEnum::PENDING->value,
-                'amount' => $this->calculateCartAmount($prices),
+                'amount' => $pricesService->calculatePrice($prices),
                 'currency' => config('paypal.currency'),
                 'payer_name' => $requestOrder['shipping']['name']['full_name'],
                 'payer_email' => $requestOrder['payer']['email_address'],

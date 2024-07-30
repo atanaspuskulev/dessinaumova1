@@ -9,25 +9,20 @@ use App\Http\Traits\CartTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use JetBrains\PhpStorm\NoReturn;
 
 class DeliveryInformationController extends Controller
 {
     use CartTrait;
 
-    public function __construct(private SessionStorageService $sessionStorageService)
+    public function __construct(private readonly SessionStorageService $sessionStorageService)
     {
     }
 
     public function deliveryForm(Request $request): View|RedirectResponse
     {
-        if($request->has('cref')) {
-            $this->sessionStorageService->store('session_cref', $request->cart_reference_key);
-        }
-
-        $this->verifyCart();
-
-        if(!$this->sessionStorageService->check('cart')) {
-            return redirect(route('front.index'));
+        if(!$this->verifyCart($request)) {
+            return redirect()->to(route('front.index'));
         }
 
         $deliveryInformation = $this->sessionStorageService->get('delivery-information');
@@ -45,11 +40,27 @@ class DeliveryInformationController extends Controller
         return redirect()->to(route('front.checkout_cart_index_payment'));
     }
 
-    private function verifyCart()
+    private function verifyCart(Request $request): bool
     {
-        if(!$this->sessionStorageService->check('cart')) {
-            return redirect()->to(route('front.index'))->send();
+        if($request->has('cart_reference_key')) {
+            $this->sessionStorageService->store('cref', $request->cart_reference_key);
         }
-        $this->checkCartRefererSource();
+
+        $cref = $this->sessionStorageService->get('cref');
+        $cart = $this->sessionStorageService->check('cart');
+
+        if($cref) {
+            $cref = (int) $cref;
+        }
+
+        if($request->has('cref')) {
+            $requestCref = (int) $request->cref;
+        } else {
+            $requestCref = $this->sessionStorageService->check('cref')
+                ? (int) $this->sessionStorageService->get('cref')
+                : null;
+        }
+
+        return ($cref && $requestCref) && ($cref === $requestCref) && $cart;
     }
 }
