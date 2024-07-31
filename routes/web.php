@@ -9,7 +9,7 @@ Route::name('front.')->middleware('web')->group(function () {
     Route::get('/cart', Front\CartIndexController::class)->name('cart.index');
 
     Route::post('/cart/remove-product', [Front\CartController::class, 'removeFromCart'])->name('remove_product_from_cart');
-//    Route::get('/cart/checkout/payment', \App\Livewire\Payment::class)->name('payment');
+
     Route::get('/order/success', [Front\OrdersController::class, 'captureAndComplete'])->name('payment.order.success');
     Route::get('/order/cancel', [Front\OrdersController::class, 'captureAndCancel'])->name('payment.order.cancel');
     Route::get('/order/test', [Front\OrdersController::class, 'test']);
@@ -20,8 +20,6 @@ Route::name('front.')->middleware('web')->group(function () {
     // Payments
 
     Route::get('/contact-me', [Front\ContactController::class, 'index'])->name('contact');
-
-    //Route::resource('cart',Front\CartController::class);
 
     Route::get('/cart/checkout/delivery-information', [Front\DeliveryInformationController::class, 'deliveryForm'])->name('delivery_form');
     Route::post('/cart/checkout/delivery-information', [Front\DeliveryInformationController::class, 'saveDeliveryInformation'])->name('saveDeliveryInformation');

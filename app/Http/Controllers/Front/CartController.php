@@ -22,32 +22,6 @@ class CartController extends Controller
     public function __construct(private readonly CartService $cartService, private readonly ProductsService $productsService, private readonly PriceService $priceService)
     {}
 
-    public function index(): View
-    {
-        $products = $this->getProductsFromCart(true, ['category', 'thumbnail']);
-
-        $prices = $products->pluck('price');
-
-        $totalPrice = $this->priceService->calculatePrice($prices, true, 0.20);
-        $priceWithoutTax = $this->priceService->calculatePrice($prices, false);
-
-        $taxAmount = $totalPrice - $priceWithoutTax;
-
-        $categories = null;
-
-        if(!$products->count()) {
-            $categories = Category::all();
-        }
-
-        if(!session()->has('cref')) {
-            session()->put('cref', time());
-        }
-
-        $cref = session()->get('cref');
-
-        return view('front.cart.index', compact('cref', 'products', 'totalPrice', 'categories', 'taxAmount'));
-    }
-
     public function removeFromCart(Request $request): JsonResponse
     {
         $productId = (int) $request->input('productId');

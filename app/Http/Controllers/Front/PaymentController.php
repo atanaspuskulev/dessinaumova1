@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\CartService;
+use App\Http\Services\OrderService;
 use App\Http\Services\Payment\PaymentService;
 use App\Http\Services\SessionStorageService;
 use App\Http\Traits\CartTrait;
@@ -16,7 +18,10 @@ class PaymentController extends Controller
 
     public function __construct(
         private readonly PaymentService $paymentService,
-        private readonly SessionStorageService $sessionStorageService)
+        private readonly SessionStorageService $sessionStorageService,
+        private readonly CartService $cartService,
+        private OrderService $orderService
+    )
     {
     }
 
@@ -34,11 +39,13 @@ class PaymentController extends Controller
             return redirect()->to(route('front.index'));
         }
 
-        $cart = $this->sessionStorageService->get('cart');
+        $cart = $this->cartService->getCart('cart');
         $deliveryInformation = $this->sessionStorageService->get('delivery-information');
 
         if(empty($cart) || empty($deliveryInformation)) {
-            $this->clearCartSession();
+            $this->cartService->cleanupForSession();
+            $this->orderService->cleanupForSession();
+
             return redirect()->to(route('front.index'));
         }
 

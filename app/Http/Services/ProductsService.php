@@ -26,4 +26,19 @@ class ProductsService
     {
         return view('admin.partials.order_view_item', compact('items'))->render();
     }
+
+    public function getProductsBy(array $criteria, $loadRelationships): Collection
+    {
+        $productsQuery = Product::query();
+
+        if($loadRelationships) {
+            $productsQuery->with($loadRelationships);
+        }
+
+        foreach($criteria as $key => $value) {
+            $productsQuery->where($key, $value);
+        }
+
+        return $productsQuery->get();
+    }
 }

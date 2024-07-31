@@ -17,7 +17,7 @@ class SessionStorageService implements StorageInterface
         return session()->get($key, $default);
     }
 
-    public function invalidate(string $key): void
+    public function invalidate(array|string $key): void
     {
         session()->forget($key);
     }

@@ -5,7 +5,7 @@ namespace App\Http\Services\Payment\Gateway\Factory;
 use App\Http\Services\Payment\Gateway\AbstractPaymentGateway;
 use App\Http\Services\Payment\Interface\PaymentGatewayInterface;
 use App\Http\Traits\CartTrait;
-use http\Exception\RuntimeException;
+use RuntimeException;
 use Illuminate\Support\Facades\Http;
 
 class PaypalFactory extends AbstractPaymentGateway implements PaymentGatewayInterface
@@ -64,8 +64,7 @@ class PaypalFactory extends AbstractPaymentGateway implements PaymentGatewayInte
                     'currency_code' => config('paypal.currency'),
                     'value' => $product->price
                 ],
-            ];
-        });
+            ];        });
 
         $paypalApi = $this->isSandbox ? config('paypal.sandbox.paypal_api_url') : config('paypal.live.paypal_api_url');
 

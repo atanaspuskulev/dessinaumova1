@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Services;
 
+use App\Helpers\Cart;
 use App\Helpers\Order as OrderHelper;
+use App\Http\Contracts\CleanupContractInterface;
 use App\Http\Enums\OrderEnum;
 use App\Http\Services\Payment\Gateway\PaymentGateway;
 use App\Http\Services\Payment\Interface\PaymentGatewayInterface;
@@ -17,8 +19,15 @@ use LaravelDaily\Invoices\Classes\InvoiceItem;
 use LaravelDaily\Invoices\Classes\Party;
 use LaravelDaily\Invoices\Invoice;
 
-class OrderService
+class OrderService implements CleanupContractInterface
 {
+    public function __construct(
+        private SessionStorageService $sessionStorageService,
+        private CartService $cartService
+    )
+    {
+    }
+
     public function getPaymentGateway(string $gateway): PaymentGatewayInterface
     {
         return (new PaymentGateway($gateway))->make();
@@ -70,14 +79,9 @@ class OrderService
         return $order;
     }
 
-    public function setOrderIdSession(string $key, int $orderId): void
-    {
-        session()->put($key, $orderId);
-    }
-
     public function clearOrderSession(string $key): void
     {
-        session()->forget($key);
+        $this->sessionStorageService->invalidate($key);
     }
 
     /**
@@ -144,5 +148,11 @@ class OrderService
             'url' => $invoice->url(),
             'filepath' => Storage::disk('invoices')->path($invoice->filename)
         ];
+    }
+
+    public function cleanupForSession(): void
+    {
+        $this->cartService->cleanupForSession();
+        $this->sessionStorageService->invalidate('delivery-informationjk');
     }
 }

@@ -2,53 +2,70 @@
 
 namespace App\Http\Services;
 
+use App\Http\Contracts\CleanupContractInterface;
+use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Model;
 
-class CartService
+class CartService implements CleanupContractInterface
 {
     private const CART_KEY = 'cart';
     private const CART_REFERENCE_KEY = 'cart_ref';
+    private SessionStorageService $sessionStorageService;
+    private ProductsService $productsService;
+    private PriceService $priceService;
+
+    public function __construct(
+        SessionStorageService $sessionStorageService,
+        ProductsService $productsService,
+        PriceService $priceService
+    )
+    {
+        $this->sessionStorageService = $sessionStorageService;
+        $this->productsService = $productsService;
+        $this->priceService = $priceService;
+    }
 
     public function add(mixed $value): void
     {
-        $cartItems = session()->get(self::CART_KEY, []);
+        $cartItems = $this->sessionStorageService->get(self::CART_KEY, []);
 
         if (!in_array($value, $cartItems, true)) {
             $cartItems[] = $value;
-            session()->put(self::CART_KEY, $cartItems);
+            $this->sessionStorageService->store(self::CART_KEY, $cartItems);
         }
     }
 
     public function hasCartReferenceKey(): bool
     {
-        return $this->hasCartSession(self::CART_REFERENCE_KEY);
+        return $this->sessionStorageService->check(self::CART_REFERENCE_KEY);
     }
 
     public function createReferenceKey(): void
     {
-        session()->put(self::CART_REFERENCE_KEY, time());
+        $this->sessionStorageService->store(self::CART_REFERENCE_KEY, time());
     }
 
     public function getCartReferenceKey(): mixed
     {
-        return session()->get(self::CART_REFERENCE_KEY);
+        return $this->sessionStorageService->get(self::CART_REFERENCE_KEY);
     }
 
     public function hasCartSession(string $key): bool
     {
-        return session()->has($key);
+        return $this->sessionStorageService->check($key);
     }
 
     public function has(mixed $searchValue): bool
     {
-        $items = session()->get(self::CART_KEY, []);
+        $items = $this->sessionStorageService->get(self::CART_KEY, []);
 
         return in_array($searchValue, $items, true);
     }
 
     public function getCart(bool $count = false): mixed
     {
-        $cartItems = session()->get(self::CART_KEY, []);
+        $cartItems = $this->sessionStorageService->get(self::CART_KEY, []);
 
         return !$count ? $cartItems : count($cartItems);
     }
@@ -87,15 +104,15 @@ class CartService
 
         $this->empty();
 
-        session()->put(self::CART_KEY, $products);
+        $this->sessionStorageService->store(self::CART_KEY, $products);
     }
 
     public function empty(): void
     {
-        session()->forget(self::CART_KEY);
+        $this->sessionStorageService->invalidate(self::CART_KEY);
     }
 
-    public function verifyCartProducts(array|int $products)
+    public function verifyCartProducts(array|int $products): bool
     {
         if(!is_array($products)) {
             $products = [$products];
@@ -104,8 +121,42 @@ class CartService
         return Product::whereIn('id', $products)->count() > 0;
     }
 
-    public function hasGeneratedKeys(): bool
+    public function getCartPreviewData(Model $categoryModel): array
     {
+        $productsIds = $this->getCart();
 
+        $products = $this->productsService->getByIds($productsIds, ['category', 'thumbnail']);
+
+        $pricesCollection = $products->pluck('price');
+
+        $totalPrice = $this->priceService->calculatePrice($pricesCollection, true, 0.20);
+        $priceWithoutTax = $this->priceService->calculatePrice($pricesCollection);
+
+        $taxAmount = $totalPrice - $priceWithoutTax;
+
+        $categories = null;
+
+        if(!$products->count()) {
+            $categories = $categoryModel::query()->get();
+        }
+
+        if(!$this->hasCartReferenceKey()) {
+            $this->createReferenceKey();
+        }
+
+        $cart_reference_key = $this->getCartReferenceKey();
+
+        return compact(
+            'cart_reference_key',
+            'products',
+            'totalPrice',
+            'categories',
+            'taxAmount'
+        );
+    }
+
+    public function cleanupForSession(): void
+    {
+        $this->sessionStorageService->invalidate(['cart', 'cref']);
     }
 }

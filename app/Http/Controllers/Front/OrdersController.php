@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Front;
 use App\Helpers\CountriesHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Enums\OrderEnum;
+use App\Http\Services\CartService;
 use App\Http\Services\OrderService;
 use App\Http\Services\Payment\Interface\PaymentGatewayInterface;
 use App\Http\Services\PriceService;
@@ -35,6 +36,7 @@ class OrdersController extends Controller
 
     public function __construct(
         protected OrderService $orderService,
+        protected CartService $cartService,
         private readonly SessionStorageService $sessionStorageService
     )
     {}
@@ -73,7 +75,8 @@ class OrdersController extends Controller
             $this->orderService->cancelOrder($this->sessionStorageService->get('current_payment_order_id'), $request->orderID);
         }
 
-        $this->clearCartSession();
+        $this->cartService->cleanupForSession();
+        $this->orderService->cleanupForSession();
 
         return response()->json([]);
     }
@@ -176,7 +179,10 @@ class OrdersController extends Controller
                     $status = 200;
                     Mail::to(config('mail.to_admin_email'))->queue(new OrderCreatedToSeller($order));
                 }
-                $this->clearCartSession();
+
+                $this->cartService->cleanupForSession();
+                $this->orderService->cleanupForSession();
+
                 return response()->json($payResult, $status);
             } catch(\RuntimeException $e) {
                 throw $e;
