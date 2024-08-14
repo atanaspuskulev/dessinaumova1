@@ -9,7 +9,7 @@
 
         <link href="{{ asset('assets/bootstrap-5.0.2/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine|Handlee|Gochi+Hand|Kalam"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine|Handlee|Gochi+Hand|Kalam|Grey+Qo"/>
         <link href="{{ asset('assets/css/custom.css') }}" type="text/css" rel="stylesheet"/>
         @yield('css_files')
         @yield('head_js')

@@ -16,7 +16,7 @@ footer {
     padding: 1rem;
 }
 .display-1 {
-    font-family: 'Tangerine', sans-serif;
+    font-family: 'Grey Qo', sans-serif;
     font-size: 60pt;
 }
 .navbar {
@@ -29,9 +29,8 @@ footer {
     text-overflow: ellipsis; /* Add ellipsis (...) for long text */
 }
 .navbar-brand {
-    font-family: 'Tangerine', sans-serif;
+    font-family: 'Grey Qo', sans-serif;
     font-size: 30pt;
-    font-weight: bold;
 }
 div, p {
     font-size: 15pt;
