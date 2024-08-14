@@ -9,7 +9,7 @@
             <div class="col-md-7">
                 <h3 class="display-1">Desi Naumova</h3>
                 <hr />
-                <div class="row">
+                <div class="row mb-4">
                     <div class="col-md-12 col-sm-12">
                         Desi Naumova is an artist from Bulgaria whose brush creates enchanting
                         fairytale worlds filled with wonder and adventure,
@@ -26,12 +26,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12 col-md-12 pt-4">
+                    <div class="col-sm-12 col-md-12 mt-2 pt-1">
+
                         <div class="row">
-                            <div class="col-md-6 col-sm-12 pl-0">
-                                <img class="img-fluid" src="{{ asset('assets/images/foxygirl.jpg') }}" alt="" />
+                            <div class="col-md-6 col-sm-12">
+                                <img class="img-fluid mb-3" src="{{ asset('assets/images/foxygirl.jpg') }}" alt="" />
                             </div>
-                            <div class="col-md-6 col-sm-12 pl-0">
+                            <div class="col-md-6 col-sm-12 ">
                                 <img class="img-fluid" src="{{ asset('assets/images/wintertale.jpg') }}" alt="" />
                             </div>
                         </div>
