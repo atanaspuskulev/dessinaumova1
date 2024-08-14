@@ -64,7 +64,8 @@ class PaypalFactory extends AbstractPaymentGateway implements PaymentGatewayInte
                     'currency_code' => config('paypal.currency'),
                     'value' => $product->price
                 ],
-            ];        });
+            ];
+        });
 
         $paypalApi = $this->isSandbox ? config('paypal.sandbox.paypal_api_url') : config('paypal.live.paypal_api_url');
 

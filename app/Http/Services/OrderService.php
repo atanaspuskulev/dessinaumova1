@@ -24,9 +24,7 @@ class OrderService implements CleanupContractInterface
     public function __construct(
         private SessionStorageService $sessionStorageService,
         private CartService $cartService
-    )
-    {
-    }
+    ) {}
 
     public function getPaymentGateway(string $gateway): PaymentGatewayInterface
     {

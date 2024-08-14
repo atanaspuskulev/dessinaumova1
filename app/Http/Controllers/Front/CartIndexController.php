@@ -7,7 +7,6 @@ use App\Http\Services\CartService;
 use App\Http\Services\PriceService;
 use App\Http\Services\ProductsService;
 use App\Http\Services\SessionStorageService;
-use App\Http\Traits\CartTrait;
 use App\Models\Category;
 use Illuminate\Http\Request;
 

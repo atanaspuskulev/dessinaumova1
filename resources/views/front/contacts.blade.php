@@ -9,35 +9,15 @@
             </div>
         </div>
     </div>
-    <div class="d-flex align-items-center justify-content-center mt-3 mb-4">
-        <form method="post  ">
-            <div class="row mb-3">
-                <div class="col">
-                    <label for="subject" class="form-label">Subject</label>
-                    <input type="text" class="form-control" id="subject" name="subject" placeholder="">
-                </div>
+    <div class="container-fluid mt-3 mb-4">
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-10">
+                Thank you for your interest in my artwork! If you encounter any issues while purchasing,
+                have specific requests for custom artwork, or simply want to learn more about my creative
+                process, I’m here to help.<br />Please don’t hesitate to reach out to me at +359 897 357 760
+                or via email at <a href="mailto:info@desinaumova.com">info@desinaumova.com</a>.<br>
+                I will be excited to assist you and explore new artistic possibilities together.
             </div>
-
-            <div class="row mb-3">
-                <div class="col-md-6 col-sm-12">
-                    <label for="names" class="form-label">Your Name</label>
-                    <input type="text" class="form-control" id="names" name="names" placeholder="">
-                </div>
-                <div class="col-md-6 col-sm-12">
-                    <label for="email" class="form-label">Your Email</label>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="">
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="message" class="form-label">Message</label>
-                <div class="col">
-                    <textarea class="form-control" name="message" id="message" rows="4" placeholder=""></textarea>
-                </div>
-            </div>
-
-            <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        </div>
     </div>
 @endsection

@@ -13,11 +13,11 @@ use App\Http\Services\Payment\Interface\PaymentGatewayInterface;
 use App\Http\Services\PriceService;
 use App\Http\Services\SessionStorageService;
 use App\Http\Traits\CartTrait;
-use App\Mail\OrderCancelled;
 use App\Mail\OrderCompletedToBuyer;
 use App\Mail\OrderCreatedToBuyer;
 use App\Mail\OrderCreatedToSeller;
 use App\Models\Orders;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -38,9 +38,11 @@ class OrdersController extends Controller
         protected OrderService $orderService,
         protected CartService $cartService,
         private readonly SessionStorageService $sessionStorageService
-    )
-    {}
+    ) {}
 
+    /**
+     * @throws BindingResolutionException
+     */
     public function captureAndComplete(): View|RedirectResponse
     {
         if(!$this->sessionStorageService->check('current_payment_order_id') || !$this->sessionStorageService->check('payment_id')) {
@@ -152,10 +154,6 @@ class OrdersController extends Controller
         return response()->json(compact('status', 'data'));
     }
 
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
     public function updateOrder(Request $request)
     {
         $status = 417;

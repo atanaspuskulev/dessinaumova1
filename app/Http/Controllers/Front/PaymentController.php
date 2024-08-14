@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
@@ -9,6 +11,7 @@ use App\Http\Services\Payment\PaymentService;
 use App\Http\Services\SessionStorageService;
 use App\Http\Traits\CartTrait;
 use App\Models\Product;
+use JsonException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -28,7 +31,7 @@ class PaymentController extends Controller
     /**
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function index()
     {
