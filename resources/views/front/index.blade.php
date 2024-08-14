@@ -10,7 +10,17 @@
                 <h3 class="display-1">Desi Naumova</h3>
                 <hr />
                 <p>
-                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humor and the like).
+                    Desi Naumova is an artist from Bulgaria whose brush creates enchanting
+                    worlds filled with wonder and adventure. Inspired by nature and working
+                    with watercolor, acrylic, and mixed media, her paintings and illustrations
+                    transport viewers to fantastical realms, alive with vibrant colors and
+                    intricate details.<br /><br />Desi transforms each piece into a portal to dreams,
+                    proving that magic exists for those who believe. Her art brings warmth
+                    and charm to any home. You have the opportunity to purchase both
+                    original paintings and art prints.<br /><br />
+
+                    Enjoy this magical, nostalgic, and earthy art.<br />
+                    Thank you!
                 </p>
             </div>
         </div>
