@@ -47,9 +47,6 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('front.index') }}">Home</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-            </li>
             @if(isset($products_categories) && $products_categories->count())
                 @foreach($products_categories as $slug => $title)
                     <li class="nav-item">
