@@ -11,11 +11,12 @@
                 <hr />
                 <p>
                     Desi Naumova is an artist from Bulgaria whose brush creates enchanting
-                    fairytale worlds filled with wonder and adventure. Inspired by nature and working
+                    fairytale worlds filled with wonder and adventure,
+                    inspired by nature and working
                     with watercolor, acrylic, and mixed media, her paintings and illustrations
                     transport viewers to fantastical realms, alive with vibrant colors and
-                    intricate details.<br /><br />Desi transforms each piece into a portal to dreams,
-                    proving that magic exists for those who believe. Her art brings warmth
+                    intricate details.<br /><br />Desi transforms each painting into a portal
+                    to dreams, proving that magic exists for those who believe. Her art brings warmth
                     and charm to any home. You have the opportunity to purchase both
                     original paintings and art prints.<br /><br />
 
