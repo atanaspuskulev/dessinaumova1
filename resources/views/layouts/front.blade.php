@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Desi Naumova</title>
+        <title>{{ $page_title ?? config('seo.default_title') }}</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
+        <meta name="description" content="{{ $meta_description ?? config('seo.default_description') }}" />
+        <meta name="keywords" content="{{ $meta_keywords ?? config('seo.default_keywords') }}" />
 
         <link href="{{ asset('assets/bootstrap-5.0.2/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
