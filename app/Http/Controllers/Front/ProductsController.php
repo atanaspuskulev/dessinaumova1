@@ -12,15 +12,26 @@ class ProductsController extends Controller
 {
     public function byCategory(string $category): View
     {
-        $categoryData = Category::where('slug', $category)->first();
+        $categoryData = Category::where('slug', $category)
+            ->where('is_active', true)
+            ->first();
 
         if (!$categoryData) {
             abort(404);
         }
 
         $products = $categoryData->products()->with('thumbnail')->paginate(10);
+        $page_title = $categoryData->title;
+        $meta_description = $categoryData->meta_description;
+        $meta_keywords = $categoryData->meta_keywords;
 
-        return view('front.products', compact('categoryData', 'products'));
+        return view('front.products', compact(
+            'categoryData',
+            'products',
+            'page_title',
+            'meta_description',
+            'meta_keywords'
+        ));
     }
 
     public function view(string $categorySlug, string $productSlug): View
@@ -35,6 +46,10 @@ class ProductsController extends Controller
         ->where('slug', $categorySlug)
         ->firstOrFail();
 
-        return view('front.product_view', compact('categoryData'));
+        $page_title = $categoryData->meta_title;
+        $meta_description = $categoryData->meta_description;
+        $meta_keywords = $categoryData->meta_keywords;
+
+        return view('front.product_view', compact('categoryData', 'page_title', 'meta_description', 'meta_keywords'));
     }
 }

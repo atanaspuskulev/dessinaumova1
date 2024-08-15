@@ -7,8 +7,21 @@ use Illuminate\View\View;
 Route::name('front.')->middleware('web')->group(function () {
 
     Route::get('/about-me', static function () {
-       return view('front.about');
+        $page_title = 'About Me | Desi Naumova';
+        $meta_description = 'Learn more about Your Shop Name, our story, values, and commitment to quality. Discover what makes us a trusted source for hand-crafted paintings, candles, and wooden articles.';
+        $meta_keywords = 'Desi Naumova, about Desi Naumova, my artwork, my mission, handmade products, paintings, candles, wooden articles';
+
+        return view('front.about', compact('page_title', 'meta_description', 'meta_keywords'));
     })->name('about');
+
+
+    Route::get('/contact-me', function() {
+        $page_title = 'Contact Me | Desi Naumova';
+        $meta_description = 'Get in touch with Desi Naumova for inquiries, custom orders, or collaborations. I am are here to help you with any questions you may have about my products or services.';
+        $meta_keywords = 'contact me, Desi Naumova contact, Desi Naumova location, get in touch';
+
+        return view('front.contacts', compact('page_title', 'meta_description', 'meta_keywords'));
+    })->name('contact');
 
     Route::get('/', [Front\HomeController::class, 'index'])->name('index');
 
@@ -24,8 +37,6 @@ Route::name('front.')->middleware('web')->group(function () {
     Route::post('/api/order/update', [Front\OrdersController::class, 'updateOrder'])->name('payment.api.order.update');
     Route::post('/api/order/cancel', [Front\OrdersController::class, 'cancelOrder'])->name('payment.api.order.cancel');
     // Payments
-
-    Route::get('/contact-me', [Front\ContactController::class, 'index'])->name('contact');
 
     Route::get('/cart/checkout/delivery-information', [Front\DeliveryInformationController::class, 'deliveryForm'])->name('delivery_form');
     Route::post('/cart/checkout/delivery-information', [Front\DeliveryInformationController::class, 'saveDeliveryInformation'])->name('saveDeliveryInformation');

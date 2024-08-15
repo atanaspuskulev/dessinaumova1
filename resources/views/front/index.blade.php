@@ -2,7 +2,19 @@
 
 @section('content')
     <div class="container-fluid mt-5">
-        <div class="row  equal-height">
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-10">
+                <h2>Welcome to Desi Naumova webstore.</h2>
+                <p>
+                    Discover my curated collection of hand-crafted paintings,
+                    aromatic candles, and exquisite wooden articles.
+                    Each piece is made with love and care, designed to bring
+                    warmth and beauty into your home.
+                    Explore our latest arrivals and find something special today.
+                </p>
+            </div>
+        </div>
+        <div class="row equal-height">
             @php
                 $colClass = match($products->count()) {
                     1 => 'col-md-12',
