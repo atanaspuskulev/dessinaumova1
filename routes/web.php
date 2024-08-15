@@ -2,8 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front;
+use Illuminate\View\View;
 
 Route::name('front.')->middleware('web')->group(function () {
+
+    Route::get('/about-me', static function () {
+       return view('front.about');
+    })->name('about');
+
     Route::get('/', [Front\HomeController::class, 'index'])->name('index');
 
     Route::get('/cart', Front\CartIndexController::class)->name('cart.index');

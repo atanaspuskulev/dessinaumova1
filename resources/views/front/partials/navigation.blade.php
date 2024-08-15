@@ -35,8 +35,15 @@
 
         </div>
 
-        <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button
+            class="navbar-toggler d-lg-none"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
             <span class="navbar-toggler-icon"></span>
         </button>
     </div>
@@ -45,18 +52,21 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('front.index') }}">Home</a>
+                <a class="nav-link @if(request()->routeIs('front.index')) active @endif" href="{{ route('front.index') }}">Home</a>
             </li>
             @if(isset($products_categories) && $products_categories->count())
                 @foreach($products_categories as $slug => $title)
                     <li class="nav-item">
-                        <a class="nav-link"
+                        <a class="nav-link @if(request()->routeIs('front.to_category') && request()->route('category') === $slug) active @endif"
                            href="{{ route('front.to_category', ['category' => $slug]) }}">{{ $title }}</a>
                     </li>
                 @endforeach
             @endif
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('front.contact') }}">Contact</a>
+                <a class="nav-link @if(request()->routeIs('front.about')) active @endif" href="{{ route('front.about') }}">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @if(request()->routeIs('front.contact')) active @endif" href="{{ route('front.contact') }}">Contact</a>
             </li>
         </ul>
     </div>
