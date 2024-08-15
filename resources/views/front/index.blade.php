@@ -4,10 +4,10 @@
     <div class="container-fluid mt-5">
         <div class="row  equal-height">
             @php
-                $colClass = match($productsCount) {
+                $colClass = match($products->count()) {
                     1 => 'col-md-12',
                     2 => 'col-md-6',
-                    default => 'col-md-3'
+                    default => 'col-md-4'
                 };
             @endphp
             @forelse($products as $product)

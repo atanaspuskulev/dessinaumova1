@@ -12,16 +12,18 @@ class HomeController extends Controller
 {
     public function index(): View
     {
-        $products = Product::with([
-            'thumbnail',
-            'category'
-        ])
-        ->where('sold', false)
-        ->inRandomOrder()
-        ->take(6)->get();
+        $products = collect();
 
-        $productsCount = $products->count();
+        Product::with(['thumbnail', 'category'])
+            ->where('sold', false)
+            ->chunk(100, function ($chunk) use ($products) {
+                $chunk->groupBy('category_id')->each(function ($items) use ($products) {
+                    $products->push($items->take(3));
+                });
+            });
 
-        return view('front.index', compact('products', 'productsCount'));
+        $products = $products->flatten();
+
+        return view('front.index', compact('products'));
     }
 }
