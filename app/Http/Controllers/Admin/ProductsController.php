@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
+use App\Http\Services\TagService;
 use App\Http\Traits\FileUploadTrait;
 use App\Http\Traits\ProductsTrait;
 use App\Models\Category;
@@ -18,6 +19,9 @@ use Illuminate\View\View;
 class ProductsController extends Controller
 {
     use FileUploadTrait, ProductsTrait;
+
+    public function __construct(private TagService $tagService)
+    {}
 
     /**
      * Display a listing of the resource.
@@ -68,12 +72,23 @@ class ProductsController extends Controller
         return view('admin.products.edit', compact('product', 'categories'));
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function update(ProductRequest $request, int $productId)
     {
         $data = $request->all();
 
         if(!isset($data['sold'])) {
             $data['sold'] = false;
+        }
+
+        if(!empty($data['tags'])) {
+            $requestTags = json_decode($data['tags'], true, 512, JSON_THROW_ON_ERROR);
+
+            foreach($requestTags as $tag) {
+                dd($this->tagService->exists($tag['value']));
+            }
         }
 
         $product = Product::withTrashed()

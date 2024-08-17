@@ -35,7 +35,8 @@ class ProductRequest extends FormRequest
             'meta_title' => 'present',
             'meta_keywords' => 'present',
             'meta_description' => 'present',
-            'images.*' => 'file|mimes:jpeg,png,webp'
+            'images.*' => 'file|mimes:jpeg,png,webp',
+            'tags' => 'sometimes|string'
         ];
     }
 

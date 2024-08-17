@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('head_content')
+    <link href="{{ asset('/assets/js/tagify/dist/tagify.css') }}" rel="stylesheet" type="text/css" />
+    <script src="{{ asset('/assets/js/tagify/dist/tagify.js') }}"></script>
+@endsection
 @section('content')
     <h1 class="h3 mb-12 text-gray-800">Edit product "{{ $product->title }}"</h1>
     @if(session()->has('message'))
@@ -81,9 +85,23 @@
                                            placeholder="Delivery information"
                                            value="{{ old('delivery', $product->delivery) }}">
                                 </div>
+                                <div class="form-group">
+                                    <label for="delivery">Product Tags</label>
+                                    <input
+                                        class="form-control ml-0"
+                                        id="tagcontent"
+                                        name="tags"
+                                        value=""
+                                        placeholder="Write/select your tags"
+                                    >
+                                </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" name="sold" type="checkbox" value="1"
-                                           id="sold" @checked(old('sold', $product->sold) == 1)>
+                                    <input
+                                        class="form-check-input"
+                                        name="sold" type="checkbox"
+                                        value="1"
+                                        id="sold" @checked(old('sold', $product->sold) == 1)
+                                    >
                                     <label class="form-check-label" for="sold">
                                         Sold
                                     </label>

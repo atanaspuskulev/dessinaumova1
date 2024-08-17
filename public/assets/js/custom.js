@@ -34,6 +34,16 @@ let restoreCategoryUrl;
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
+    if($('#tagcontent').length > 0) {
+        new Tagify(document.getElementById('tagcontent'), {
+            focusable: false,
+            dropdown: {
+                position: "input",
+                enabled : 0
+            }
+        });
+    }
+
     if ($('.sortable-container').length > 0) {
         $(".sortable-container").sortable({
             items: ".sortable-item",

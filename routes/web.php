@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front;
-use Illuminate\View\View;
 
 Route::name('front.')->middleware('web')->group(function () {
 
@@ -15,7 +14,7 @@ Route::name('front.')->middleware('web')->group(function () {
     })->name('about');
 
 
-    Route::get('/contact-me', function() {
+    Route::get('/contact-me', static function() {
         $page_title = 'Contact Me | Desi Naumova';
         $meta_description = 'Get in touch with Desi Naumova for inquiries, custom orders, or collaborations. I am are here to help you with any questions you may have about my products or services.';
         $meta_keywords = 'contact me, Desi Naumova contact, Desi Naumova location, get in touch';
