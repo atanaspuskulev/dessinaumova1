@@ -22,6 +22,8 @@ Route::name('front.')->middleware('web')->group(function () {
         return view('front.contacts', compact('page_title', 'meta_description', 'meta_keywords'));
     })->name('contact');
 
+    Route::get('/tag/{tag}', [Front\ProductsController::class, 'byTag'])->name('by_tag');
+
     Route::get('/', [Front\HomeController::class, 'index'])->name('index');
 
     Route::get('/cart', Front\CartIndexController::class)->name('cart.index');

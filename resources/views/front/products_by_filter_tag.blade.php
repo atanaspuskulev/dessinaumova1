@@ -1,0 +1,55 @@
+@extends('layouts.front')
+
+@section('content')
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <div class="col">
+                <h1>Products in category: {{ $tagData->name }}</h1>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid mt-5">
+        <div class="row  equal-height">
+            @forelse($products as $product)
+                <div class="col-md-3 mb-5">
+                    <div class="card mb-4 rounded-5 card-box-shadow">
+                        <img src="{{ displayImage($product->id, $product->thumbnail?->path, true) }}" class="card-img-top" alt="Product 1">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ $product->title }}</h3>
+                            <p class="card-text">{!! $product->short_description !!}</p>
+                            <h3 class="@if($product->sold) bg-warning @endif p-2 mb-5">
+                                Price: {{ $product->price }}&euro;
+                                @if($product->sold)
+                                    - This product is sold!
+                                @endif
+                            </h3>
+                            @if(isset($cartItems) && in_array($product->id, $cartItems, true))
+                                @include('front.partials.item-in-cart')
+                            @endif
+                            <a href="{{ route('front.product_view', ['category_slug' => $product->category->slug, 'product_slug' => $product->slug]) }}" class="product-button mb-3 position-absolute bottom-0 end-0 me-3">View More</a>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="col-md-6">
+                    <!-- Product 2 -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            There are no products to show.
+                        </div>
+                    </div>
+                </div>
+            @endforelse
+        </div>
+        <div class="row mb-4">
+            <div class="col text-center">
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        {{ $products->links() }}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+@endsection

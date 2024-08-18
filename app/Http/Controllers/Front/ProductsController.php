@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\View\View;
 
 class ProductsController extends Controller
@@ -41,7 +42,8 @@ class ProductsController extends Controller
                 $query->where('slug', $productSlug)->firstOrFail();
             },
             'products.thumbnail',
-            'products.gallery'
+            'products.gallery',
+            'products.tags'
         ])
         ->where('slug', $categorySlug)
         ->firstOrFail();
@@ -51,5 +53,16 @@ class ProductsController extends Controller
         $meta_keywords = $categoryData->meta_keywords;
 
         return view('front.product_view', compact('categoryData', 'page_title', 'meta_description', 'meta_keywords'));
+    }
+
+    public function byTag(string $tag): View
+    {
+        $tagData = Tag::where('name', $tag)->firstOrFail();
+        $products = $tagData->products()->with([
+            'thumbnail',
+            'category'
+        ])->paginate(10);
+
+        return view('front.products_by_filter_tag', compact('tagData', 'products'));
     }
 }

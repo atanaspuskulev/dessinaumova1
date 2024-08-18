@@ -2,6 +2,12 @@
 
 @section('css_files')
     <link rel="stylesheet" href="{{ asset('assets/mp/magnific-popup.css') }}">
+
+    <style>
+        .badge-link {
+            text-decoration: none;
+        }
+    </style>
 @endsection
 
 @section('js_files')
@@ -54,6 +60,16 @@
                 <h1>{{ $product?->title }} {{ $product->id }}</h1>
                 <hr>
                 <p>{!! $product?->description !!}</p>
+                @if($product->tags->count())
+                    <div class="small">in category: </div>
+                    @foreach($product->tags as $tag)
+                        <a href="{{ route('front.by_tag', ['tag' => $tag->slug]) }}" class="badge-link">
+                            <span class="badge bg-info">
+                                {{ $tag->name }}
+                            </span>
+                        </a>
+                    @endforeach
+                @endif
                 @if($product?->price)
                     <h2 class="mt-3 mb-3">Price: {{ $product->price }}&euro;</h2>
                 @endif
