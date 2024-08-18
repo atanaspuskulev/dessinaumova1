@@ -11,6 +11,7 @@ use App\Http\Traits\FileUploadTrait;
 use App\Http\Traits\ProductsTrait;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -45,7 +46,9 @@ class ProductsController extends Controller
     {
         $categories = Category::all();
 
-        return view('admin.products.create', compact('categories'));
+        $tags = Tag::orderBy('name', 'asc')->get()->pluck('name')->toArray();
+
+        return view('admin.products.create', compact('categories', 'tags'));
     }
 
     /**
@@ -63,13 +66,14 @@ class ProductsController extends Controller
 
     public function edit(int $productId): View
     {
-        $product = Product::with('gallery')->withTrashed()
+        $product = Product::with(['gallery', 'tags'])->withTrashed()
             ->where('id', $productId)
             ->first();
 
         $categories = Category::all();
+        $tags = Tag::orderBy('name', 'asc')->get()->pluck('name')->toArray();
 
-        return view('admin.products.edit', compact('product', 'categories'));
+        return view('admin.products.edit', compact('product', 'categories', 'tags'));
     }
 
     /**
@@ -83,18 +87,31 @@ class ProductsController extends Controller
             $data['sold'] = false;
         }
 
+        $tags = collect();
+
         if(!empty($data['tags'])) {
             $requestTags = json_decode($data['tags'], true, 512, JSON_THROW_ON_ERROR);
 
             foreach($requestTags as $tag) {
-                dd($this->tagService->exists($tag['value']));
+                if(!$this->tagService->exists($tag['value'])) {
+                    $newTag = $this->tagService->create(['name' => $tag['value']]);
+                    $tags->push($newTag);
+                } else {
+                    $existingTag = $this->tagService->getOneBy(['name' => $tag['value']]);
+                    $tags->push($existingTag);
+                }
             }
         }
 
-        $product = Product::withTrashed()
-            ->findOrFail($productId);
+        $product = Product::withTrashed()->findOrFail($productId);
 
         $product->update($data);
+
+        $product->tags()->detach();
+
+        if(!$tags->isEmpty()) {
+            $product->tags()->sync($tags->pluck('id'));
+        }
 
         $this->uploadFiles($request, 'images', $product);
 

@@ -1,5 +1,12 @@
 @extends('layouts.admin')
+@section('head_content')
+    <script>
+        var available_tags ={!! json_encode($tags) !!};
+    </script>
 
+    <link href="{{ asset('/assets/js/tagify/dist/tagify.css') }}" rel="stylesheet" type="text/css" />
+    <script src="{{ asset('/assets/js/tagify/dist/tagify.js') }}"></script>
+@endsection
 @section('content')
     <h1 class="h3 mb-12 text-gray-800">Add new product</h1>
 
@@ -57,6 +64,16 @@
                                 <div class="form-group">
                                     <label for="delivery">Delivery information</label>
                                     <input type="text" class="form-control" id="delivery" name="delivery" placeholder="Delivery information" value="{{ old('delivery') }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="delivery">Product Tags</label>
+                                    <input
+                                        class="form-control ml-0"
+                                        id="tagcontent"
+                                        name="tags"
+                                        value=""
+                                        placeholder="Write/select your tags"
+                                    >
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" name="sold" type="checkbox" value="1" id="sold" @checked(old('sold') == 1)>

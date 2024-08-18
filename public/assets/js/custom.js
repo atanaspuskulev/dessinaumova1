@@ -37,6 +37,7 @@ $(function () {
     if($('#tagcontent').length > 0) {
         new Tagify(document.getElementById('tagcontent'), {
             focusable: false,
+            whitelist: available_tags,
             dropdown: {
                 position: "input",
                 enabled : 0

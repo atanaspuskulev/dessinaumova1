@@ -1,6 +1,10 @@
 @extends('layouts.admin')
 
 @section('head_content')
+    <script>
+        var available_tags ={!! json_encode($tags) !!};
+    </script>
+
     <link href="{{ asset('/assets/js/tagify/dist/tagify.css') }}" rel="stylesheet" type="text/css" />
     <script src="{{ asset('/assets/js/tagify/dist/tagify.js') }}"></script>
 @endsection
@@ -91,7 +95,7 @@
                                         class="form-control ml-0"
                                         id="tagcontent"
                                         name="tags"
-                                        value=""
+                                        value="{{ implode(', ', $product->tags->pluck('name')->toArray()) }}"
                                         placeholder="Write/select your tags"
                                     >
                                 </div>
