@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Jobs\GenerateSitemapJob;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -52,6 +53,16 @@ class Product extends Model
 
         static::updating(function ($item) {
             $item->updated_at = now()->toDateString();
+        });
+
+        static::created(function ($product) {
+            // Dispatch the job when a product is created
+            GenerateSitemapJob::dispatch();
+        });
+
+        static::updated(function ($product) {
+            // Dispatch the job when a product is updated
+            GenerateSitemapJob::dispatch();
         });
     }
 

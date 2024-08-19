@@ -27,16 +27,21 @@ class ProductsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         $products = Product::with([
             'thumbnail',
             'category'
         ])
+        ->when($request->has('byCategory'), function($query) use ($request) {
+            return $query->where('category_id', $request->byCategory);
+        })
         ->withTrashed()
         ->paginate(12);
 
-        return view('admin.products.index', compact('products'));
+        $categories = Category::all();
+
+        return view('admin.products.index', compact('products', 'categories'));
     }
 
     /**

@@ -10,6 +10,14 @@
                 </div>
                 <div class="card-body">
                     <div class="container">
+                        @if(!$categories->isEmpty())
+                            <div class="row mb-3">
+                                Filter by:
+                                @foreach($categories as $category)
+                                    <a href="{{ route('products.index', ['byCategory' => $category->id]) }}"  class="mr-2">{{ $category->title }}</a>
+                                @endforeach
+                            </div>
+                        @endif
                         <div class="row" id="product-list">
                             @forelse($products as $product)
                                 <div id="{{ $product->id }}" class="sortable-item-product col-lg-3 col-md-4 col-sm-12 mb-3">

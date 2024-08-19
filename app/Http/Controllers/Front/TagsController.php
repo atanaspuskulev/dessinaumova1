@@ -17,7 +17,11 @@ class TagsController extends Controller
                 ->orderBy('name', 'asc')->get();
         });
 
-        return view('front.tags.index', compact('tags'));
+        $page_title = 'Explore all categories';
+        $meta_description = 'Discover all categories at Desi Naumova. Browse our collection of hand-crafted paintings, candles, and wooden articles by exploring our product tags.';
+        $meta_keywords = 'product categories, explore categories, category overview, Desi Naumova, paintings, candles, wooden articles';
+
+        return view('front.tags.index', compact('tags', 'page_title', 'meta_description', 'meta_keywords'));
     }
 
     public function show(string $tag): View
@@ -28,6 +32,10 @@ class TagsController extends Controller
             'category'
         ])->paginate(10);
 
-        return view('front.products_by_filter_tag', compact('tagData', 'products'));
+        $page_title = $tagData->name . ' products';
+        $meta_description = 'Explore our collection of ' . $tagData->name . ' products at Desi Naumova. Discover unique paintings, candles, and wooden articles that add a personal touch to your home decor.';
+        $meta_keywords = $tagData->name . ' products, buy ' . $tagData->name . ' products, Desi Naumova';
+
+        return view('front.products_by_filter_tag', compact('tagData', 'products', 'page_title', 'meta_description', 'meta_keywords'));
     }
 }
