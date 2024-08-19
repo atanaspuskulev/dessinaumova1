@@ -23,7 +23,7 @@ Route::name('front.')->middleware('web')->group(function () {
     })->name('contact');
 
     Route::get('/tags', [Front\TagsController::class, 'index'])->name('tags');
-    Route::get('/tag/{tag}', [Front\ProductsController::class, 'byTag'])->name('by_tag');
+    Route::get('/tag/{tag}', [Front\TagsController::class, 'show'])->name('by_tag');
 
     Route::get('/', [Front\HomeController::class, 'index'])->name('index');
 

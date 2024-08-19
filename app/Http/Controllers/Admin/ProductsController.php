@@ -60,6 +60,8 @@ class ProductsController extends Controller
 
         $this->uploadFiles($request, 'images', $product);
 
+        cache()->forget('tags_list');
+
         return redirect()->route('products.edit', ['product' => $product])
             ->with('message', sprintf("Successfully created product %s", $product->title));
     }
@@ -114,6 +116,8 @@ class ProductsController extends Controller
         }
 
         $this->uploadFiles($request, 'images', $product);
+
+        cache()->forget('tags_list');
 
         return redirect()->route('products.edit', compact('product'))
             ->with('message', sprintf("Successfully updated product %s", $product->title));

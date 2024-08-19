@@ -54,15 +54,4 @@ class ProductsController extends Controller
 
         return view('front.product_view', compact('categoryData', 'page_title', 'meta_description', 'meta_keywords'));
     }
-
-    public function byTag(string $tag): View
-    {
-        $tagData = Tag::where('name', $tag)->firstOrFail();
-        $products = $tagData->products()->with([
-            'thumbnail',
-            'category'
-        ])->paginate(10);
-
-        return view('front.products_by_filter_tag', compact('tagData', 'products'));
-    }
 }
