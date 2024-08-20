@@ -276,3 +276,7 @@ ul.dropdown-cart li .item-right button {
         margin-top: 10px;
     }
 }
+
+.footer span, .footer a{
+    font-size: 10pt;
+}

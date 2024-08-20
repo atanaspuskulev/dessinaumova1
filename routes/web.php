@@ -22,6 +22,38 @@ Route::name('front.')->middleware('web')->group(function () {
         return view('front.contacts', compact('page_title', 'meta_description', 'meta_keywords'));
     })->name('contact');
 
+    Route::get('/cookies-policy', static function() {
+        $page_title = 'Cookies Policy | Desi Naumova';
+        $meta_description = 'Read ' . config('app.name') . '\'s Cookies Policy to learn how we interact with cookies.';
+        $meta_keywords = 'cookies policy, Desi Naumova cookies policy';
+
+        return view('front.cookies-policy', compact('page_title', 'meta_description', 'meta_keywords'));
+    })->name('cookies_policy');
+
+    Route::get('/privacy-policy', static function() {
+        $page_title = 'Privacy Policy | Desi Naumova';
+        $meta_description = 'Read ' . config('app.name') . '\'s Privacy Policy to learn how we handle your personal information.';
+        $meta_keywords = 'privacy policy, Desi Naumova legal policy';
+
+        return view('front.privacy-policy', compact('page_title', 'meta_description', 'meta_keywords'));
+    })->name('privacy_policy');
+
+    Route::get('/terms-of-use', static function() {
+        $page_title = 'Terms Of Use | Desi Naumova';
+        $meta_description = 'Understand the Terms of Use for shopping at ' . config('app.name');
+        $meta_keywords = 'terms of use, Desi Naumova tos';
+
+        return view('front.tos', compact('page_title', 'meta_description', 'meta_keywords'));
+    })->name('terms_of_use');
+
+    Route::get('/return-policy', static function() {
+        $page_title = 'Return Policy | Desi Naumova';
+        $meta_description = 'Learn about ' . config('app.name') . '\'s Return Policy for hassle-free shopping';
+        $meta_keywords = 'return policy, Desi Naumova';
+
+        return view('front.return-policy', compact('page_title', 'meta_description', 'meta_keywords'));
+    })->name('return_policy');
+
     Route::get('/tags', [Front\TagsController::class, 'index'])->name('tags');
     Route::get('/tag/{tag}', [Front\TagsController::class, 'show'])->name('by_tag');
 
