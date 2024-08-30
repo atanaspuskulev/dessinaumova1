@@ -1,37 +1,34 @@
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>{{ isset($page_title) ? $page_title . ' | Desi Naumova' : config('seo.default_title') }}</title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<head>
+    <title>{{ isset($page_title) ? $page_title . ' | ' . config('app.name') : config('seo.default_title') }}</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <meta name="description" content="{{ $meta_description ?? config('seo.default_description') }}" />
-        <meta name="keywords" content="{{ $meta_keywords ?? config('seo.default_keywords') }}" />
+    <meta name="description" content="{{ $meta_description ?? config('seo.default_description') }}" />
+    <meta name="keywords" content="{{ $meta_keywords ?? config('seo.default_keywords') }}" />
 
-        <link href="{{ asset('assets/bootstrap-5.0.2/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine|Handlee|Gochi+Hand|Kalam|Grey+Qo"/>
-        <link href="{{ asset('assets/css/custom.css') }}" type="text/css" rel="stylesheet"/>
-        @yield('css_files')
-        @yield('head_js')
-    </head>
-    <body>
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine|Handlee|Gochi+Hand|Kalam|Grey+Qo"/>
+    <link href="{{ asset('assets/css/front/style.css') }}" type="text/css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">    <link rel="stylesheet" href="{{ asset('assets/fontawesome-free-6.4.2-web/css/all.min.css') }}"/>
+    <link href="{{ asset('assets/css/custom.css') }}" type="text/css" rel="stylesheet"/>
+    @yield('css_files')
+    @yield('head_js')
+</head>
+<body>
     @include('front.partials.navigation')
-
     @yield('content')
 
-    <script src="{{ asset('assets/bootstrap-5.0.2/js/bootstrap.bundle.js') }}"></script>
-        @yield('js_files')
-    </body>
-    <footer class="bg-dark text-white py-4 footer">
+    <footer class="py-5 bg-dark">
         <div class="container">
             <div class="row">
                 <!-- Footer Links -->
-                <div class="col-md-2 text-start">
+                <div class="col-md text-start">
                     <h4>About</h4>
+                    <hr />
                     <ul class="list-unstyled">
                         <li><a href="{{ route('front.terms_of_use') }}" class="text-white">Terms of Use</a></li>
                         <li><a href="{{ route('front.privacy_policy') }}" class="text-white">Privacy Policy</a></li>
@@ -41,8 +38,9 @@
                     </ul>
                 </div>
 
-                <div class="col-md-2 text-start">
+                <div class="col-md text-start">
                     <h4>Categories</h4>
+                    <hr />
                     <ul class="list-unstyled">
                         @if(isset($products_categories) && $products_categories->count())
                             @foreach($products_categories as $slug => $title)
@@ -56,11 +54,12 @@
                 </div>
 
                 <!-- Social Media Links (Optional) -->
-                <div class="col-md-3 text-md-end">
-                    <span>Follow me:</span>
-                    <a href="https://facebook.com" class="text-white me-2">Facebook</a>
-                    <a href="https://twitter.com" class="text-white me-2">Instagram</i></a>
-                    <a href="https://instagram.com" class="text-white">TikTok</i></a>
+                <div class="col-md text-start">
+                    <h4>Follow Me</h4>
+                    <hr />
+                    <a href="https://facebook.com" class="text-white me-2"><i class="bi bi-facebook"></i></a>
+                    <a href="https://twitter.com" class="text-white me-2"><i class="bi bi-instagram"></i></a>
+                    <a href="https://instagram.com" class="text-white me-2"><i class="bi bi-tiktok"></i></a>
                 </div>
             </div>
 
@@ -69,7 +68,8 @@
                     <p class="mb-0">&copy; {{ date('Y') }} Desi Naumova. All rights reserved.</p>
                 </div>
             </div>
-        </div>
-    </footer>
-
+        </div>    </footer>
+    <script src="{{ asset('assets/bootstrap-5.0.2/js/bootstrap.bundle.js') }}"></script>
+    @yield('js_files')
+</body>
 </html>

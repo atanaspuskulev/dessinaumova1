@@ -32,6 +32,8 @@ class CategoriesController extends Controller
     {
         $category = Category::create($request->all());
 
+        cache()->forget('cached_categories');
+
         return redirect()->route('categories.edit', compact('category'))
             ->with('message', sprintf("Successfully updated category %s", $category->title));
     }
@@ -55,6 +57,8 @@ class CategoriesController extends Controller
 
         $category->update($data);
 
+        cache()->forget('cached_categories');
+
         return redirect()->route('categories.edit', compact('category'))
             ->with('message', sprintf("Successfully updated category %s", $category->title));
     }
@@ -63,6 +67,7 @@ class CategoriesController extends Controller
     {
         try {
             $category->delete();
+            cache()->forget('cached_categories');
             return response()->json([]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
@@ -81,7 +86,7 @@ class CategoriesController extends Controller
             }
 
             $category->forceDelete();
-
+            cache()->forget('cached_categories');
             return response()->json([]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
@@ -92,7 +97,7 @@ class CategoriesController extends Controller
     {
         try {
             Category::withTrashed()->findOrFail($categoryId)->restore();
-
+            cache()->forget('cached_categories');
             return response()->json([]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);

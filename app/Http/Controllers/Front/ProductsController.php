@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Models\Tag;
 use Illuminate\View\View;
 
 class ProductsController extends Controller
@@ -21,7 +20,7 @@ class ProductsController extends Controller
             abort(404);
         }
 
-        $products = $categoryData->products()->with('thumbnail')->paginate(10);
+        $products = $categoryData->products()->with(['thumbnail', 'category'])->paginate(10);
         $page_title = $categoryData->title;
         $meta_description = $categoryData->meta_description;
         $meta_keywords = $categoryData->meta_keywords;
@@ -52,6 +51,11 @@ class ProductsController extends Controller
         $meta_description = $categoryData->meta_description;
         $meta_keywords = $categoryData->meta_keywords;
 
-        return view('front.product_view', compact('categoryData', 'page_title', 'meta_description', 'meta_keywords'));
+        return view('front.product_view', compact(
+            'categoryData',
+            'page_title',
+            'meta_description',
+            'meta_keywords'
+        ));
     }
 }

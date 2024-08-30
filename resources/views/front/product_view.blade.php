@@ -106,7 +106,8 @@
                     >
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <input type="hidden" name="product_id" value="{{ $product->id }}" />
-                        <button type="submit" class="buy-button" id="buy-button">Buy this item</button>
+                        <button type="submit" class="btn btn-outline-dark flex-shrink-0" id="buy-button">
+                            <i class="bi-cart-fill me-1"></i> Buy this item</button>
                     </form>
                 @elseif(!$product?->sold && in_array($product?->id, $cartItems, true))
                     @include('front.partials.item-in-cart')

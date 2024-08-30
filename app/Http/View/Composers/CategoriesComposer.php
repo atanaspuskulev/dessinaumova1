@@ -11,9 +11,11 @@ readonly class CategoriesComposer
 {
     public function compose(View $view)
     {
-        $categories = Category::where('is_active', true)
-            ->get()
-            ->pluck('title', 'slug');
+        $categories = cache()->remember('cached_categories', config('seo.tags.ttl'), function() {
+            return Category::where('is_active', true)
+                ->get()
+                ->pluck('title', 'slug');
+        });
 
         $view->with('products_categories', $categories);
     }

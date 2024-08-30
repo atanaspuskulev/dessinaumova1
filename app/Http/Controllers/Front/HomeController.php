@@ -18,7 +18,7 @@ class HomeController extends Controller
             ->where('sold', false)
             ->chunk(100, function ($chunk) use ($products) {
                 $chunk->groupBy('category_id')->each(function ($items) use ($products) {
-                    $products->push($items->take(3));
+                    $products->push($items->shuffle()->take(3));
                 });
             });
 
