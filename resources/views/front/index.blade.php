@@ -8,7 +8,7 @@
                 <p class="lead fw-normal text-white-50 mb-0">
                     Discover my curated collection of paintings, art-prints, bookmarks
                     universe candles.
-                    Each piece is made with love and care, designed to bring
+                    Everything is made with love and care, designed to bring
                     warmth and beauty into your home.
 
                 </p>
