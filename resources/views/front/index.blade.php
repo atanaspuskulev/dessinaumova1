@@ -10,7 +10,7 @@
                     universe candles.
                     Each piece is made with love and care, designed to bring
                     warmth and beauty into your home.
-                    Explore our latest arrivals and find something special today.
+
                 </p>
             </div>
         </div>
