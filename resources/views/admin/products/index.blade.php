@@ -43,7 +43,7 @@
                                                 @if($product->sold)
                                                     <b>SOLD</b>
                                                 @else
-                                                    ${{ $product->price }}
+                                                    {{ $product->price }} EUR
                                                 @endif
                                             </p>
                                         </div>
