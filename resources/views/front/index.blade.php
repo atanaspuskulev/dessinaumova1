@@ -6,7 +6,7 @@
             <div class="text-center text-white">
                 <h1 class="display-4 fw-bolder desi-title">Welcome to Desi Naumova webstore.</h1>
                 <p class="lead fw-normal text-white-50 mb-0">
-                    Discover my curated collection of hand-crafted paintings, art-prints, bookmarks
+                    Discover my curated collection of paintings, art-prints, bookmarks
                     universe candles.
                     Each piece is made with love and care, designed to bring
                     warmth and beauty into your home.
