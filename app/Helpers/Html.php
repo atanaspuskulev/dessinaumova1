@@ -50,9 +50,10 @@ function admin_link_active_class(
 
 function listColumnClass(\Illuminate\Support\Collection $collection): string
 {
-    return match($collection->count()) {
-        1 => 'col-md-6',
-        2 => 'col-md-6',
-        default => 'col-md-4'
-    };
+//    return match($collection->count()) {
+//        1 => 'col-md-4',
+//        2 => 'col-md-6',
+//        default => 'col-md-4'
+//    };
+    return 'col-md-4';
 }
