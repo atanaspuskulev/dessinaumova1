@@ -26,7 +26,7 @@ class TagsController extends Controller
 
     public function show(string $tag): View
     {
-        $tagData = Tag::where('name', $tag)->firstOrFail();
+        $tagData = Tag::where('slug', $tag)->firstOrFail();
         $products = $tagData->products()->with([
             'thumbnail',
             'category'
