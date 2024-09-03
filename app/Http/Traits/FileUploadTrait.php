@@ -23,6 +23,13 @@ trait FileUploadTrait
                     $path = sprintf("uploads/%d", $model->id);
 
                     $temp_path = storage_path($path);
+                    $public_path = public_path("storage/".$path);
+
+                    if (!File::exists($public_path)) {
+                        File::makeDirectory($public_path, 0777, true);
+                    } else {
+                        File::chmod($public_path, 0777);
+                    }
 
                     if (!File::exists($temp_path)) {
                         File::makeDirectory($temp_path, 0777, true);
