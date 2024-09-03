@@ -6,6 +6,7 @@ use App\Models\Images;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -20,34 +21,25 @@ trait FileUploadTrait
             foreach ($files as $file) {
                 if ($file->isValid()) {
                     $path = sprintf("uploads/%d", $model->id);
+
+                    $temp_path = storage_path($path);
+
+                    if (!File::exists($temp_path)) {
+                        File::makeDirectory($temp_path, 0777, true);
+                    } else {
+                        File::chmod($temp_path, 0777);
+                    }
+
                     $extension = $file->getClientOriginalExtension();
                     $fileName = Str::random(20);
                     $storageFilename = "{$fileName}.{$extension}";
 
                     // Store the original image
                     $originalPath = "{$path}/original/{$storageFilename}";
-
-                    if(is_dir("{$path}/original")) {
-                        chmod("{$path}/original", 0777);
-                    }
-
-                    if (!mkdir("{$path}/original", 0777, true) && !is_dir("{$path}/original")) {
-                        throw new \RuntimeException(sprintf('Directory "%s" was not created', "{$path}/original"));
-                    }
-
                     $file->storeAs('public', $originalPath);
 
                     // Generate a thumbnail and store it in the thumbnails directory
-
-                    if(is_dir("{$path}/thumbnails")) {
-                        chmod("{$path}/thumbnails", 0777);
-                    }
-
                     $thumbnailPath = "{$path}/thumbnails/{$storageFilename}";
-                    if (!mkdir("{$path}/thumbnails", 0777, true) && !is_dir("{$path}/thumbnails")) {
-                        throw new \RuntimeException(sprintf('Directory "%s" was not created', "{$path}/thumbnails"));
-                    }
-
 
                     $this->generateThumbnail($file, $thumbnailPath);
                     $model->gallery()->create(['path' => $storageFilename]);
