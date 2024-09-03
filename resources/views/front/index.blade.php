@@ -18,11 +18,8 @@
     <section class="py-5">
         <div class="container-fluid mt-5">
         <div class="row equal-height">
-            @php
-                $columnClass = listColumnClass($products);
-            @endphp
             @forelse($products as $product)
-                @include('front.partials.product-item', ['columnClass' => $columnClass, 'productItem' => $product])
+                @include('front.partials.product-item', ['columnClass' => 'col-md-4', 'productItem' => $product])
             @empty
                 <div class="col-md-6">
                     There are no products to show.

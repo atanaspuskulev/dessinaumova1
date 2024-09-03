@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Storage;
 
 function displayImage(
     int $recordId,
-    string|null $path,
+    string|null $imageName,
     bool|null $isThumbnail = null,
     string $thumbnailPath = 'thumbnails'
 ): string
@@ -14,19 +14,19 @@ function displayImage(
     $isThumbnail ??= false;
     $defaultImage = asset('assets/images/default-image.png');
 
-    if(!$path) {
+    if(!$imageName) {
         return $defaultImage;
     }
 
-    $storageDirectory = sprintf(
-        'uploads/%s/%s',
-        $recordId, $isThumbnail ? $thumbnailPath : 'original'
+    $image = sprintf(
+        'uploads/%s/%s/%s',
+        $recordId, $isThumbnail ? $thumbnailPath : 'original', $imageName
     );
 
-    $fileExists = Storage::disk('public')->exists($storageDirectory . '/' . $path);
+    $fileExists = Storage::disk('public')->exists($image);
 
     if ($fileExists) {
-        return asset(sprintf('storage/%s/%s', $storageDirectory, $path));
+        return Storage::disk('public')->url($image);
     }
 
     return $defaultImage;
@@ -46,14 +46,4 @@ function admin_link_active_class(
         return $defaultClass . ' ' . $addClass;
     }
     return $defaultClass;
-}
-
-function listColumnClass(\Illuminate\Support\Collection $collection): string
-{
-//    return match($collection->count()) {
-//        1 => 'col-md-4',
-//        2 => 'col-md-6',
-//        default => 'col-md-4'
-//    };
-    return 'col-md-4';
 }
