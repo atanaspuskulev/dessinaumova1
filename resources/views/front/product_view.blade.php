@@ -50,7 +50,6 @@
                                 </a>
                             </div>
                         </div>
-
                     @endforeach
                 @else
                     <img  class="img-fluid" src="{{ asset('assets/images/default-image.png') }}" />
