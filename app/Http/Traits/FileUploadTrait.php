@@ -26,17 +26,29 @@ trait FileUploadTrait
 
                     // Store the original image
                     $originalPath = "{$path}/original/{$storageFilename}";
-//                    if (!mkdir("{$path}/original", 0777, true) && !is_dir("{$path}/original")) {
-//                        throw new \RuntimeException(sprintf('Directory "%s" was not created', "{$path}/original"));
-//                    }
+
+                    if(is_dir("{$path}/original")) {
+                        chmod("{$path}/original", 0777);
+                    }
+
+                    if (!mkdir("{$path}/original", 0777, true) && !is_dir("{$path}/original")) {
+                        throw new \RuntimeException(sprintf('Directory "%s" was not created', "{$path}/original"));
+                    }
 
                     $file->storeAs('public', $originalPath);
 
                     // Generate a thumbnail and store it in the thumbnails directory
+
+                    if(is_dir("{$path}/thumbnails")) {
+                        chmod("{$path}/thumbnails", 0777);
+                    }
+
                     $thumbnailPath = "{$path}/thumbnails/{$storageFilename}";
-//                    if (!mkdir("{$path}/thumbnails", 0777, true) && !is_dir("{$path}/thumbnails")) {
-//                        throw new \RuntimeException(sprintf('Directory "%s" was not created', "{$path}/thumbnails"));
-//                    }
+                    if (!mkdir("{$path}/thumbnails", 0777, true) && !is_dir("{$path}/thumbnails")) {
+                        throw new \RuntimeException(sprintf('Directory "%s" was not created', "{$path}/thumbnails"));
+                    }
+
+
                     $this->generateThumbnail($file, $thumbnailPath);
                     $model->gallery()->create(['path' => $storageFilename]);
                 }
