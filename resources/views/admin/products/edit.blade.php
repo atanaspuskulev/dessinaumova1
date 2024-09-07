@@ -80,8 +80,20 @@
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="price">Price</label>
-                                    <input type="number" name="price" class="form-control" id="price"
-                                           value="{{ old('price', $product->price) }}">
+                                    <input
+                                        type="text" name="price"
+                                        class="form-control"
+                                        id="price"
+                                        value="{{ old('price', $product->price) }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="shipping_cost">Shipping Cost</label>
+                                    <input
+                                        type="text"
+                                        name="shipping_cost"
+                                        class="form-control"
+                                        id="shipping_cost"
+                                        value="{{ old('shipping_cost', $product->shipping_cost) }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="delivery">Delivery information</label>

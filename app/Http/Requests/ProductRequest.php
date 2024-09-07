@@ -28,6 +28,7 @@ class ProductRequest extends FormRequest
             'short_description' => 'required',
             'description' =>'required',
             'price' =>'required',
+            'shipping_cost' => 'present',
             'material' => 'required',
             'dimentions1' => 'required',
             'delivery' => 'present',

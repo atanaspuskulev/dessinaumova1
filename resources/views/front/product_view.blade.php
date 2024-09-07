@@ -72,6 +72,14 @@
                 @if($product?->price)
                     <h2 class="mt-3 mb-3">Price: {{ $product->price }}&euro;</h2>
                 @endif
+                <p>
+                    <b>Shipping Cost: </b>
+                    @if((int) $product->shipping_cost === 0)
+                        <span class="text-success" style="color: green">Free</span>
+                    @else
+                        {{ $product->shipping_cost }}&euro;
+                    @endif
+                </p>
                 <p><b>Material:</b> {{ $product?->material }}</p>
                 @if($product?->dimentions1)
                     <p><b>Size information:</b> {{ $product->dimentions1 }}</p>
