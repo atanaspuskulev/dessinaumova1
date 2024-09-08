@@ -88,11 +88,15 @@ div, p {
 }
 
 @media(max-width: 767px) {
+
     .col-sm-12 .card-title {
-        min-height: 100px;
+        max-height: 30px;
     }
     .col-sm-12 .card-text {
-        min-height: 100px;
+    }
+
+    .view-sm-gallery {
+        margin-top: 30px;
     }
 }
 
@@ -350,4 +354,4 @@ header p {
 
 .view-product {
     font-size: 10pt !important;
- }
+}

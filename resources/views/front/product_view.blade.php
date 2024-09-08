@@ -40,7 +40,7 @@
     @endphp
     <div class="container-fluid mt-5 mb-5">
         <div class="row">
-            <div class="col-md-6 col-sm-12 mb-0  order-xxl-1 order-2">
+            <div class="col-md-6 col-sm-12 mb-0 order-xxl-1 order-2 view-sm-gallery">
                 @if($product->gallery->count())
                     @foreach($product->gallery as $mainImage)
                         <div class="row">
@@ -55,7 +55,7 @@
                     <img  class="img-fluid" src="{{ asset('assets/images/default-image.png') }}" />
                 @endif
             </div>
-            <div class="col-md-6 col-sm-12 mt-5 mt-md-0 order-xxl-2 order-1l up view-product">
+            <div class="col-md-6 col-sm-12 mt-sm-2 mt-md-0 order-xxl-2 order-1l up view-product">
                 <p class="card-title">{{ $product?->title }}</p>
                 <hr>
                 <p>{!! $product?->description !!}</p>
