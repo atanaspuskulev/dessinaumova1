@@ -55,31 +55,21 @@
                     <img  class="img-fluid" src="{{ asset('assets/images/default-image.png') }}" />
                 @endif
             </div>
-            <div class="col-md-6 col-sm-12 mt-5 mt-md-0 order-xxl-2 order-1l up">
-                <h1>{{ $product?->title }} {{ $product->id }}</h1>
+            <div class="col-md-6 col-sm-12 mt-5 mt-md-0 order-xxl-2 order-1l up view-product">
+                <p class="card-title">{{ $product?->title }}</p>
                 <hr>
                 <p>{!! $product?->description !!}</p>
                 @if($product->tags->count())
-                    <div class="small">in category: </div>
+                    <div class="mb-3 ">in category:
                     @foreach($product->tags as $tag)
                         <a href="{{ route('front.by_tag', ['tag' => $tag->slug]) }}" class="badge-link">
-                            <span class="badge bg-info">
+                            <span class="badge bg-tag-custom">
                                 {{ $tag->name }}
                             </span>
                         </a>
                     @endforeach
+                    </div>
                 @endif
-                @if($product?->price)
-                    <h2 class="mt-3 mb-3">Price: {{ $product->price }}&euro;</h2>
-                @endif
-                <p>
-                    <b>Shipping Cost: </b>
-                    @if((int) $product->shipping_cost === 0)
-                        <span class="text-success" style="color: green">Free</span>
-                    @else
-                        {{ $product->shipping_cost }}&euro;
-                    @endif
-                </p>
                 <p><b>Material:</b> {{ $product?->material }}</p>
                 @if($product?->dimentions1)
                     <p><b>Size information:</b> {{ $product->dimentions1 }}</p>
@@ -96,6 +86,17 @@
                 @if($product?->sold)
                     <h3 class="p-3 bg-warning">This product is sold.</h3>
                 @endif
+                @if($product?->price)
+                    <h5 class="mt-3 mb-3 ">Price: {{ $product->price }}&euro;</h5>
+                @endif
+                <p>
+                    <b>Shipping Cost: </b>
+                    @if((int) $product->shipping_cost === 0)
+                        <span class="text-success1">Free</span>
+                        @else
+                            {{ $product->shipping_cost }}&euro;
+                    @endif
+                </p>
 
                 @if(!$product?->sold && !in_array($product?->id, session()->get('cart', [])))
                     <p class="small">

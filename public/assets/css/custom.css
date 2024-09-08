@@ -36,7 +36,6 @@ footer {
     font-size: 30pt;
 }
 div, p {
-    font-size: 15pt;
     font-weight: normal;
 }
 .navbar-shadow {
@@ -65,17 +64,20 @@ div, p {
 }
 
 .card-title {
-    margin-bottom: 20px;
-    min-height:80px;
+    margin: 0 0 0.4444444444em;
+    min-height: 3em;
+    max-height: none;
+    line-height: 1.5;
+    overflow: hidden;
+    font-size: 12pt;
 }
 
 .card-text {
-    font-size: 14pt;
-    min-height: 100px;
+    min-height: 3.5em;
 }
 
 .col-sm-12 .card-title {
-    color: #F08080;
+    color: #6d3636;
 }
 
 .col-md-3 .card-title {
@@ -124,7 +126,7 @@ div, p {
 .common-link {
     color: #fff;
     text-decoration: none;
-    padding-top:2px
+    padding: 5px;
 }
 
 .common-link:hover {
@@ -317,9 +319,35 @@ ul.dropdown-cart li .item-right button {
 }
 
 .bg-heading {
-    background-color: #afa5a3;
+    /*background-color: #afa5a3;*/
+    background-color: #647254;
 }
 
 .desi-title {
    font-family: 'Grey Qo', sans-serif;;
 }
+
+header p {
+    font-size: 13pt !important;
+    color: #fff !important;
+}
+
+.category-info-container {
+    min-height: 50px;
+}
+
+.card-body {
+    font-size: 10pt !important;
+}
+
+.bg-tag-custom {
+    background-color: #647254;
+}
+
+.text-success1 {
+    color: #647254;
+}
+
+.view-product {
+    font-size: 10pt !important;
+ }

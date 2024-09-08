@@ -3,9 +3,9 @@
 @section('content')
     <header class="bg-heading py-5 align-content-start">
         <div class="container ">
-            <div class="text-white ">
+            <div class="text-white">
                 <h1 class="display-6 fw-bolder">{{ $categoryData?->title }}</h1>
-                <p class=" fw-normal text-white-50 mb-0">
+                <p class="fw-normal text-white mb-0">
                     {!! $categoryData->description !!}
                 </p>
             </div>

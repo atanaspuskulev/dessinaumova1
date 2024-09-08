@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col">
                 <h1>Explore All Tags</h1>
-                <p>Welcome to our Tags Overview page. Here, you can explore all the product tags available at Desi Naumova.
+                <p class="view-product">Welcome to our Tags Overview page. Here, you can explore all the product tags available at Desi Naumova.
                     Whether you're looking for hand-crafted paintings, aromatic candles, or exquisite wooden articles, you'll find them organized by tags for easy browsing.</p>
                 <hr>
             </div>

@@ -10,7 +10,7 @@
                 <h3 class="display-1">Desi Naumova</h3>
                 <hr />
                 <div class="row mb-4">
-                    <div class="col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12 view-product">
                         Desi Naumova is an artist from Bulgaria whose brush creates enchanting
                         fairytale worlds filled with wonder and adventure,
                         inspired by nature and working

@@ -5,11 +5,11 @@
             class="card-img-top" alt="{{ $productItem->title }}"
         >
         <div class="card-body">
-            <h3 class="card-title">{{ $productItem->title }}</h3>
+            <p class="card-title">{{ $productItem->title }}</p>
             <p class="card-text">{!! $productItem->short_description !!}</p>
-            <h3>Price: {{ $productItem->price }}&euro;</h3>
+            <p>Price: {{ $productItem->price }}&euro;</p>
             <br>
-            <p>
+            <p class="category-info-container">
                 <span class="badge rounded-pill bg-secondary">
                         <a
                             href="{{ route('front.to_category', ['category' => $productItem->category->slug]) }}"
