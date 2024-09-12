@@ -15,7 +15,6 @@ class DisplayPriceDirective
 {
     public static function displayPrice($params): string
     {
-        dd($params);
         $money = new Money(((int) round($price * 100)), new Currency($currency));
         $currencies = new ISOCurrencies();
 
