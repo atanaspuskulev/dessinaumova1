@@ -13,7 +13,7 @@ use NumberFormatter;
 
 class DisplayPriceDirective
 {
-    public static function displayPrice($params): string
+    public static function displayPrice($price): string
     {
         $currency = config('payment.currency');
 
