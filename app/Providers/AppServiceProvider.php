@@ -9,6 +9,7 @@ use App\Http\View\Composers\CartCurrentContentComposer;
 use App\Http\View\Composers\CartItemsComposer;
 use App\Http\View\Composers\CategoriesComposer;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
@@ -41,5 +42,13 @@ class AppServiceProvider extends ServiceProvider
         View::composer(['front.products', 'front.product_view'], CartCurrentContentComposer::class);
         View::composer(['layouts.front'], CategoriesComposer::class);
         View::composer(['layouts.front'], CartItemsComposer::class);
+
+        Blade::directive('shipping_cost', static function ($shippingCost) {
+            return "<?php echo \App\Directives\ShippingCostDirective::shippingCostLabel($shippingCost); ?>";
+        });
+
+        Blade::directive('price', function($params) {
+            return "<?php echo \App\Directives\DisplayPriceDirective::displayPrice($params); ?>";
+        });
     }
 }

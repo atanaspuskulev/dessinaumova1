@@ -18,11 +18,8 @@
                 @include('front.partials.product-item', ['productItem' => $product])
             @empty
                 <div class="col-md-6">
-                    <!-- Product 2 -->
                     <div class="card mb-4">
-                        <div class="card-body">
-                            There are no products to show.
-                        </div>
+                        <div class="card-body">{{ __('messages.no_products') }}</div>
                     </div>
                 </div>
             @endforelse

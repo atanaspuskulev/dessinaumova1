@@ -1,0 +1,19 @@
+<?php
+
+return [
+    'free' => 'Free',
+    'shipping_cost_label' => 'Shipping Cost',
+    'in_category_lc' => 'in category',
+    'material' => 'Material',
+    'size_info' => 'Size information',
+    'price' => 'Price',
+    'size_info_more' => 'Size information (more)',
+    'size_info_other' => 'Size information (other)',
+    'delivery_info' => 'Delivery Information',
+    'product_is_sold' => 'This product is sold.',
+    'note_lbl' => 'Note',
+    'buy_item' => 'Buy this item',
+    'view_more' => 'View More',
+    'contact_me' => 'Contact Me',
+    'products_in_category_lbl' => 'Products in category'
+];

@@ -60,9 +60,12 @@
                 <hr>
                 <p>{!! $product?->description !!}</p>
                 @if($product->tags->count())
-                    <div class="mb-3 ">in category:
+                    <div class="mb-3 ">{{ __('site.in_category_lc') }}:
                     @foreach($product->tags as $tag)
-                        <a href="{{ route('front.by_tag', ['tag' => $tag->slug]) }}" class="badge-link">
+                        <a
+                            href="{{ route('front.by_tag', ['tag' => $tag->slug]) }}"
+                            class="badge-link"
+                        >
                             <span class="badge bg-tag-custom">
                                 {{ $tag->name }}
                             </span>
@@ -70,39 +73,36 @@
                     @endforeach
                     </div>
                 @endif
-                <p><b>Material:</b> {{ $product?->material }}</p>
+                <p><b>{{ __('site.material') }}:</b> {{ $product?->material }}</p>
                 @if($product?->dimentions1)
-                    <p><b>Size information:</b> {{ $product->dimentions1 }}</p>
+                    <p><b>{{ __('site.size_info') }}:</b> {{ $product->dimentions1 }}</p>
                 @endif
                 @if($product?->dimentions2)
-                    <p><b>Size information (more):</b> {{ $product->dimentions2 }}</p>
+                    <p><b>{{ __('site.size_info_more') }}:</b> {{ $product->dimentions2 }}</p>
                 @endif
                 @if($product?->dimentions3)
-                    <p><b>Size information (other):</b> {{ $product->dimentions3 }}</p>
+                    <p><b>{{ __('site.size_info_other') }}:</b> {{ $product->dimentions3 }}</p>
                 @endif
                 @if($product?->delivery)
-                    <p><b>Delivery information:</b> {{ $product->delivery }}</p>
+                    <p><b>{{ __('site.delivery_info') }}:</b> {{ $product->delivery }}</p>
                 @endif
                 @if($product?->sold)
-                    <h3 class="p-3 bg-warning">This product is sold.</h3>
+                    <h3 class="p-3 bg-warning">{{ __('site.product_is_sold') }}</h3>
                 @endif
                 @if($product?->price)
-                    <h5 class="mt-3 mb-3 ">Price: {{ $product->price }}&euro;</h5>
+                    <h5 class="mt-3 mb-3 ">{{ __('site.price') }}: {{ $product->price }}&euro;</h5>
                 @endif
+
                 <p>
-                    <b>Shipping Cost: </b>
-                    @if((int) $product->shipping_cost === 0)
-                        <span class="text-success1">Free</span>
-                        @else
-                            {{ $product->shipping_cost }}&euro;
-                    @endif
+                    <b>{{ __('site.shipping_cost_label') }}: </b>
+                    @shipping_cost($product->shipping_cost)
                 </p>
 
                 @if(!$product?->sold && !in_array($product?->id, session()->get('cart', [])))
                     <p class="small">
                         <i>
-                            <b>Note:</b> This is the price without a tax applied.<br />The tax
-                            is 15% and is applied at the total of the order.
+                            <b>{{ __('site.note_lbl') }}:</b>
+                            {!! __('messages.tax_info') !!}
                         </i>
                     </p>
                     <form
@@ -114,8 +114,12 @@
                     >
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <input type="hidden" name="product_id" value="{{ $product->id }}" />
-                        <button type="submit" class="btn btn-outline-dark flex-shrink-0" id="buy-button">
-                            <i class="bi-cart-fill me-1"></i> Buy this item</button>
+                        <button
+                            type="submit"
+                            class="btn btn-outline-dark flex-shrink-0"
+                            id="buy-button"
+                        >
+                            <i class="bi-cart-fill me-1"></i> {{ __('site.buy_item') }}</button>
                     </form>
                 @elseif(!$product?->sold && in_array($product?->id, $cartItems, true))
                     @include('front.partials.item-in-cart')
