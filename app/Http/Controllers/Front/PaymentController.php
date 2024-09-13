@@ -42,7 +42,7 @@ class PaymentController extends Controller
             return redirect()->to(route('front.index'));
         }
 
-        $cart = $this->cartService->getCart('cart');
+        $cart = $this->cartService->getCart();
         $deliveryInformation = $this->sessionStorageService->get('delivery-information');
 
         if(empty($cart) || empty($deliveryInformation)) {

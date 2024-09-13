@@ -20,5 +20,6 @@ return [
     'email_address_lbl' => 'E-Mail Address',
     'phone_optional_lbl' => 'Your Phone (Optional)',
     'additional_information_optional_lbl' => 'Additional Information (Optional)',
-    'continue' => 'Continue'
+    'continue' => 'Continue',
+    'cart_payment_title' => 'Cart Payment'
 ];
