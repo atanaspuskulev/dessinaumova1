@@ -24,9 +24,7 @@ class DisplayPriceDirective
             throw new InvalidArgumentException("Currency not supported: $currency");
         }
 
-        $nf = new NumberFormatter('en_US', NumberFormatter::CURRENCY); // 'en_GB' for English + EUR formatting
-        $mf = new IntlMoneyFormatter($nf, $currencies);
-
-        return $mf->format($money);
+        $nf = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
+        return (new IntlMoneyFormatter($nf, $currencies))->format($money);
     }
 }

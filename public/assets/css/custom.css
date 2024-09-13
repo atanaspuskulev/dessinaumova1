@@ -1,8 +1,12 @@
-body {
+html, body {
+    height: 100%;
+    margin: 0;
     display: flex;
     flex-direction: column;
+}
+
+body {
     min-height: 100vh;
-    margin: 0;
 }
 
 main {
@@ -10,8 +14,8 @@ main {
 }
 
 footer {
-    background-color: #343a40; /* Set the background color of your footer */
-    color: #ffffff; /* Set the text color of your footer */
+    background-color: #343a40;
+    color: #ffffff;
     text-align: center;
     padding: 1rem;
 }
@@ -24,9 +28,9 @@ footer {
 }
 
 .navbar .navbar-nav .nav-item .nav-link {
-    white-space: nowrap; /* Prevent line breaks */
-    overflow: hidden;    /* Hide overflowing text */
-    text-overflow: ellipsis; /* Add ellipsis (...) for long text */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 #navbarNav {
     margin-right: 20px;

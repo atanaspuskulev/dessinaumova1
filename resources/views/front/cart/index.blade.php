@@ -17,7 +17,7 @@
     <div class="container-fluid mt-5">
         <div class="row">
             <div class="col">
-                <h1>Your shopping cart</h1>
+                <h1>{{ __('site.shopping_cart_lbl') }}</h1>
                 <hr>
             </div>
         </div>

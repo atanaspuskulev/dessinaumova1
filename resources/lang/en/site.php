@@ -15,5 +15,12 @@ return [
     'buy_item' => 'Buy this item',
     'view_more' => 'View More',
     'contact_me' => 'Contact Me',
-    'products_in_category_lbl' => 'Products in category'
+    'products_in_category_lbl' => 'Products in category',
+    'shopping_cart_lbl' => 'Your shopping cart',
+    'follow_me' => 'Follow Me',
+    'categories' => 'Categories',
+    'about' => 'About',
+    'tos' => 'Terms of Use',
+    'privacy_policy' => 'Privacy Policy',
+    'cookies_policy' => 'Cookies Policy',
 ];

@@ -20,32 +20,41 @@
 </head>
 <body>
     @include('front.partials.navigation')
-    @yield('content')
+
+    <main>
+        @yield('content')
+    </main>
 
     <footer class="py-5 bg-dark">
         <div class="container">
             <div class="row">
                 <!-- Footer Links -->
                 <div class="col-md text-start">
-                    <h4>About</h4>
+                    <h4>{{ __('site.about') }}</h4>
                     <hr />
                     <ul class="list-unstyled">
-                        <li><a href="{{ route('front.terms_of_use') }}" class="text-white">Terms of Use</a></li>
-                        <li><a href="{{ route('front.privacy_policy') }}" class="text-white">Privacy Policy</a></li>
-                        <li><a href="{{ route('front.cookies_policy') }}" class="text-white">Cookies Policy</a></li>
-                        <li><a href="{{ route('front.about') }}" class="text-white">About</a></li>
-                        <li><a href="{{ route('front.contact') }}" class="text-white">Contact</a></li>
+                        <li><a href="{{ route('front.terms_of_use') }}" class="text-white">{{ __('site.tos') }}</a></li>
+                        <li><a href="{{ route('front.privacy_policy') }}" class="text-white">{{ __('site.privacy_policy') }}</a></li>
+                        <li><a href="{{ route('front.cookies_policy') }}" class="text-white">{{ __('site.cookies_policy') }}</a></li>
+                        <li><a href="{{ route('front.about') }}" class="text-white">{{ __('site.about') }}</a></li>
+                        <li><a href="{{ route('front.contact') }}" class="text-white">{{ __('site.contact_me') }}</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md text-start">
-                    <h4>Categories</h4>
+                    <h4>{{ __('site.categories') }}</h4>
                     <hr />
                     <ul class="list-unstyled">
                         @if(isset($products_categories) && $products_categories->count())
                             @foreach($products_categories as $slug => $title)
                                 <li>
-                                    <a class="text-white" href="{{ route('front.to_category', ['category' => $slug]) }}">{{ $title }}
+                                    <a
+                                        class="text-white"
+                                        href="{{ route('front.to_category', [
+                                            'category' => $slug
+                                        ]) }}"
+                                    >
+                                        {{ $title }}
                                     </a>
                                 </li>
                             @endforeach
@@ -53,9 +62,8 @@
                     </ul>
                 </div>
 
-                <!-- Social Media Links (Optional) -->
                 <div class="col-md text-start">
-                    <h4>Follow Me</h4>
+                    <h4>{{ __('site.follow_me') }}</h4>
                     <hr />
                     <a href="https://facebook.com" class="text-white me-2"><i class="bi bi-facebook"></i></a>
                     <a href="https://twitter.com" class="text-white me-2"><i class="bi bi-instagram"></i></a>
@@ -65,10 +73,11 @@
 
             <div class="row mt-3">
                 <div class="col text-center">
-                    <p class="mb-0">&copy; {{ date('Y') }} Desi Naumova. All rights reserved.</p>
+                    <p class="mb-0">&copy; {{ date('Y') }} {{ config('app.name') }}. {{ __('messages.copyright_msg') }}</p>
                 </div>
             </div>
-        </div>    </footer>
+        </div>
+    </footer>
     <script src="{{ asset('assets/bootstrap-5.0.2/js/bootstrap.bundle.js') }}"></script>
     @yield('js_files')
 </body>
