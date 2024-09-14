@@ -24,8 +24,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
+use Exception;
 
 class OrdersController extends Controller
 {
@@ -111,6 +110,7 @@ class OrdersController extends Controller
                 'order_id' => '',
                 'status' => OrderEnum::PENDING->value,
                 'amount' => $pricesService->calculatePrice($prices),
+                'shipping_cost' => (float)$request->shipping_cost,
                 'currency' => config('paypal.currency'),
                 'payer_name' => $requestOrder['shipping']['name']['full_name'],
                 'payer_email' => $requestOrder['payer']['email_address'],
@@ -140,7 +140,7 @@ class OrdersController extends Controller
             $this->sessionStorageService->store('current_payment_order_id', $order->id);
 
             Mail::to($requestOrder['payer']['email_address'])->queue(new OrderCreatedToBuyer($order));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $message = sprintf(
                 'An error occurred while trying to create user order and send email: %s',
                 $e->getMessage()

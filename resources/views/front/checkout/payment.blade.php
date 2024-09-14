@@ -11,6 +11,7 @@
         let orderUpdateUrl = '{{ route("front.payment.api.order.update") }}';
         let apiCancelUrl = '{{ route("front.payment.api.order.cancel") }}';
         let orderInfo = JSON.parse('{!! $order !!}');
+        let shippingCost = {{ $shippingCost }};
         let paypalDefaultLocale = '{{ $paypalLocale }}';
     </script>
 

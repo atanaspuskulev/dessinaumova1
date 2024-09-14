@@ -30,7 +30,8 @@ $(function() {
                 body: JSON.stringify({
                     paymentMethod: 'paypal',
                     paymentSource: data.paymentSource,
-                    order: orderInfo
+                    order: orderInfo,
+                    shipping_cost: shippingCost
                 })
             }).then((res) => {
                 return res.json();

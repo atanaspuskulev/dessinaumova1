@@ -12,6 +12,7 @@ class Orders extends Model
         'order_id',
         'status',
         'amount',
+        'shipping_cost',
         'currency',
         'payer_name',
         'payer_email',

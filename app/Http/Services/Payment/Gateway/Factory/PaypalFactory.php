@@ -106,7 +106,5 @@ class PaypalFactory extends AbstractPaymentGateway implements PaymentGatewayInte
         } catch(\Exception $e) {
             throw $e;
         }
-
-
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\CartService;
 use App\Http\Services\OrderService;
 use App\Http\Services\Payment\PaymentService;
+use App\Http\Services\PriceService;
 use App\Http\Services\SessionStorageService;
 use App\Http\Traits\CartTrait;
 use App\Models\Product;
@@ -23,6 +24,7 @@ class PaymentController extends Controller
         private readonly PaymentService $paymentService,
         private readonly SessionStorageService $sessionStorageService,
         private readonly CartService $cartService,
+        private readonly PriceService $priceService,
         private OrderService $orderService
     )
     {
@@ -58,9 +60,10 @@ class PaymentController extends Controller
         $paypalLocale = $this->paymentService->getPaymentConfigKey('paypal', 'locale');
 
         $purchases = [];
+        $shippingCost = 0.00;
 
-        Product::whereIn('id', $cart)->get()
-            ->map(static function ($item) use (&$purchases, $paypalCurrency) {
+        $pq = Product::whereIn('id', $cart)->get();
+        $pq->map(static function ($item) use (&$purchases, $paypalCurrency) {
                 $purchases[] = [
                     'reference_id' => $item->id,
                     'description' => $item->title,
@@ -71,10 +74,20 @@ class PaymentController extends Controller
                 ];
             });
 
+        $shippingCost = $this->priceService->calculateShippingPrice($pq->pluck('shipping_cost'));
+
         $purchaseUnits = $this->paymentService->assemblePurchaseUnitsForPaypal($purchases, $deliveryInformation);
 
         $order = json_encode($purchaseUnits, JSON_THROW_ON_ERROR);
 
-        return view('front.checkout.payment', compact('order', 'paypalClientId', 'paypalCurrency', 'paypalBrandName', 'paypalLocale', 'deliveryInformation'));
+        return view('front.checkout.payment', compact(
+            'order',
+            'paypalClientId',
+            'paypalCurrency',
+            'paypalBrandName',
+            'paypalLocale',
+            'deliveryInformation',
+            'shippingCost'
+        ));
     }
 }
