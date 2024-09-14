@@ -39,14 +39,14 @@
         @endforeach
         <tr>
             <td colspan="5" class="text-end total-price">
-                {{ __('cart.tax_lbl') }} {{ config('payment.default_tax_percent') }}%:
-                @price($taxAmount)
+                {{ __('site.shipping_cost_label') }}:
+                @shipping_cost($product->shipping_cost)
             </td>
         </tr>
         <tr>
             <td colspan="5" class="text-end total-price">
-                {{ __('site.shipping_cost_label') }}:
-                @shipping_cost($product->shipping_cost)
+                {{ __('cart.tax_lbl') }} {{ config('payment.default_tax_percent') }}%:
+                @price($taxAmount)
             </td>
         </tr>
         <tr>

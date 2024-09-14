@@ -131,13 +131,11 @@ class CartService implements CleanupContractInterface
         $prices = $products->pluck('price');
         $shippingCosts = $products->pluck('shipping_cost');
 
+        $shippingPrice = $this->priceService->calculateShippingPrice($shippingCosts);
+        $prices->push($shippingPrice);
         $totalPrice = $this->priceService->calculatePrice($prices, true, 0.20);
         $priceWithoutTax = $this->priceService->calculatePrice($prices);
-        $shippingPrice = $this->priceService->calculateShippingPrice($shippingCosts);
-        $totalPrice += $shippingPrice;
-
         $taxAmount = $totalPrice - $priceWithoutTax;
-
         $categories = null;
 
         if(!$products->count()) {

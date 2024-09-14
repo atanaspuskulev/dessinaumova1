@@ -16,11 +16,10 @@ class PriceService
         }
 
         if($applyTaxRate && $taxRate) {
-            $taxAmount = $amount * $taxRate;
-            $amount += $taxAmount;
+            $amount *= (1 + $taxRate);
         }
 
-        return round($amount);
+        return round($amount, 2);
     }
 
     public function calculateShippingPrice(Collection $prices): float
