@@ -45,6 +45,12 @@
         </tr>
         <tr>
             <td colspan="5" class="text-end total-price">
+                {{ __('site.shipping_cost_label') }}:
+                @shipping_cost($product->shipping_cost)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5" class="text-end total-price">
                 {{ __('cart.total') }}:
                 @price($totalPrice)
             </td>

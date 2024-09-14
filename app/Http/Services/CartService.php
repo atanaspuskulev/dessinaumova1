@@ -128,10 +128,13 @@ class CartService implements CleanupContractInterface
 
         $products = $this->productsService->getByIds($productsIds, ['category', 'thumbnail']);
 
-        $pricesCollection = $products->pluck('price');
+        $prices = $products->pluck('price');
+        $shippingCosts = $products->pluck('shipping_cost');
 
-        $totalPrice = $this->priceService->calculatePrice($pricesCollection, true, 0.20);
-        $priceWithoutTax = $this->priceService->calculatePrice($pricesCollection);
+        $totalPrice = $this->priceService->calculatePrice($prices, true, 0.20);
+        $priceWithoutTax = $this->priceService->calculatePrice($prices);
+        $shippingPrice = $this->priceService->calculateShippingPrice($shippingCosts);
+        $totalPrice += $shippingPrice;
 
         $taxAmount = $totalPrice - $priceWithoutTax;
 
@@ -152,7 +155,8 @@ class CartService implements CleanupContractInterface
             'products',
             'totalPrice',
             'categories',
-            'taxAmount'
+            'taxAmount',
+            'shippingPrice'
         );
     }
 

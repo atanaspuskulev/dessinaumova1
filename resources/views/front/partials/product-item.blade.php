@@ -10,7 +10,7 @@
             <p>{{ __('site.price') }}: @price($productItem->price)</p>
             <p>
                 {{ __('site.shipping_cost_label') }}:
-                @shipping_cost($productItem->shipping_cost)
+                @shipping_cost($productItem->shippingPrice)
             </p>
             <br>
             <p class="category-info-container">

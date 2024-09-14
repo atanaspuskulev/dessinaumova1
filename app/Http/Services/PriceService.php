@@ -22,4 +22,15 @@ class PriceService
 
         return round($amount);
     }
+
+    public function calculateShippingPrice(Collection $prices): float
+    {
+        // Handle free delivery first. Immediately return if there's a 0.00 price
+        // which indicates free delivery.
+        if($prices->contains(0.00)) {
+           return 0.00;
+        }
+
+        return (float) $prices->max();
+    }
 }

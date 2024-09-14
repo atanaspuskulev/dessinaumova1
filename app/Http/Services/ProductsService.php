@@ -15,11 +15,9 @@ class ProductsService
 
     public function getByIds(array $ids, array $relationships = []): Collection
     {
-        return Product::when(!empty($relationships), static function($query) use ($relationships) {
-            $query->with($relationships);
-        })
-        ->whereIn('id', $ids)
-        ->get();
+        return Product::with($relationships)
+            ->whereIn('id', $ids)
+            ->get();
     }
 
     public function getProductItemsWithTemplate(Collection $items): string
