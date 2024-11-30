@@ -7,7 +7,7 @@ namespace App\Directives;
 class ShippingCostDirective
 {
     public static function shippingCostLabel(
-        float|int $shippingCost,
+        float|int $shippingCost = 0,
         string $freeShippingCostLabel = 'free',
         string $currencySign = "&euro;"
     ): string
