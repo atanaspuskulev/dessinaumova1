@@ -119,7 +119,7 @@ class OrderService implements CleanupContractInterface
 
             $items[] = InvoiceItem::make($orderItem->product->title)
                 ->quantity(1)
-                ->pricePerUnit($orderItem->product->price);
+                ->pricePerUnit((float)$orderItem->product->price);
         }
 
         $invoice = Invoice::make('receipt')
