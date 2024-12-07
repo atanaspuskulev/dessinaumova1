@@ -48,11 +48,17 @@ class Product extends Model
         });
 
         static::creating(function ($item) {
+            if($item->shipping_cost === null) {
+                $item->shipping_cost = 0;
+            }
             $item->slug = Str::lower(Str::slug($item->title));
             $item->created_at = now()->toDateString();
         });
 
         static::updating(function ($item) {
+            if($item->shipping_cost === null) {
+                $item->shipping_cost = 0;
+            }
             $item->updated_at = now()->toDateString();
         });
 
