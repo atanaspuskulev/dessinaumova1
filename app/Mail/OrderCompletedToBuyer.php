@@ -51,7 +51,9 @@ class OrderCompletedToBuyer extends Mailable implements ShouldQueue
     public function attachments(): array
     {
         return [
-            Attachment::fromStorage()
+            Attachment::fromStorage($this->invoice['filepath'])
+                ->as('invoice.pdf')
+                ->withMime('application/pdf')
         ];
     }
 }
