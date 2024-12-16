@@ -12,6 +12,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 
 class OrderCompletedToBuyer extends Mailable implements ShouldQueue
 {
@@ -47,9 +48,14 @@ class OrderCompletedToBuyer extends Mailable implements ShouldQueue
      * Get the attachments for the message.
      *
      * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @throws \Exception
      */
     public function attachments(): array
     {
+        if (!Storage::exists($this->invoice['filepath'])) {
+            throw new \RuntimeException('Attachment file does not exist: ' . $this->invoice['filepath']);
+        }
+
         return [
             Attachment::fromStorage($this->invoice['filepath'])
                 ->as('invoice.pdf')

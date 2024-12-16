@@ -54,7 +54,17 @@ class OrdersController extends Controller
 
         $invoice = $this->orderService->makeInvoice($order);
 
-        Mail::to($order->payer_email)->queue(new OrderCompletedToBuyer($order, $invoice));
+        try {
+            Mail::to($order->payer_email)->send(new OrderCompletedToBuyer($order, $invoice));
+            // Optionally log success if needed
+            logger('Email sent successfully to ' . $order->payer_email);
+        } catch (\Exception $e) {
+            // Log the error message
+            logger('Failed to send email: ' . $e->getMessage());
+
+            // Optionally rethrow or handle the exception
+            throw $e;
+        }
 
         $this->orderService->clearOrderSession('current_payment_order_id');
         $this->orderService->clearOrderSession('current_order_id');
