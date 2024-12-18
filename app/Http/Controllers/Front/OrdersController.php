@@ -149,7 +149,7 @@ class OrdersController extends Controller
 
             $this->sessionStorageService->store('current_payment_order_id', $order->id);
 
-            Mail::to($requestOrder['payer']['email_address'])->queue(new OrderCreatedToBuyer($order));
+            Mail::to($requestOrder['payer']['email_address'])->send(new OrderCreatedToBuyer($order));
         } catch (Exception $e) {
             $message = sprintf(
                 'An error occurred while trying to create user order and send email: %s',
@@ -185,7 +185,7 @@ class OrdersController extends Controller
                     $this->sessionStorageService->store('payment_id', $payResult['id']);
 
                     $status = 200;
-                    Mail::to(config('mail.to_admin_email'))->queue(new OrderCreatedToSeller($order));
+                    Mail::to(config('mail.to_admin_email'))->send(new OrderCreatedToSeller($order));
                 }
 
                 $this->cartService->cleanupForSession();
