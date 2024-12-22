@@ -52,13 +52,13 @@ class OrderCompletedToBuyer extends Mailable
      */
     public function attachments(): array
     {
-        if (!Storage::exists($this->invoice['filepath'])) {
+        if (!file_exists($this->invoice['filepath'])) {
             throw new \RuntimeException('Attachment file does not exist: ' . $this->invoice['filepath']);
         }
 
         return [
-            Attachment::fromStorage($this->invoice['filepath'])
-                ->as('invoice.pdf')
+            Attachment::fromPath($this->invoice['filepath'])
+                ->as('invoice_' . $this->order->order_id . '.pdf')
                 ->withMime('application/pdf')
         ];
     }
