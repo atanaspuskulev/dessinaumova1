@@ -2,8 +2,12 @@
 
 namespace App\Http\Services\Payment\Gateway\Factory;
 
+use App\Http\Services\CartService;
 use App\Http\Services\Payment\Gateway\AbstractPaymentGateway;
 use App\Http\Services\Payment\Interface\PaymentGatewayInterface;
+use App\Http\Services\PriceService;
+use App\Http\Services\ProductsService;
+use App\Http\Services\SessionStorageService;
 use App\Http\Traits\CartTrait;
 use RuntimeException;
 use Illuminate\Support\Facades\Http;
@@ -66,6 +70,7 @@ class PaypalFactory extends AbstractPaymentGateway implements PaymentGatewayInte
                 ],
             ];
         });
+
 
         $paypalApi = $this->isSandbox ? config('paypal.sandbox.paypal_api_url') : config('paypal.live.paypal_api_url');
 

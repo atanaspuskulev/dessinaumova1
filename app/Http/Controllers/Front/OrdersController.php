@@ -92,7 +92,7 @@ class OrdersController extends Controller
         return response()->json([]);
     }
 
-    public function createOrder(Request $request): JsonResponse
+    public function createOrder(Request $request)//: JsonResponse
     {
         $status = true;
         $data = [];
@@ -135,6 +135,7 @@ class OrdersController extends Controller
             ];
 
             $this->gateway = $this->orderService->getPaymentGateway($request->paymentMethod);
+
             $this->accessToken = $this->gateway->getAuthToken();
             $capture = $this->gateway->createOrder(['products' => $productsIds, 'order' => $orderData], $this->accessToken);
 
