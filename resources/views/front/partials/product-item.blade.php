@@ -7,11 +7,15 @@
         <div class="card-body">
             <p class="card-title">{{ $productItem->title }}</p>
             <p class="card-text">{!! $productItem->short_description !!}</p>
-            <p>{{ __('site.price') }}: @price($productItem->price)</p>
-            <p>
-                {{ __('site.shipping_cost_label') }}:
-                @shipping_cost($productItem->shipping_cost)
-            </p>
+            @if(!$productItem->sold)
+                <p>{{ __('site.price') }}: @price($productItem->price)</p>
+                <p>
+                    {{ __('site.shipping_cost_label') }}:
+                    @shipping_cost($productItem->shipping_cost)
+                </p>
+            @else
+                <h5 class="p-3 bg-warning">{{ __('site.product_is_sold') }}</h5>
+            @endif
             <br>
             <p class="category-info-container">
                 <span class="badge rounded-pill bg-secondary">

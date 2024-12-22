@@ -54,7 +54,6 @@ class OrdersController extends Controller
 
         $invoice = $this->orderService->makeInvoice($order);
 
-
         try {
             Mail::to($order->payer_email)->send(new OrderCompletedToBuyer($order, $invoice));
         } catch (\Exception $e) {

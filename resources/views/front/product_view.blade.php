@@ -89,14 +89,16 @@
                 @if($product?->sold)
                     <h3 class="p-3 bg-warning">{{ __('site.product_is_sold') }}</h3>
                 @endif
-                @if($product?->price)
-                    <h5 class="mt-3 mb-3 ">{{ __('site.price') }}: {{ $product->price }}&euro;</h5>
-                @endif
+                @if(!$product?->sold)
+                    @if($product?->price)
+                        <h5 class="mt-3 mb-3 ">{{ __('site.price') }}: {{ $product->price }}&euro;</h5>
+                    @endif
 
-                <p>
-                    <b>{{ __('site.shipping_cost_label') }}: </b>
-                    @shipping_cost($product->shipping_cost)
-                </p>
+                    <p>
+                        <b>{{ __('site.shipping_cost_label') }}: </b>
+                        @shipping_cost($product->shipping_cost)
+                    </p>
+                @endif
 
                 @if(!$product?->sold && !in_array($product?->id, session()->get('cart', [])))
                     <p class="small">

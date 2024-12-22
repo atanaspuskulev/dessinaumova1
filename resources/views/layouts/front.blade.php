@@ -65,9 +65,8 @@
                 <div class="col-md text-start">
                     <h4>{{ __('site.follow_me') }}</h4>
                     <hr />
-                    <a href="https://facebook.com" class="text-white me-2"><i class="bi bi-facebook"></i></a>
-                    <a href="https://twitter.com" class="text-white me-2"><i class="bi bi-instagram"></i></a>
-                    <a href="https://instagram.com" class="text-white me-2"><i class="bi bi-tiktok"></i></a>
+                    <a target="_blank" href="https://www.facebook.com/DesiNaumovaArtworks" class="text-white me-2"><i class="bi bi-facebook"></i></a>
+                    <a target="_blank" href="https://www.instagram.com/desislava.naumova/" class="text-white me-2"><i class="bi bi-instagram"></i></a>
                 </div>
             </div>
 
