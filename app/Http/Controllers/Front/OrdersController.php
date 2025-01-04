@@ -17,6 +17,7 @@ use App\Mail\OrderCompletedToBuyer;
 use App\Mail\OrderCreatedToBuyer;
 use App\Mail\OrderCreatedToSeller;
 use App\Models\Orders;
+use App\Models\Product;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -36,7 +37,8 @@ class OrdersController extends Controller
     public function __construct(
         protected OrderService $orderService,
         protected CartService $cartService,
-        private readonly SessionStorageService $sessionStorageService
+        private readonly SessionStorageService $sessionStorageService,
+        private readonly PriceService $priceService
     ) {}
 
     /**
@@ -48,19 +50,32 @@ class OrdersController extends Controller
             return redirect(route('front.index'));
         }
 
-        $order = Orders::where('id', $this->sessionStorageService->get('current_payment_order_id'))
+        $order = Orders::with(['items'])
+            ->where('id', $this->sessionStorageService->get('current_payment_order_id'))
             ->where('order_id', $this->sessionStorageService->get('payment_id'))
             ->first();
 
+        $productsIds = $order->items->pluck('product_id')->toArray();
+
+        $products = Product::whereIn('id', $productsIds)->get();
+        $prices = $products->pluck('price');
+        $shippingCosts = $products->pluck('shipping_cost');
+
+        $shippingPrice = $this->priceService->calculateShippingPrice($shippingCosts);
+
+        $prices->push($shippingPrice);
+        $totalPrice = number_format($this->priceService->calculatePrice($prices, true, 0.20), 2,'.', '');
+
+        $priceWithoutTax = $this->priceService->calculatePrice($prices);
+        $taxAmount = $totalPrice - $priceWithoutTax;
+
         $invoice = $this->orderService->makeInvoice($order);
 
-        try {
-            Mail::to($order->payer_email)->send(new OrderCompletedToBuyer($order, $invoice));
-        } catch (\Exception $e) {
-            // Log the error message
-            logger('Failed to send email: ' . $e->getMessage());
+        $shippingPrice = number_format($shippingPrice, 2, '.', '');
 
-            // Optionally rethrow or handle the exception
+        try {
+            Mail::to($order->payer_email)->send(new OrderCompletedToBuyer($order, $invoice, $totalPrice, $taxAmount, $shippingPrice));
+        } catch (\Exception $e) {
             throw $e;
         }
 

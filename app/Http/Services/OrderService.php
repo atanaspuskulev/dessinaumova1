@@ -98,6 +98,8 @@ class OrderService implements CleanupContractInterface
             ],
         ]);
 
+        $order->load('items');
+
         $customer = new Buyer([
             'name' => $order->payer_name,
             'custom_fields' => [

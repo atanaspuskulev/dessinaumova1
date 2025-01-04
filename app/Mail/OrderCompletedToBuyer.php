@@ -21,7 +21,13 @@ class OrderCompletedToBuyer extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public Orders $order, public array $invoice)
+    public function __construct(
+        public Orders $order,
+        public array $invoice,
+        public string $totalPrice,
+        public float $taxAmount,
+        public string $shippingCost
+    )
     {}
 
     /**
@@ -30,7 +36,7 @@ class OrderCompletedToBuyer extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Order Completed To Buyer',
+            subject: 'Order #' . $this->order->order_id . ' has been completed.',
         );
     }
 
