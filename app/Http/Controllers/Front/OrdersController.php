@@ -75,7 +75,7 @@ class OrdersController extends Controller
 
         try {
             Mail::to($order->payer_email)->send(new OrderCompletedToBuyer($order, $invoice, $totalPrice, $taxAmount, $shippingPrice));
-            $products->update(['sold' => true]);
+            Product::whereIn('id', $productsIds)->update(['sold' => true]);
         } catch (\Exception $e) {
             throw $e;
         }
