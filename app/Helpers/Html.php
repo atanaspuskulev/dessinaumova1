@@ -8,7 +8,8 @@ function displayImage(
     int $recordId,
     string|null $imageName,
     bool|null $isThumbnail = null,
-    string $thumbnailPath = 'thumbnails'
+    string $thumbnailPath = 'thumbnails',
+    string $uploadPath = 'uploads'
 ): string
 {
     $isThumbnail ??= false;
@@ -19,8 +20,8 @@ function displayImage(
     }
 
     $image = sprintf(
-        'uploads/%s/%s/%s',
-        $recordId, $isThumbnail ? $thumbnailPath : 'original', $imageName
+        '%s/%s/%s/%s',
+        $uploadPath, $recordId, $isThumbnail ? $thumbnailPath : 'original', $imageName
     );
 
     $fileExists = Storage::disk('public')->exists($image);

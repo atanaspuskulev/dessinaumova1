@@ -5,25 +5,20 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
+use App\Models\Category;
 use Illuminate\View\View;
 
 class HomeController extends Controller
 {
     public function index(): View
     {
-        $products = collect();
+        $maincategory = Category::with('thumbnail')->orderBy('position')->first();
 
-        Product::with(['thumbnail', 'category'])
-            ->where('sold', false)
-            ->chunk(100, function ($chunk) use ($products) {
-                $chunk->groupBy('category_id')->each(function ($items) use ($products) {
-                    $products->push($items->shuffle()->take(3));
-                });
-            });
+        $items = Category::with('thumbnail')->where('is_active', true)
+            ->whereNot('id', $maincategory->id)
+            ->orderBy('position')
+            ->get();
 
-        $products = $products->flatten();
-
-        return view('front.index', compact('products'));
+        return view('front.index', compact('items', 'maincategory'));
     }
 }

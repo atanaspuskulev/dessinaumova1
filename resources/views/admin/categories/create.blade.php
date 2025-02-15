@@ -16,6 +16,7 @@
                         </div>
                     @endif
                     <form
+                        enctype="multipart/form-data"
                         method="post"
                         action="{{ route('categories.store') }}">
                         @csrf
@@ -92,6 +93,13 @@
                                     <label class="form-check-label" for="is_active">
                                         Is active
                                     </label>
+                                </div>
+                                <div class="form-group">
+                                    <hr>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="image" id="image">
+                                        <label class="custom-file-label" for="image">Choose Image</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -13,14 +13,24 @@ use Intervention\Image\Facades\Image;
 
 trait FileUploadTrait
 {
-    public function uploadFiles(ValidatesWhenResolved $request, string $keyName, Model $model)
+    public function uploadFiles(
+        ValidatesWhenResolved $request,
+        string $keyName,
+        Model $model,
+        string $uploadPath = 'uploads',
+        string $modelMethodName = 'gallery'
+    )
     {
         if ($request->hasFile($keyName)) {
             $files = $request->file($keyName);
 
+            if(!is_array($files)) {
+                $files = [$files];
+            }
+
             foreach ($files as $file) {
                 if ($file->isValid()) {
-                    $path = sprintf("uploads/%d", $model->id);
+                    $path = sprintf("%s/%d", $uploadPath, $model->id);
 
                     $temp_path = storage_path($path);
                     $public_path = public_path("storage/".$path);
@@ -49,14 +59,14 @@ trait FileUploadTrait
                     $thumbnailPath = "{$path}/thumbnails/{$storageFilename}";
 
                     $this->generateThumbnail($file, $thumbnailPath);
-                    $model->gallery()->create(['path' => $storageFilename]);
+                    $model->$modelMethodName()->create(['path' => $storageFilename]);
                 }
             }
         }
     }
 
     protected function generateThumbnail(UploadedFile $file, string $thumbnailPath): string
-    {;
+    {
         $configThumbnail = config('images.resize.thumbnail');
         $image = Image::make($file);
         $image->fit($configThumbnail['max_width'], $configThumbnail['max_height']); // Adjust the dimensions for your thumbnails
@@ -65,9 +75,9 @@ trait FileUploadTrait
         return $thumbnailPath;
     }
 
-    public function deleteImage(Model $model, Images $imageObject): void
+    public function deleteImage(Model $model, Images $imageObject, $uploadPath = 'uploads'): void
     {
-        $path = sprintf("uploads/%d", $model->id);
+        $path = sprintf("%s/%d", $uploadPath, $model->id);
 
         Storage::disk('public')->delete(sprintf("%s/original/%s", $path, $imageObject->path));
         Storage::disk('public')->delete(sprintf("%s/thumbnails/%s", $path, $imageObject->path));

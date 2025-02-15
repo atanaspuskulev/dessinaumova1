@@ -359,3 +359,46 @@ header p {
 .view-product {
     font-size: 10pt !important;
 }
+
+.right-image {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain; /* Prevents stretching */
+}
+.image-wrapper {
+    display: block; /* Ensure it behaves as a block element */
+    position: relative;
+    max-width: fit-content; /* Keeps it only as wide as the image */
+    height: max-content; /* Matches the image height */
+    overflow: hidden; /* Ensures no unwanted overflow */
+
+}
+
+
+.image-wrapper img {
+    display: block; /* Prevents unwanted spacing */
+    height: auto;
+    transition: transform .5s ease-in-out; /* Smooth 1s zoom effect */
+}
+
+.image-wrapper:hover img {
+    transform: scale(1.1); /* Slight zoom effect */
+}
+
+.overlay {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    background: none;
+    width: 100%; /* Ensures it matches the parent width */
+    color: white;
+    padding: 10px;
+    text-align: center;
+    box-sizing: border-box; /* Prevents padding from increasing the width */
+    transition: all 0.3s ease; /* Smooth transition */
+    overflow: hidden; /* Prevents overflow */
+}
+
+.image-link {
+    display: inline-block;
+}

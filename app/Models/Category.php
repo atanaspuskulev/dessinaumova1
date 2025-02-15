@@ -7,6 +7,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
@@ -45,6 +47,11 @@ class Category extends Model
         static::updating(function ($item) {
             $item->updated_at = now()->toDateString();
         });
+    }
+
+    public function thumbnail(): MorphOne
+    {
+        return $this->morphOne(Images::class, 'imageable');
     }
 
     public function products()

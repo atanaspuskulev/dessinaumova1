@@ -29,7 +29,8 @@ class CategoryRequest extends FormRequest
             'meta_description' => 'present',
             'meta_keywords' => 'present',
             'meta_title' => 'present',
-            'is_active' => 'sometimes'
+            'is_active' => 'sometimes',
+            'image' => 'file|mimes:jpeg,png,webp'
         ];
 
         $rules['slug'] = $this->has('category_id')
