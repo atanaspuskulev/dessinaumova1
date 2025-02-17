@@ -94,6 +94,8 @@ class ProductsController extends Controller
             $data['sold'] = false;
         }
 
+        $data['has_qty'] = !!isset($data['has_qty']);
+
         $tags = collect();
 
         if(!empty($data['tags'])) {

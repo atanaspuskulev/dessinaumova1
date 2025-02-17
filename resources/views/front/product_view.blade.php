@@ -91,7 +91,7 @@
                 @endif
                 @if(!$product?->sold)
                     @if($product?->price)
-                        <h5 class="mt-3 mb-3 ">{{ __('site.price') }}: {{ $product->price }}&euro;</h5>
+                        <h5 class="mt-3 mb-3 ">{{ __('site.price') }}: @price($product->price, $product->currency)</h5>
                     @endif
 
                     <p>

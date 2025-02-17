@@ -3,15 +3,15 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="trashCategory">Archive Category?</h5>
+                <h5 class="modal-title" id="trashCategory">{{ __('strings.archive_category_title') }}</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Are you sure you want to archive this category?</div>
+            <div class="modal-body">{{ __('strings.archive_category_question') }}</div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-danger" href="javascript:void(0);" onclick="trashCategoryAction();">Archive</a>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ __('strings.cancel') }}</button>
+                <a class="btn btn-danger" href="javascript:void(0);" onclick="trashCategoryAction();">{{ __('strings.archive') }}</a>
             </div>
         </div>
     </div>
@@ -22,15 +22,15 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="destroyCategory">Delete Category?</h5>
+                <h5 class="modal-title" id="destroyCategory">{{ __('strings.delete_category_title') }}</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Are you sure you want to delete this category?</div>
+            <div class="modal-body">{{ __('strings.delete_category_question') }}</div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-danger" href="javascript:void(0);" onclick="destoryCategoryAction();">DELETE</a>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ __('strings.cancel') }}</button>
+                <a class="btn btn-danger" href="javascript:void(0);" onclick="destoryCategoryAction();">{{ __('strings.delete') }}</a>
             </div>
         </div>
     </div>
@@ -41,15 +41,15 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="untrashCategory">Restore Category?</h5>
+                <h5 class="modal-title" id="untrashCategory">{{ __('strings.restore_category_title') }}</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Are you sure you want to restore this category?</div>
+            <div class="modal-body">{{ __('strings.restore_category_question') }}</div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-success" href="javascript:void(0);" onclick="restoreCategoryAction();">RESTORE</a>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ __('strings.cancel') }}</button>
+                <a class="btn btn-success" href="javascript:void(0);" onclick="restoreCategoryAction();">{{ __('strings.restore') }}</a>
             </div>
         </div>
     </div>

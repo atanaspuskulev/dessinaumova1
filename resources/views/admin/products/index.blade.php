@@ -1,18 +1,18 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1 class="h3 mb-12 text-gray-800">List Products</h1>
+    <h1 class="h3 mb-12 text-gray-800">{{ __('strings.list_products') }}</h1>
     <div class="row">
         <div class="col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">List of all products</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ __('nav.admin.list') }}</h6>
                 </div>
                 <div class="card-body">
                     <div class="container">
                         @if(!$categories->isEmpty())
                             <div class="row mb-3">
-                                Filter by:
+                                {{ __('form.filter_by') }}:
                                 @foreach($categories as $category)
                                     <a href="{{ route('products.index', ['byCategory' => $category->id]) }}"  class="mr-2">{{ $category->title }}</a>
                                 @endforeach
@@ -31,36 +31,36 @@
                                                 alt=""
                                                 class="mb-2 img-fluid">
                                             <p>
-                                                <b>Category: </b><br />
+                                                <b>{{ __('strings.category') }}: </b><br />
                                                 {{ $product->category->title }}
                                             </p>
                                             <p>
-                                                <b>Short Description: </b><br />
+                                                <b>{{ __('strings.short_description') }}: </b><br />
                                                 {{ $product->short_description }}
                                             </p>
                                             <p>
-                                                <b>Price: </b><br />
+                                                <b>{{ __('strings.price') }}: </b><br />
                                                 @if($product->sold)
-                                                    <b>SOLD</b>
+                                                    <b>{{ __('strings.SOLD') }}</b>
                                                 @else
-                                                    {{ $product->price }} EUR
+                                                    {{ $product->price }} {{ $product->currency ?? 'EUR' }}
                                                 @endif
                                             </p>
                                         </div>
                                         <div class="card-footer">
                                             <div class="d-flex justify-content-end">
-                                                <a data-toggle="tooltip" title="Edit product" href="{{ route('products.edit', ['product' => $product]) }}" class="btn btn-sm btn-info mr-2">
+                                                <a data-toggle="tooltip" title="{{ __('strings.edit') }}" href="{{ route('products.edit', ['product' => $product]) }}" class="btn btn-sm btn-info mr-2">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                                 @if($product->trashed())
-                                                    <a data-toggle="tooltip" title="Restore product" href="javascript:void(0);" onclick="restoreProduct('{{ route('products.restore', ['product' => $product]) }}');" class="btn btn-sm btn-secondary mr-2">
+                                                    <a data-toggle="tooltip" title="{{ __('strings.restore') }}" href="javascript:void(0);" onclick="restoreProduct('{{ route('products.restore', ['product' => $product]) }}');" class="btn btn-sm btn-secondary mr-2">
                                                         <i class="fas fa-folder-plus"></i>
                                                     </a>
-                                                    <a data-toggle="tooltip" title="Permanently delete product" onclick="destroyProduct('{{ route('products.force-delete', ['product' => $product]) }}')" href="javascript:void(0);" class="btn btn-sm btn-danger">
+                                                    <a data-toggle="tooltip" title="{{ __('strings.delete') }}" onclick="destroyProduct('{{ route('products.force-delete', ['product' => $product]) }}')" href="javascript:void(0);" class="btn btn-sm btn-danger">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
                                                 @else
-                                                    <a data-toggle="tooltip" title="Archive this product" onclick="trashProduct('{{ route('products.destroy', ['product' => $product]) }}')" href="javascript:void(0);" class="btn btn-sm btn-danger">
+                                                    <a data-toggle="tooltip" title="{{ __('strings.archive') }}" onclick="trashProduct('{{ route('products.destroy', ['product' => $product]) }}')" href="javascript:void(0);" class="btn btn-sm btn-danger">
                                                         <i class="fas fa-folder-minus"></i>
                                                     </a>
                                                 @endif
@@ -69,8 +69,8 @@
                                     </div>
                                 </div>
                             @empty
-                                There're no products currently available.
-                                Start here and <a href="{{ route('products.create') }}" class="ml-1">add new product</a>.
+                                Няма въведени продукти.
+                                Започнете тук и <a href="{{ route('products.create') }}" class="ml-1">създайте нов продукт.</a>.
                             @endforelse
                         </div>
                         <div class="row">

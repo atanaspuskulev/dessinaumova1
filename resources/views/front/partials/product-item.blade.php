@@ -8,7 +8,7 @@
             <p class="card-title">{{ $productItem->title }}</p>
             <p class="card-text">{!! $productItem->short_description !!}</p>
             @if(!$productItem->sold)
-                <p>{{ __('site.price') }}: @price($productItem->price)</p>
+                <p>{{ __('site.price') }}: @price($productItem->price, $productItem->currency)</p>
                 <p>
                     {{ __('site.shipping_cost_label') }}:
                     @shipping_cost($productItem->shipping_cost)

@@ -33,6 +33,7 @@ class Product extends Model
         'currency',
         'delivery',
         'sold',
+        'has_qty',
         'meta_title',
         'meta_description',
         'meta_keywords',

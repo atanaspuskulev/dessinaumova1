@@ -13,9 +13,9 @@ use NumberFormatter;
 
 class DisplayPriceDirective
 {
-    public static function displayPrice($price): string
+    public static function displayPrice($price, $currentCurrency = null): string
     {
-        $currency = config('payment.currency');
+        $currency = $currentCurrency ?? config('payment.currency');
 
         $money = new Money(((int) round($price * 100)), new Currency($currency));
         $currencies = new ISOCurrencies();

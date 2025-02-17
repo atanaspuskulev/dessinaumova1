@@ -11,7 +11,7 @@
                 aria-haspopup="true"
                 aria-expanded="false"
             >
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Logout</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ __('nav.admin.logout') }}</span>
             </a>
         </li>
     </ul>

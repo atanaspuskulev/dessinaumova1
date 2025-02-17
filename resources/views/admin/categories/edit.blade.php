@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1 class="h3 mb-12 text-gray-800">Edit category "{{ $category->title }}"</h1>
+    <h1 class="h3 mb-12 text-gray-800">{{ __('form.edit_category') }} "{{ $category->title }}"</h1>
     @if(session()->has('message'))
         <div class="alert alert-success">
             {{ session('message') }}
@@ -11,7 +11,7 @@
         <div class="col-lg col-md">
             <div class="card shadow mb-12">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Edit Category Information</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ __('form.edit_information') }}</h6>
                 </div>
                 <div class="card-body">
                     @if($errors->any())
@@ -29,7 +29,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="title">Title</label>
+                                    <label for="title">{{ __('form.title') }}</label>
                                     <input
                                         type="text"
                                         class="form-control"
@@ -38,7 +38,7 @@
                                         value="{{ old('title', $category->title) }}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="slug">Category slug</label>
+                                    <label for="slug">{{ __('form.slug') }}</label>
                                     <input
                                         type="text"
                                         class="form-control"
@@ -47,7 +47,7 @@
                                         value="{{ old('slug', $category->slug) }}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="description">Description</label>
+                                    <label for="description">{{ __('form.description') }}</label>
                                     <textarea
                                         class="form-control"
                                         id="description"
@@ -55,7 +55,7 @@
                                         rows="6">{{ old('description', $category->description) }}</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="meta_description">Meta description</label>
+                                    <label for="meta_description">{{ __('form.meta_description') }}</label>
                                     <textarea
                                         class="form-control"
                                         id="meta_description"
@@ -63,7 +63,7 @@
                                         rows="6">{{ old('meta_description', $category->meta_description) }}</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="meta_keywords">Meta keywords</label>
+                                    <label for="meta_keywords">{{ __('form.meta_keywords') }}</label>
                                     <textarea
                                         class="form-control"
                                         id="meta_keywords"
@@ -71,7 +71,7 @@
                                         rows="6">{{ old('meta_keywords', $category->meta_keywords) }}</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="meta_title">Meta title</label>
+                                    <label for="meta_title">{{ __('form.meta_title') }}</label>
                                     <input
                                         type="text"
                                         class="form-control"
@@ -80,7 +80,7 @@
                                         value="{{ old('meta_title', $category->meta_title) }}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="position">Position</label>
+                                    <label for="position">{{ __('form.position') }}</label>
                                     <input
                                         type="number"
                                         class="form-control"
@@ -97,20 +97,20 @@
                                         id="is_active"
                                         @checked(old('is_active', $category->is_active ) == 1)>
                                     <label class="form-check-label" for="is_active">
-                                        Is active
+                                        {{ __('form.is_active') }}
                                     </label>
                                 </div>
                                 <div class="form-group">
                                     <hr>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="image" id="image">
-                                        <label class="custom-file-label" for="image">Choose Image</label>
+                                        <label class="custom-file-label" for="image">{{ __('form.choose_image') }}</label>
                                     </div>
                                     <br /><br />
                                     @if($category->thumbnail)
                                         <img src="{!! displayImage($category->id, $category->thumbnail->path, isThumbnail: true, uploadPath: 'categories') !!}" />
                                     @else
-                                        This category has no image
+                                        {{ __('form.no_image') }}
                                     @endif
                                 </div>
                             </div>
@@ -118,8 +118,8 @@
                         <div class="row">
                             <div class="col pt-4 pb-3">
                                 <hr>
-                                <button type="submit" class="float-right btn btn-primary ml-3">Update</button>
-                                <a  href="{{ route('categories.index') }}" class="float-right btn btn-danger">Cancel</a>
+                                <button type="submit" class="float-right btn btn-primary ml-3">{{ __('form.update') }}</button>
+                                <a href="{{ route('categories.index') }}" class="float-right btn btn-danger">{{ __('form.cancel') }}</a>
                             </div>
                         </div>
                     </form>

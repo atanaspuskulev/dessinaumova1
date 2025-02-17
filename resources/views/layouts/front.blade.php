@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bg">
 <head>
     <title>{{ isset($page_title) ? $page_title . ' | ' . config('app.name') : config('seo.default_title') }}</title>
     <meta charset="utf-8">
@@ -72,7 +72,7 @@
 
             <div class="row mt-3">
                 <div class="col text-center">
-                    <p class="mb-0">&copy; {{ date('Y') }} {{ config('app.name') }}. {{ __('messages.copyright_msg') }}</p>
+                    <p class="mb-0">&copy; {{ date('Y') }} {{ __('site.reserved') }}</p>
                 </div>
             </div>
         </div>

@@ -27,7 +27,7 @@
                         @endforeach
                         <li class="divider"></li>
                         <li class="text-center mt-2 mb-2">
-                            <a class="btn btn-primary" href="{{ route('front.cart.index') }}">View Cart</a>
+                            <a class="btn btn-primary" href="{{ route('front.cart.index') }}">{{ __('cart.view_cart') }}</a>
                         </li>
                     </ul>
                 @endif
@@ -52,7 +52,7 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link @if(request()->routeIs('front.index')) active @endif" href="{{ route('front.index') }}">Home</a>
+                <a class="nav-link @if(request()->routeIs('front.index')) active @endif" href="{{ route('front.index') }}">{{ __('nav.front.home') }}</a>
             </li>
             @if(isset($products_categories) && $products_categories->count())
                 @foreach($products_categories as $slug => $title)
@@ -63,10 +63,10 @@
                 @endforeach
             @endif
             <li class="nav-item">
-                <a class="nav-link @if(request()->routeIs('front.about')) active @endif" href="{{ route('front.about') }}">About</a>
+                <a class="nav-link @if(request()->routeIs('front.about')) active @endif" href="{{ route('front.about') }}">{{ __('nav.front.about') }}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link @if(request()->routeIs('front.contact')) active @endif" href="{{ route('front.contact') }}">Contact</a>
+                <a class="nav-link @if(request()->routeIs('front.contact')) active @endif" href="{{ route('front.contact') }}">{{ __('nav.front.contacts') }}</a>
             </li>
         </ul>
     </div>
