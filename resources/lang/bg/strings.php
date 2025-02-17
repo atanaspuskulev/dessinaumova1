@@ -31,5 +31,6 @@ return [
     'shipping_cost' => 'Цена на доставка',
     'delivery_information' => 'Информация за доставка',
     'tags' => 'Етикети',
-    'gallery' => 'Галерия'
+    'gallery' => 'Галерия',
+    'in' => 'В'
 ];

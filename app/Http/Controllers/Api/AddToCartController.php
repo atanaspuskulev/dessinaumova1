@@ -16,14 +16,14 @@ class AddToCartController extends Controller
     {
         $productId = (int) $request->input('product_id');
 
-        $message = 'Product was added to the cart.';
+        $message = trans('cart.product_added');
         $success = $continue = true;
 
         if(!$this->productsService->isValidProductById($productId)) {
-            $message = 'This product is not valid.';
+            $message = trans('cart.product_invalid');
             $success = $continue = false;
         } elseif($this->cartService->has($productId)) {
-            $message = 'This product has already been added.';
+            $message = trans('cart.product_already_added');
             $success = $continue = false;
         } else {
             $this->cartService->add($productId);

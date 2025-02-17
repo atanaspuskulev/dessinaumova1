@@ -1,27 +1,23 @@
 <?php
 
 return [
-    'shop_greeting' => 'Welcome to Desi Naumova webstore.',
-    'index_lead' => 'Discover my curated collection of paintings, art-prints, bookmarks and
-                    universe candles. Everything is made with love and care, designed to bring
-                    warmth and beauty into your home.',
-    'about_page_info' => 'Desi Naumova is an artist from Bulgaria whose brush creates enchanting
-                        fairytale worlds filled with wonder and adventure,
-                        inspired by nature and working
-                        with watercolor, acrylic, and mixed media, her paintings and illustrations
-                        transport viewers to fantastical realms, alive with vibrant colors and
-                        intricate details.<br /><br />Desi transforms each painting into a portal
-                        to dreams, proving that magic exists for those who believe. Her art brings warmth
-                        and charm to any home. You have the opportunity to purchase both
-                        original paintings and art prints.<br /><br />
-
-                        Enjoy this magical, nostalgic, and earthy art.<br />
-                        Thank you!',
-    'contact_page_info' => 'Thank you for your interest in my artwork! If you encounter any issues while purchasing,
-                have specific requests for custom artwork, or simply want to learn more about my creative
-                process, I’m here to help.<br />Please don\'t hesitate to reach out to me via
-                email at <a href="mailto:info@desinaumova.com">info@desinaumova.com</a>.<br />
-                I will be excited to assist you and explore new artistic possibilities together.',
+    'shop_greeting' => 'Добре дошли в арт магазина на Деси Наумова.',
+    'index_lead' => 'Открийте моята подбрана колекция от картини, щампи, принтове, отметки и вселенски свещи. Всичко е направено
+                    с любов и грижа, за да внесе топлина и красота във вашия дом.',
+    'about_page_info' => 'Казвам се Деси Наумова и съм родена в град Шумен. Като художник и поет изкуството винаги е било неразделна част от моя живот
+    – още от ранна детска възраст се вдъхновявам да изразявам себе си чрез рисунки,
+    поезия и мотивационни напомняния.
+    Творчеството е моят начин да докосвам души, да вдъхновявам и да създавам красота в света
+    около мен. Обичам да рисувам, да се потапям в цветове и форми, които отразяват емоциите и
+    мечтите ми. Следвам светлината и полета на душата си, търся красотата във всичко и се
+    стремя да вдъхновявам другите да правят същото. Изкуството и думите ми са отражение на
+    моята вътрешна вселена – свят, изпълнен с любов, хармония и стремеж към истинското и
+    стойностното.',
+    'contact_page_info' => 'Благодаря ви за интереса към моите творби! Ако срещнете проблеми по време на покупката,
+ имате конкретни въпроси за персонализирани произведения на изкуството или просто искате да научите повече за моето рекламно послание
+ процес, тук съм, за да помогна.<br />Моля, не се колебайте да се свържете с мен чрез
+ имейл на <a href="mailto:info@desinaumova.com">info@desinaumova.com</a>.<br />
+                Ще се радвам да ви помогна и да открием заедно нови артистични възможности.',
     'payment_page_content' => '<h3>Payment Options</h3>
                 <p>We offer secure and convenient payment options through PayPal. Choose the method that best suits you:</p>
                 <div class="payment-option">

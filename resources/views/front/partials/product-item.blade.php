@@ -1,4 +1,4 @@
-<div class="{{ isset($columnClass) ? $columnClass : 'col-md-3' }} col-sm-12 mb-5">
+<div class="{{ isset($columnClass) ? $columnClass : 'col-md-4' }} col-sm-12 mb-5">
     <div class="card mb-4 rounded-3 card-box-shadow">
         <img
             src="{{ displayImage($productItem->id, $productItem->thumbnail?->path, true) }}"
@@ -25,7 +25,7 @@
                             ]) }}"
                             class="common-link"
                         >
-                            &#x27A1; In {{ $productItem->category->title }}
+                            &#x27A1; {{ $productItem->category->title }}
                         </a>
                 </span>
             </p>
