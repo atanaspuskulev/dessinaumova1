@@ -4,7 +4,7 @@
     <div class="container-fluid mt-5">
         <div class="row">
             <div class="col">
-                <h1>Terms Of Use</h1>
+                <h1>Условия за ползване</h1>
                 <hr>
             </div>
         </div>
@@ -12,105 +12,104 @@
     <div class="container-fluid mt-3 mb-4">
         <div class="row justify-content-center mb-3">
             <div class="col-md-10">
-                <h5>Last updated: 20-08-2004</h5>
-                Welcome to {{ config('app.name') }} Website. ("we", "us", "our").
-                By accessing or using our website at {{ config('app.url') }} ("Website"),
-                you agree to comply with and be bound by the following terms and conditions ("Terms of Use").
-                Please read these Terms of Use carefully
-                before using our Website. If you do not agree with these Terms, you should not use our Website.
+                <h5>Последно обновено: 15-02-2025</h5>
+                Добре дошли в уебсайта на Деси Наумова. („ние“, „нас“, „наши“).
+                Чрез достъп до или използване на нашия уебсайт на www.desinaumova.com („Уебсайт“),
+                вие се съгласявате да спазвате и да бъдете обвързани от следните правила и условия („Условия за ползване“).
+                Моля, прочетете внимателно тези Условия за ползване
+                преди да използвате нашия уебсайт. Ако не сте съгласни с тези Условия, не трябва да използвате нашия уебсайт.
                 <ul class="mt-4">
                     <ol>
-                        <h4>1. Acceptance of Terms</h4>
-                        By accessing or using our Website, you agree to be bound by these Terms of Use, as well as our Privacy Policy and any other policies or guidelines that may be applicable. These Terms apply to all visitors, users, and others who access or use the Website.
+                        <h4>1. Приемане на условията</h4>
+                        Чрез достъпа или използването на нашия уебсайт вие се съгласявате да бъдете
+                        обвързани от тези Условия за ползване, както и от нашата Политика за поверителност и
+                        всички други политики или насоки, които може да са приложими.
+                        Тези Условия се прилагат за всички посетители, потребители и други,
+                        които осъществяват достъп до или използват уебсайта.
                     </ol>
                     <ol>
-                        <h4>2. Use of the Website</h4>
-                        You agree to use our Website only for lawful purposes and in
-                        accordance with these Terms of Use. You are prohibited from using our Website:
+                        <h4>2. Използване на уебсайта</h4>
+                        Вие се съгласявате да използвате нашия уебсайт само за законни цели и в
+                        в съответствие с тези Условия за ползване. Забранено ви е да използвате нашия уебсайт:
                         <ul>
-                            <li><h6>For any unlawful purpose.</h6></li>
-                            <li><h6>To solicit others to perform or participate in any unlawful acts.</h6></li>
-                            <li><h6>To violate any international, federal, or local regulations, rules, laws, or ordinances.</h6></li>
-                            <li><h6>To infringe upon or violate our intellectual property rights or the intellectual property rights of others.</h6></li>
-                            <li><h6>To harass, abuse, insult, harm, defame, slander, disparage, intimidate, or discriminate based on gender, sexual orientation, religion, ethnicity, race, age, national origin, or disability.</h6></li>
-                            <li><h6>To submit false or misleading information.</h6></li>
-                            <li><h6>To upload or transmit viruses or any other type of malicious code that will or may be used in any way that will affect the functionality or operation of the Website or any related website.</h6></li>
-                            <li><h6>To collect or track the personal information of others.</h6></li>
-                            <li><h6>To spam, phish, pharm, pretext, spider, crawl, or scrape.</h6></li>
-                            <li><h6>For any obscene or immoral purpose.</h6></li>
-                            <li><h6>To interfere with or circumvent the security features of the Website or any related website.</h6></li>
+                            <li><h6>За всякакви незаконни цели.</h6></li>
+                            <li><h6>Да принуждавате други да извършват или участват в незаконни действия.</h6></li>
+                            <li><h6>За нарушаване на международни, федерални или местни разпоредби, правила, закони или наредби.</h6></li>
+                            <li><h6>За нарушаване или нарушаване на нашите права на интелектуална собственост или правата на интелектуална собственост на други лица.</h6></li>
+                            <li><h6>За да тормозите, малтретирате, обиждате, наранявате, клеветите, клеветите, пренебрегвате, сплашвате или дискриминирате въз основа на пол, сексуална ориентация, религия, етническа принадлежност, раса, възраст, национален произход или увреждане.</h6></li>
+                            <li><h6>За предоставяне на невярна или подвеждаща информация.</h6></li>
+                            <li><h6>За качване или предаване на вируси или всякакъв друг вид злонамерен код, който ще или може да бъде използван по какъвто и да е начин, който ще повлияе на функционалността или работата на уебсайта или който и да е свързан уебсайт.</h6></li>
+                            <li><h6>За събиране или проследяване на лична информация на други.</h6></li>
+                            <li><h6>За спам, фишинг, събиране на информация, претекст, обхождане или скрейп.</h6></li>
+                            <li><h6>За всякакви неприлични или неморални цели.</h6></li>
+                            <li><h6>За намеса или заобикаляне на функциите за сигурност на уебсайта или който и да е свързан уебсайт.</h6></li>
                         </ul>
                     </ol>
                     <ol>
-                        <h4>3. Product Information and Availability</h4>
-                        All descriptions of products and product pricing on our Website are subject to change at any time
-                        without notice, at our sole discretion. We reserve the right to discontinue any product at any time.
-                        We do not warrant that the quality of any products purchased by you will meet your expectations.
+                        <h4>3. Информация за продукти и наличност</h4>
+                        Всички описания на продуктите и цените на продуктите на нашия уебсайт подлежат на промяна по всяко време
+                        без предупреждение, по наше лично усмотрение. Ние си запазваме правото да прекратим всеки продукт по всяко време.
+                        Ние не гарантираме, че качеството на който и да е закупен от вас продукт ще отговаря на вашите очаквания.
                     </ol>
                     <ol>
-                        <h4>4. Orders and Payment</h4>
+                        <h4>4. Поръчки и плащане</h4>
                         <ul>
-                            <li><strong>Order Acceptance:</strong> We reserve the right to refuse any order you place with us. We may limit or cancel quantities purchased per person, per household, or per order at our discretion.</li>
-                            <li><strong>Payment:</strong> All payments must be made at the time of purchase. We accept payment via Paypal Fastpay and Paypal CreditCard processing. By providing your payment information, you authorize us to charge the amount specified for the order.</li>
-                            <li><strong>Pricing: </strong>Prices for our products are subject to change without notice. We reserve the right to correct any pricing errors at any time.</li>
+                            <li><strong>Приемане на поръчка:</strong> Ние си запазваме правото да откажем всяка поръчка, която направите при нас. Можем да ограничим или анулираме количествата, закупени на човек, на домакинство или на поръчка по наше усмотрение.</li>
+                            <li><strong>Плащане:</strong> Всички плащания трябва да бъдат направени в момента на покупката. Приемаме плащане чрез Paypal Fastpay и обработка на Paypal CreditCard. Предоставяйки вашата информация за плащане, вие ни разрешавате да таксуваме сумата, посочена за поръчката. Ако използвате "наложен платеж", вие ще заплатите сумата при приемането на поръчката от ваша страна.</li>
+                            <li><strong>Ценообразуване: </strong>Цените на нашите продукти подлежат на промяна без предизвестие. Ние си запазваме правото да коригираме всякакви грешки в цените по всяко време.</li>
                         </ul>
                     </ol>
                     <ol>
-                        <h4>5. Shipping and Delivery</h4>
-                        We aim to ship products within 1-5 business days after receiving your order. Delivery times may vary depending on your location and shipping method. We are not responsible for any delays in shipping caused by third-party carriers or factors beyond our control.
+                        <h4>5. Доставка и изпращане</h4>
+                        Ние се стремим да изпратим продуктите в рамките на 1-5 работни дни след получаване на вашата поръчка. Времето за доставка може да варира в зависимост от вашето местоположение и метода на доставка. Ние не носим отговорност за забавяне на доставката, причинено от трети превозвачи или фактори извън нашия контрол.
                     </ol>
                     <ol>
-                        <h4>6. Returns and Refunds</h4>
-                        If you are not satisfied with your purchase, you may return the product within 15 days of receipt
-                        for a refund or exchange, subject to our <a href="{{ route('front.return_policy') }}">Return Policy</a>.
-                        To initiate a return, please contact us at <a href="mailto:info@desinaumova.com">info@desinaumova.com</a>.
-                        Return shipping costs are the responsibility of the customer, unless the product is defective or we
-                        made an error in the order.
+                        <h4>6. Връщане и възстановяване на средства</h4>
+                        Ако не сте доволни от покупката си, можете да върнете продукта в рамките на 15 дни от получаването
+                        за възстановяване или замяна, според нашaтa <a href="{{ route('front.return_policy') }}">Политика за връщане</a>.
+                        За да инициирате връщане, моля свържете се с нас на <a href="mailto:info@desinaumova.com">info@desinaumova.com</a>.
+                        Разходите за обратна доставка са отговорност на клиента, освен ако продуктът не е дефектен или ние
+                        направи грешка в поръчката.
                     </ol>
                     <ol>
-                        <h4>7. Intellectual Property Rights</h4>
-                        All content on our Website, including text, graphics, logos, images, and software,
-                        is the property of {{ config('app.name') }} Website owner and its content
-                        suppliers and is protected by international copyright, trademark, and other intellectual
-                        property laws. You may not use, reproduce, or distribute any content from our
-                        Website without our express written permission.
+                        <h4>7. Права на интелектуална собственост</h4>
+                        Цялото съдържание на нашия уебсайт, включително текст, графики, лога, изображения и софтуер,
+                        е собственост на Деси Наумова, собственик на уебсайт и неговото съдържание
+                        доставчици и е защитено от международно авторско право, търговска марка и други интелектуални права
+                        закони за собственост. Нямате право да използвате, възпроизвеждате или разпространявате съдържание от нашите
+                        Уебсайт без нашето изрично писмено разрешение.
                     </ol>
                     <ol>
-                        <h4>8. Limitation of Liability</h4>
-                        To the fullest extent permitted by law, {{ config('app.name') }} shall not be liable for any direct, indirect,
-                        incidental, special, or consequential damages resulting from the use or inability to use our
-                        Website or products, even if we have been advised of the possibility of such damages.
-                        This includes, but is not limited to, damages for loss of profits, data, or other intangibles.
+                        <h4>8. Ограничение на отговорността</h4>
+                        В максималната степен, разрешена от закона, Деси Наумова не носи отговорност за никакви преки, непреки,
+                        случайни, специални или последващи щети в резултат на използването или невъзможността да използвате нашите
+                        Уебсайт или продукти, дори ако сме били уведомени за възможността от такива щети.
+                        Това включва, но не се ограничава до щети за пропуснати ползи, данни или други нематериални активи.
                     </ol>
                     <ol>
-                        <h4>9. Indemnification</h4>
-                        You agree to indemnify, defend, and hold harmless {{ config('app.name') }} and our affiliates, owners, employees,
-                        and agents from and against any and all claims, liabilities, damages, losses, and expenses, including legal fees,
-                        arising out of or in any way connected with your use of the Website or breach of these Terms of Use.
+                        <h4>9. Обезщетение</h4>
+                        Вие се съгласявате да обезщетите, защитите и предпазите от отговорност Деси Наумова и нашите свързани лица, собственици, служители,
+                        и агенти от и срещу всякакви искове, задължения, щети, загуби и разноски, включително правни такси,
+                        произтичащи от или по какъвто и да е начин свързани с използването на Уебсайта или нарушаване на настоящите Условия за ползване.
                     </ol>
                     <ol>
-                        <h4>10. Governing Law</h4>
-                        These Terms of Use shall be governed by and construed in accordance with the laws of
-                        Bulgarian Court, without regard to its conflict of law principles.
-                        Any disputes arising from these Terms or your use of the Website shall be resolved in
-                        the courts located in Bulgarian Court.
+                        <h4>10. Приложим закон</h4>
+                        Тези Условия за ползване се управляват и тълкуват в съответствие със законите на
+                        Български съд, без оглед на неговите стълкновителни принципи.
+                        Всички спорове, произтичащи от настоящите Условия или използването на уебсайта от ваша страна, ще бъдат разрешавани в
+                        съдилищата, разположени в българския съд.
                     </ol>
                     <ol>
-                        <h4>11. Changes to These Terms</h4>
-                        We reserve the right to update or modify these Terms of Use at any time without prior notice. Your continued use of the Website following the posting of changes constitutes your acceptance of those changes. We encourage you to review these Terms periodically for any updates.
-                    </ol>
+                        <h4>11. Промени условията</h4>
+                        Ние си запазваме правото да актуализираме или променяме тези Условия за ползване по всяко време без предварително известие. Ако продължите да използвате уебсайта след публикуването на промените, приемате тези промени от ваша страна. Насърчаваме ви периодично да преглеждате тези Условия за актуализации.                    </ol>
                     <ol>
-                        <h4>12. Contact Information</h4>
-                        If you have any questions about these Terms of Use, please contact us at:<br /><br />
+                        <h4>12. Информация за контакт</h4>
+                        Ако имате въпроси относно тези Условия за ползване, моля свържете се с нас на:<br /><br />
                         <a href="info@desinaumova.com">info@desinaumova.com</a>
                     </ol>
                 </ul>
             </div>
         </div>
-        <div class="row justify-content-center mb-3">
-            <div class="col-md-10">
 
-            </div>
-        </div>
     </div>
 @endsection

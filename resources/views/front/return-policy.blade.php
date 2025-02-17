@@ -4,7 +4,7 @@
     <div class="container-fluid mt-5">
         <div class="row">
             <div class="col">
-                <h1>Return Policy</h1>
+                <h1>Политика за връщане</h1>
                 <hr>
             </div>
         </div>
@@ -12,10 +12,10 @@
     <div class="container-fluid mt-3 mb-4">
         <div class="row justify-content-center mb-3">
             <div class="col-md-10">
-                <h5>Last updated: 20-08-2024</h5>
-                At {{ config('app.name') }}, we want you to be completely satisfied with your purchase.
-                If you are not entirely happy with your purchase, we're here to help.
-                Please read our Return Policy carefully to understand your rights and obligations.
+                <h5>Последно обновено: 15-02-2025</h5>
+                В www.desinaumova.com искаме да сте напълно доволни от покупката си,
+                и ако не сте, ние сме тук, за да ви помогнем.
+                Моля, прочетете внимателно нашата Политика за връщане, за да разберете вашите права и задължения.
             </div>
         </div>
 
@@ -23,59 +23,60 @@
             <div class="col-md-10 pb-3">
                 <ul>
                     <ol>
-                        <h4>1. Returns</h4>
-                        If you are not satisfied with your purchase, you may return it within 15 days from the date you received it.
-                        To be eligible for a return, your item must be:
+                        <h4>1. Връщания</h4>
+                        Ако не сте доволни от покупката си, можете да я върнете в рамките на 15 дни от датата, на която сте я получили.
+                        За да отговаря на условията за връщане, вашият артикул трябва да бъде:
                         <ul>
-                            <li><strong>Unused and in the same condition that you received it.</strong></li>
-                            <li><strong>In the original packaging with all tags and labels attached.</strong></li>
-                            <li><strong>Accompanied by the receipt or proof of purchase.</strong></li>
+                            <li><strong>Неизползван и в същото състояние, в което сте го получили.</strong></li>
+                            <li><strong>В оригиналната опаковка с всички етикети.</strong></li>
+                            <li><strong>Придружен от касов бон или доказателство за покупка.</strong></li>
                         </ul>
                     </ol>
                     <ol>
-                        <h4>2. How to Initiate a Return</h4>
-                        To initiate a return, please follow these steps:
+                        <h4>2. Как да заявите връщане</h4>
+                        За да заявите връщане, моля, изпълнете следните стъпки:
                         <ul>
-                            <li><strong>Contact Us:</strong> Email us at <a href="info@desinaumova.com">info@desinaumova.com</a> with your order number and reason for the return.
-                                We will provide you with a Return Authorization Number (RAN) and instructions on where to send your item.
+                            <li><strong>Пишете ни:</strong> на <a href="info@desinaumova.com">info@desinaumova.com</a>
+                                с номера на вашата поръчка и причината за връщането.
+                                Ще ви предоставим номер за разрешение за връщане (RAN) и инструкции къде да изпратите вашия артикул.
                             </li>
                             <li>
-                                <strong>Prepare the Package: </strong>
-                                Place the item securely in its original packaging, along with your receipt or proof of
-                                purchase, and clearly write the RAN on the outside of the package.
+                                <strong>Подгответе опаковката: </strong>
+                                Поставете артикула сигурно в оригиналната му опаковка, заедно с вашата касова бележка или доказателство за
+                                покупка и ясно напишете RAN от външната страна на опаковката.
                             </li>
                             <li>
-                                <strong>Ship the Return: </strong>
-                                Mail the return package to the address provided in our return instructions. You are responsible for the
-                                shipping costs unless the item is defective or we made an error with your order.
+                                <strong>Изпратете: </strong>
+                                Изпратете пакета за връщане на адреса, посочен в нашите инструкции за връщане. Вие сте отговорни за
+                                разходи за доставка, освен ако артикулът не е дефектен или сме направили грешка с вашата поръчка.
                             </li>
                         </ul>
-                        <strong>Note: </strong> We recommend using a trackable shipping method, as we cannot be responsible for items lost during return shipping.
+                        <strong>Забележка: </strong> Препоръчваме да използвате метод за проследяване на доставка, тъй като не можем да носим отговорност за артикули, загубени по време на връщане.
                     </ol>
                     <ol>
-                        <h4>3. Refunds</h4>
-                        Once we receive your returned item, we will inspect it and notify you that we have received your returned item. We will also notify you of the approval or rejection of your refund based on the condition of the item.
+                        <h4>3. Възстановявания</h4>
+                        След като получим вашия върнат артикул, ние ще го проверим и ще ви уведомим, че сме получили вашия върнат артикул. Също така ще ви уведомим за одобрението или отхвърлянето на вашето възстановяване въз основа на състоянието на артикула.
                         <br /><br />
-                        <p><strong>Approved Refunds:</strong> If your return is approved, we will process your refund to your original method of payment. You will receive the credit within a certain number of days, depending on your card issuer's policies.</p>
-                        <p><strong>Partial Refunds:</strong> In certain situations, only partial refunds may be granted, such as items not in their original condition, damaged, or missing parts for reasons not due to our error.</p>
-                        <p><strong>Non-Refundable Items:</strong> Items marked as "Final Sale" are not eligible for a refund.</p>
+                        <p><strong>Одобрени възстановявания:</strong> Ако връщането ви бъде одобрено, ние ще обработим възстановяването ви по първоначалния ви начин на плащане. Ще получите кредита в рамките на определен брой дни, в зависимост от правилата на издателя на вашата карта.</p>
+                        <p><strong>Частични възстановявания:</strong> В определени ситуации могат да бъдат предоставени само частични възстановявания, като артикули, които не са в първоначалното си състояние, повредени или липсващи части по причини, които не се дължат на наша грешка.</p>
+                        <p><strong>Артикули, които не подлежат на връщане:</strong> Артикулите, маркирани като „Окончателна разпродажба“, не отговарят на условията за възстановяване.</p>
                     </ol>
                     <ol>
-                        <h4>4. Return Shipping Costs</h4>
+                        <h4>4. Разходи за доставка при връщане</h4>
                         <br />
-                        <p><strong>Customer Responsibility:</strong> Unless the return is due to a defect or an error on our part, you are responsible for paying the shipping costs for returning your item.</p>
-                        <p><strong>Refund of Shipping Costs:</strong> Shipping costs are non-refundable. If you receive a refund, the original cost of shipping will be deducted from your refund.</p>
+                        <p><strong>Отговорност на клиента:</strong> Освен ако връщането не се дължи на дефект или грешка от наша страна, вие носите отговорност за плащането на транспортните разходи за връщането на вашия артикул.</p>
+                        <p><strong>Възстановяване на разходите за доставка:</strong> Разходите за доставка не се възстановяват. Ако получите възстановяване, първоначалната цена на доставката ще бъде приспадната от възстановяването ви.</p>
                     </ol>
                     <ol>
-                        <h4>5. Late or Missing Refunds</h4>
-                        If you haven’t received a refund yet, first check your bank account again. Then contact your credit card company; it may take some time before your refund is officially posted.
-                        If you’ve done all of this and you still have not received your refund, please contact us at <a href="info@desinaumova.com">info@desinaumova.com</a>.
+                        <h4>5. Закъснели или липсващи възстановявания</h4>
+                        Ако все още не сте получили възстановяване, първо проверете отново банковата си сметка. След това се свържете с компанията за кредитни карти; може да отнеме известно време, преди вашето възстановяване да бъде официално публикувано.
+                        Ако сте направили всичко това и все още не сте получили възстановяването си, моля, свържете се с нас на <a href="info@desinaumova.com">info@desinaumova.com</a>.
                     </ol>
                     <ol>
-                        <h4>6. Contact Us</h4>
-                        If you have any questions about our Return Policy, please contact us:
+                        <h4>6. Пишете ни</h4>
+                        Ако имате въпроси относно нашата Политика за връщане, моля свържете се с нас:
                         <br /><br />
-                        {{ config('app.name') }}<br />
+                        Деси Наумова<br />
                         <a href="info@desinaumova.com">info@desinaumova.com</a>
                     </ol>
                 </ul>

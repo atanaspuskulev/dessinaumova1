@@ -4,7 +4,7 @@
     <div class="container-fluid mt-5">
         <div class="row">
             <div class="col">
-                <h1>Privacy Policy</h1>
+                <h1>Политика за поверителност</h1>
                 <hr>
             </div>
         </div>
@@ -12,114 +12,109 @@
     <div class="container-fluid mt-3 mb-4">
         <div class="row justify-content-center mb-3">
             <div class="col-md-10">
-                <h5 class="mb-3">Last updated: 20-08-2024</h5>
-                <strong>{{ config('app.name') }}</strong> ("we", "us", "our") operates the website {{ config('app.url') }} ("Website").
-                This Privacy Policy describes how we collect, use, and share information when you visit our
-                Website and make a purchase from us.
-                By using our Website, you agree to the collection and use of information in accordance with this policy.
+                <h5 class="mb-3">Последно обновено: 15-02-2025</h5>
+                <strong>Деси наумова</strong> („ние“, „нас“, „наши“) оперира уебсайта {{ config('app.url') }} ("Уебсайт").
+                TТази Политика за поверителност описва как събираме, използваме и споделяме информация, когато посещавате нашия
+                Уеб сайт и направете покупка от нас.
+                Използвайки нашия уебсайт, вие се съгласявате със събирането и използването на информация в съответствие с тази политика.
             </div>
         </div>
         <div class="row justify-content-center mb-3">
             <div class="col-md-10">
                 <ol>
-                    <li><a href="#information-we-collect">Information We Collect</a></li>
-                    <li><a href="#your-information">How We Use Your Information</a>
-                    <li><a href="#sharing-information">Sharing Your Information</a></li>
-                    <li><a href="#cookies-and-tracking">Cookies and Tracking Technologies</a></li>
-                    <li><a href="#security">Security</a></li>
-                    <li><a href="#your-rights">Your Rights</a></li>
-                    <li><a href="#external-links">Links to Other Websites</a></li>
+                    <li><a href="#information-we-collect">Информация, която събираме</a></li>
+                    <li><a href="#your-information">Как използваме вашата информация</a>
+                    <li><a href="#sharing-information">Споделяне на вашата информация</a></li>
+                    <li><a href="#cookies-and-tracking">Бисквитки и технологии за проследяване</a></li>
+                    <li><a href="#security">Сигурност</a></li>
+                    <li><a href="#your-rights">Вашите права</a></li>
+                    <li><a href="#external-links">Връзки към други уебсайтове</a></li>
                 </ol>
             </div>
         </div>
         <div class="row justify-content-center mb-4">
             <div class="col-md-10 border-bottom pb-3">
-                <h3 id="information-we-collect">1. Information We Collect</h3>
-                We collect the following types of information to fulfill your orders and improve your shopping experience:
+                <h3 id="information-we-collect">1. Информация, която събираме</h3>
+                Ние събираме следните типове информация, за да изпълним вашите поръчки и да подобрим вашето пазаруване:
                 <ul>
                     <li>
-                        <strong>Personal Information: </strong>
-                        When you place an order, we collect personal information such as your name, email address,
-                        shipping address, and payment information. This information is necessary to process and deliver
-                        your orders.
+                        <strong>Лична информация: </strong>
+                        Когато направите поръчка, ние събираме лична информация като вашето име, имейл адрес,
+                        адрес за доставка и информация за плащане. Тази информация е необходима за обработка и доставка
+                        вашите поръчки.
                     </li>
                     <li>
-                        <strong>Log Data:</strong>
-                        Like many websites, we collect information that your browser sends whenever you visit our
-                        Website ("Log Data").
-                        This may include information such as your computer's Internet Protocol ("IP") address,
-                        browser type, browser version, the pages of our Website that you visit, the time and date of
-                        your visit, the time spent on those pages, and other statistics.
+                        <strong>Регистрационни данни:</strong>
+                        Подобно на много уебсайтове, ние събираме информация, която вашият браузър изпраща всеки път, когато посетите нашия
+                        Уебсайт („Регистрационни данни“).
+                        Това може да включва информация като адреса на интернет протокола („IP“) на вашия компютър,
+                        тип браузър, версия на браузъра, страниците на нашия уебсайт, които посещавате, час и дата
+                        вашето посещение, времето, прекарано на тези страници, и други статистически данни.
                     </li>
                 </ul>
             </div>
         </div>
         <div class="row justify-content-center mb-4">
             <div class="col-md-10 border-bottom pb-3">
-                <h3 id="your-information">2. How We Use Your Information</h3>
+                <h3 id="your-information">2. Как използваме вашата информация</h3>
                 We use the information we collect for the following purposes:
                 <ul>
-                    <li><strong>Order Processing:</strong> To process and deliver your orders, including sending you emails to confirm your order status and shipping details.</li>
-                    <li><strong>Customer Support:</strong> To provide customer support and respond to your inquiries.</li>
-                    <li><strong>Improving Our Website:</strong> To analyze trends, usage, and activities on our Website to improve its functionality and user experience.</li>
+                    <li><strong>Обработка на поръчки:</strong> За обработка и доставка на вашите поръчки, включително изпращане на имейли за потвърждаване на състоянието на вашата поръчка и подробности за доставка.</li>
+                    <li><strong>Поддръжка на клиенти:</strong> За да осигурим поддръжка на клиенти и да отговорим на вашите запитвания.</li>
+                    <li><strong>Подобряване на нашия уебсайт:</strong> За да анализираме тенденциите, употребата и дейностите на нашия уебсайт, за да подобрим неговата функционалност и потребителско изживяване.</li>
                 </ul>
             </div>
         </div>
         <div class="row justify-content-center mb-4">
             <div class="col-md-10 pb-3 border-bottom">
-                <h3 id="sharing-information">3. Sharing Your Information</h3>
-                We do not sell, trade, or otherwise transfer your personal information to outside parties, except as necessary to fulfill your order or comply with the law. This includes:
+                <h3 id="sharing-information">3. Споделяне на вашата информация</h3>
+                Ние не продаваме, търгуваме или по друг начин прехвърляме вашата лична информация на външни страни, освен ако е необходимо за изпълнение на вашата поръчка или за спазване на закона. Това включва:
                 <ul>
                     <li>
-                        <strong>Service Providers: </strong>We may share your information with third-party service
-                        providers who assist us in operating our Website,
-                        conducting our business, or servicing you (e.g., payment processors, shipping companies),
-                        as long as those parties agree to keep your information confidential and secure.
+                        <strong>Доставчици на услуги: </strong>Възможно е да споделим вашата информация с услуга на трета страна
+                        доставчици, които ни помагат при работата с нашия уебсайт,
+                        извършване на нашия бизнес или обслужване на вас (напр. процесори за обработка на плащания, транспортни компании),
+                        стига тези страни да се съгласят да пазят вашата информация поверителна и защитена.
                     </li>
-                    <li><strong>Legal Compliance: </strong>We may disclose your information if required to do so by law or in response to valid requests by public authorities (e.g., a court or a government agency).</li>
+                    <li><strong>Законово съответствие: </strong>Можем да разкрием вашата информация, ако това се изисква по закон или в отговор на валидни искания от страна на публични органи (напр. съд или държавна агенция).</li>
                 </ul>
             </div>
         </div>
         <div class="row justify-content-center mb-4">
             <div class="col-md-10 pb-3 border-bottom">
-                <h3 id="cookies-and-tracking">4. Cookies and Tracking Technologies</h3>
-                Our Website uses cookies to enhance your browsing experience.
-                Cookies are small data files that are placed on your computer or mobile device when you visit our Website.
-                We use cookies for the following purposes:
+                <h3 id="cookies-and-tracking">4. Бисквитки и технологии за проследяване</h3>
+                Нашият уебсайт използва бисквитки, за да подобри изживяването ви при сърфиране.
+                Бисквитките са малки файлове с данни, които се поставят на вашия компютър или мобилно устройство, когато посещавате нашия уебсайт.
+                Използваме бисквитки за следните цели:
                 <ul>
                     <li>
-                        To recognize you when you return to our Website.
+                        За да ви разпознаем, когато се върнете на нашия уебсайт.
                     </li>
-                    <li>To remember your preferences and shopping cart contents.</li>
-                    <li>To analyze Website usage and performance.</li>
+                    <li>За да запомните вашите предпочитания и съдържанието на пазарската количка.</li>
+                    <li>За анализ на използването и ефективността на уебсайта.</li>
                 </ul>
-                You can choose to disable cookies through your browser settings; however, this may affect your ability to use certain features of our Website.
-            </div>
+                Можете да изберете да деактивирате бисквитките чрез настройките на браузъра си; това обаче може да повлияе на способността ви да използвате определени функции на нашия уебсайт.            </div>
         </div>
         <div class="row justify-content-center mb-4">
             <div class="col-md-10 pb-3 border-bottom">
-                <h3 id="security">5. Security</h3>
-                We take the security of your personal information seriously and use appropriate measures to protect it. However, please be aware that no method of transmission over the Internet, or method of electronic storage, is 100% secure, and we cannot guarantee absolute security.
-            </div>
+                <h3 id="security">5. Сигурност</h3>
+                Ние приемаме сериозно сигурността на вашата лична информация и използваме подходящи мерки, за да я защитим. Въпреки това, имайте предвид, че нито един метод за предаване през интернет или метод за електронно съхранение не е 100% защитен и ние не можем да гарантираме абсолютна сигурност.            </div>
         </div>
         <div class="row justify-content-center mb-4">
             <div class="col-md-10 pb-3 border-bottom">
-                <h3 id="your-rights">6. Your Rights</h3>
-                Depending on your location, you may have certain rights regarding your personal information, such as the right to:
-                <ul>
-                    <li><strong>Access:</strong> Request a copy of the information we hold about you.</li>
-                    <li><strong>Rectification:</strong> Request that we correct any inaccuracies in your information.</li>
-                    <li><strong>Deletion:</strong> Request that we delete your personal information, subject to certain legal requirements.</li>
-                    <li><strong>Withdrawal of Consent:</strong> Withdraw your consent to the processing of your information, where applicable.</li>
+                <h3 id="your-rights">6. Вашите права</h3>
+                В зависимост от местоположението ви може да имате определени права по отношение на вашата лична информация, като например правото на:                <ul>
+                    <li><strong>Достъп:</strong> Поискайте копие от информацията, която съхраняваме за вас.</li>
+                    <li><strong>Коригиране:</strong> Поискайте да коригираме всички неточности във вашата информация.</li>
+                    <li><strong>Изтриване:</strong> Поискайте да изтрием вашата лична информация, при спазване на определени законови изисквания.</li>
+                    <li><strong>Оттегляне на съгласието:</strong> Оттеглете съгласието си за обработване на вашата информация, когато е приложимо.</li>
                 </ul>
-                To exercise any of these rights, please contact us using the information provided below.
-            </div>
+                За да упражните някое от тези права, моля, свържете се с нас, като използвате информацията, предоставена по-долу.            </div>
         </div>
         <div class="row justify-content-center mb-4">
             <div class="col-md-10 pb-3">
-                <h3 id="external-links">7. Links to Other Websites</h3>
-                Our Website may contain links to third-party websites that are not operated by us. If you click on a third-party link, you will be directed to that third party's site.
-            </div>
+                <h3 id="external-links">7. Връзки към други уебсайтове</h3>
+                Нашият уебсайт може да съдържа връзки към уебсайтове на трети страни, които не се управляват от нас. Ако щракнете върху връзка на трета страна, ще бъдете насочени към сайта на тази трета страна.            </div>
         </div>
     </div>
 @endsection

@@ -11,6 +11,21 @@
 @endsection
 
 @section('js_files')
+    <script>
+        let labels = {
+            'continue_browsing': "{!! __('cart.continue_browsing') !!}",
+            'view_cart': "{!! __('cart.view_cart') !!}",
+            'cancel': "{!! __('strings.cancel') !!}",
+            'cart_updated': "{!! __('cart.cart_updated') !!}",
+            'cart_info': "{!! __('cart.cart_info') !!}",
+            'error_update': "{!! __('cart.error_updating_cart') !!}",
+            'ок': "{!! __('cart.ok') !!}",
+            'remove_from_cart': "{!! __('cart.remove_from_cart') !!}",
+            'warning': "{!! __('cart.remove_warning') !!}",
+            'remove': "{!! __('cart.remove') !!}",
+            'remove_err': "{!! __('cart.err_msg_request') !!}"
+        };
+    </script>
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="{{ asset('assets/mp/jquery.magnific-popup.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

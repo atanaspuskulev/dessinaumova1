@@ -9,13 +9,13 @@ $(function() {
                     $('#__PRODUCT__').remove();
                     $('#cart-items-num').text(response.data.cart_count);
                     Swal.fire({
-                        title: !response.data.continue ? 'Cart Info' : 'Cart Updated!',
+                        title: !response.data.continue ? labels.cart_info : lables.cart_updated,
                         text: response.data.message,
                         icon: 'success',
-                        confirmButtonText: 'View Cart',
+                        confirmButtonText: labels.view_cart,
                         showDenyButton: true,
                         showCancelButton: true,
-                        denyButtonText: 'Continue Browsing',
+                        denyButtonText: labels.continue_browsing,
                         denyButtonColor: '#009F46'
                     }).then((result) => {
                         if (result.isConfirmed) {
@@ -28,10 +28,10 @@ $(function() {
                     });
                 } else {
                     Swal.fire({
-                        title: 'Error Updating Cart!',
+                        title: labels.error_update,
                         text: response.data.message,
                         icon: 'error',
-                        confirmButtonText: 'Ok'
+                        confirmButtonText: labels.ok
                     });
                 }
             });
@@ -41,10 +41,10 @@ $(function() {
 
 function confirmRemove(productId) {
     Swal.fire({
-        title: 'Remove From Cart',
-        text: 'Are you sure you want to remove this product from the cart?',
+        title: labels.remove_from_cart,
+        text: labels.warning,
         icon: 'warning',
-        confirmButtonText: 'Remove',
+        confirmButtonText: labels.remove,
         showCancelButton: true
     }).then((result) => {
         if(result.isConfirmed) {
@@ -56,10 +56,10 @@ function confirmRemove(productId) {
                     $('.cart-list').empty().html(response.data.html);
                 } else {
                     Swal.fire({
-                        title: 'Error Updating Cart!',
-                        text: 'Something went wrong while trying to remove product from a list.',
+                        title: labels.error_update,
+                        text: labels.remove_err,
                         icon: 'error',
-                        confirmButtonText: 'Ok'
+                        confirmButtonText: labels.ok
                     });
                 }
             });
