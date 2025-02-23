@@ -44,7 +44,7 @@
                         @forelse($items as $item)
                             <div class="col-md-12 col-sm-12 mb-3  d-flex flex-column align-self-start image-wrapper">
                                 <a class="image-link" href="{{ route('front.to_category', ['category' => $item->slug]) }}">
-                                    <img class="img-fluid right-image" src="{!! displayImage($item->id, $item->thumbnail->path, isThumbnail: false, uploadPath: 'categories') !!}" />
+                                    <img class="img-fluid right-image" src="{!! displayImage($item->id, $item->thumbnail?->path ?? null, isThumbnail: false, uploadPath: 'categories') !!}" />
                                     <div class="overlay">
                                         <h4 class="title">{{ $item->title }}</h4>
                                         <p class="description">{!! $item->description  !!}</p>
