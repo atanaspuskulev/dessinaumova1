@@ -31,7 +31,7 @@
                 @if(isset($maincategory))
                     <div class="col-md-7 col-sm-12 image-wrapper">
                         <a class="image-link" href="{{ route('front.to_category', ['category' => $maincategory->slug]) }}">
-                            <img class="img-fluid" src="{!! displayImage($maincategory->id, $maincategory->thumbnail->path, isThumbnail: false, uploadPath: 'categories') !!}" />
+                            <img class="img-fluid" src="{!! displayImage($maincategory->id, $maincategory->thumbnail?->path, isThumbnail: false, uploadPath: 'categories') !!}" />
                             <div class="overlay">
                                 <h4 class="title">{{ $maincategory->title }}</h4>
                                 <p class="description">{!! $maincategory->description  !!}</p>
