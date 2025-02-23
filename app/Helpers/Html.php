@@ -48,3 +48,15 @@ function admin_link_active_class(
     }
     return $defaultClass;
 }
+
+function getThumbnail($productId) {
+    $product = \App\Models\Product::with('thumbnail')->find($productId);
+
+    return $product ? $product->thumbnail?->path : null;
+}
+
+function getTitle($productId) {
+    $product = \App\Models\Product::find($productId);
+
+    return $product->title;
+}

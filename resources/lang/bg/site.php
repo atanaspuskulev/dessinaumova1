@@ -16,7 +16,7 @@ return [
     'view_more' => 'Виж повече',
     'contact_me' => 'Контакти',
     'products_in_category_lbl' => 'Продукти в категория',
-    'shopping_cart_lbl' => 'Вашата количка',
+    'shopping_cart_lbl' => 'Преглед на количката',
     'follow_me' => 'Последвайте ме',
     'categories' => 'Категории',
     'about' => 'Относно',

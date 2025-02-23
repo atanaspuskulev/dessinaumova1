@@ -9,12 +9,9 @@ use Illuminate\View\View;
 
 readonly class CartCurrentContentComposer
 {
-    public function __construct(private CartService $cartService)
-    {
-    }
 
     public function compose(View $view)
     {
-        $view->with('cartItems', $this->cartService->getCart());
+        $view->with('cartItems', []);
     }
 }

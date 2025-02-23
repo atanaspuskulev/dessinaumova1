@@ -43,10 +43,6 @@ class AppServiceProvider extends ServiceProvider
         View::composer(['layouts.front'], CategoriesComposer::class);
         View::composer(['layouts.front'], CartItemsComposer::class);
 
-        Blade::directive('shipping_cost', static function ($shippingCost) {
-            return "<?php echo \App\Directives\ShippingCostDirective::shippingCostLabel($shippingCost); ?>";
-        });
-
         Blade::directive('price', function($params) {
             return "<?php echo \App\Directives\DisplayPriceDirective::displayPrice($params); ?>";
         });

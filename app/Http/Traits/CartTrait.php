@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Traits;
 
-use App\Http\Services\CartService;
-use App\Http\Services\PriceService;
-use App\Http\Services\ProductsService;
-use App\Models\Category;
+use App\Models\Orders;
 use App\Models\Product;
 use Illuminate\Support\Collection;
 
@@ -21,5 +18,32 @@ trait CartTrait
         })
         ->whereIn('id', session()->get('cart', []))
         ->get();
+    }
+
+    public function getIdsFromCart(): array
+    {
+        $ids = [];
+
+        foreach(session()->get('cart', []) as $cartProduct) {
+            $ids[] = $cartProduct['product_id'];
+        }
+
+        return $ids;
+    }
+
+    function generateOrderNumber(): string {
+        $prefix = "ORD";
+        $date = date("Ymd"); // YYYYMMDD format
+        $lastOrderNumber = $this->getLastOrderNum(); // Fetch from DB or Cache
+        $nextOrderNumber = str_pad((string)$lastOrderNumber, 4, "0", STR_PAD_LEFT);
+
+        return "{$prefix}-{$date}-{$nextOrderNumber}";
+    }
+
+    public function getLastOrderNum(): int
+    {
+        $lastOrder = Orders::latest('id')->first();
+
+        return $lastOrder ? (int) $lastOrder->order_num + 1 : 1;
     }
 }

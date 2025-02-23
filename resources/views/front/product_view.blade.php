@@ -11,25 +11,10 @@
 @endsection
 
 @section('js_files')
-    <script>
-        let labels = {
-            'continue_browsing': "{!! __('cart.continue_browsing') !!}",
-            'view_cart': "{!! __('cart.view_cart') !!}",
-            'cancel': "{!! __('strings.cancel') !!}",
-            'cart_updated': "{!! __('cart.cart_updated') !!}",
-            'cart_info': "{!! __('cart.cart_info') !!}",
-            'error_update': "{!! __('cart.error_updating_cart') !!}",
-            'ок': "{!! __('cart.ok') !!}",
-            'remove_from_cart': "{!! __('cart.remove_from_cart') !!}",
-            'warning': "{!! __('cart.remove_warning') !!}",
-            'remove': "{!! __('cart.remove') !!}",
-            'remove_err': "{!! __('cart.err_msg_request') !!}"
-        };
-    </script>
+
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="{{ asset('assets/mp/jquery.magnific-popup.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('assets/js/cart.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('.lightbox').magnificPopup({
@@ -39,13 +24,6 @@
                 }
             });
         });
-    </script>
-@endsection
-
-@section('head_js')
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script>
-        let cart_add_url = "{{ route('api.add_to_cart') }}";
     </script>
 @endsection
 
@@ -108,27 +86,25 @@
                     @if($product?->price)
                         <h5 class="mt-3 mb-3 ">{{ __('site.price') }}: @price($product->price, $product->currency)</h5>
                     @endif
-
-                    <p>
-                        <b>{{ __('site.shipping_cost_label') }}: </b>
-                        @shipping_cost($product->shipping_cost)
-                    </p>
                 @endif
 
-                @if(!$product?->sold && !in_array($product?->id, session()->get('cart', [])))
-                    <p class="small">
-                        <i>
-                            <b>{{ __('site.note_lbl') }}:</b>
-                            {!! __('messages.tax_info') !!}
-                        </i>
-                    </p>
+                @if(!$product?->sold)
                     <form
-                        onsubmit="return false"
                         method="post"
-                        action="{{ route('api.add_to_cart') }}"
+                        action="{{ route('front.cart.add') }}"
                         class="mt-4 mb-sm-4"
                         id="__PRODUCT__"
                     >
+                        @if($product->has_qty)
+                            <div class="col-md-1 col-sm-2 mb-3">
+                                <div class="form-group">
+                                    <label for="quantity" style="font-weight: bold;">{{ __('form.quantity') }}</label>
+                                    <input type="number" class="form-control" id="quantity" name="quantity"  value="1">
+                                </div>
+                            </div>
+                        @else
+                            <input type="hidden" class="form-control" id="quantity" name="quantity"  value="1">
+                        @endif
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <input type="hidden" name="product_id" value="{{ $product->id }}" />
                         <button

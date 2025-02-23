@@ -7,7 +7,7 @@
                 <img src="{{ asset('assets/images/desi-naumova.jpg') }}" class="img-fluid" alt="{{ config('app.name') }}">
             </div>
             <div class="col-md-7">
-                <h3 class="display-1">{{ config('app.name') }}</h3>
+                <h3 class="display-1 custom-font">Деси Наумова</h3>
                 <hr />
                 <div class="row mb-4">
                     <div class="col-md-12 col-sm-12 view-product">{!! __('text.about_page_info') !!}</div>

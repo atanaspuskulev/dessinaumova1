@@ -24,7 +24,7 @@ class OrderCreatedToBuyer extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: config('app.name') . ' - New Order Created',
+            subject: 'Поръчка #' . $this->order->order_id . ' - Деси Наумова',
         );
     }
 

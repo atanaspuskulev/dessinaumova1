@@ -4,29 +4,21 @@
     <div class="container-fluid mt-5">
         <div class="row">
             <div class="col">
-                <h1>Payment Completed</h1>
+                <h1>Завършена поръчка</h1>
                 <hr>
             </div>
         </div>
     </div>
     <div class="d-flex align-items-center justify-content-center mt-3 mb-4 p-5">
-        Dear {{ $order->payer_name }},<br /><br />
+        Благодарим Ви за поръчката през нашият уеб сайт!<br /><br />
 
-        Thank you for your purchase! We are delighted to inform you that your payment has been successfully processed
-        and your order has been received.<br /><br />
+        Вашите артикули ще бъдат приготвени и опаковани в най-кратък срок, след което ще бъдат изпратени към вас.<br /><br />
 
-        Your chosen artworks are now being prepared for shipment and will be sent to you shortly.
-        You can expect to receive a confirmation email with tracking details once your order has been dispatched.<br /><br />
+        Междувременно, ако имате въпроси, интересувате се от нещо - моля, свържете се на посочения e-mail адрес!<br /><br />
 
-        In the meantime, should you have any questions, concerns, or special requests, please do not hesitate to
-        contact us. We are here to assist you and ensure your complete satisfaction with your purchase.<br /><br />
+        Най-добри пожелания,<br /><br />
 
-        Thank you for choosing our service. We hope you enjoy your new artworks and look forward to serving you again
-        in the future.<br /><br />
-
-        Best regards,<br /><br />
-
-        Desi Naumova<br />
+        Деси Наумова<br />
         info@dessinaumova.com<br />
     </div>
 @endsection

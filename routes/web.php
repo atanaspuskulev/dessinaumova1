@@ -6,54 +6,55 @@ use App\Http\Controllers\Front;
 Route::name('front.')->middleware('web')->group(function () {
 
     Route::get('/about-me', static function () {
-        $page_title = 'About Me | Desi Naumova';
-        $meta_description = 'Learn more about Your Shop Name, our story, values, and commitment to quality. Discover what makes us a trusted source for hand-crafted paintings, candles, and wooden articles.';
-        $meta_keywords = 'Desi Naumova, about Desi Naumova, my artwork, my mission, handmade products, paintings, candles, wooden articles';
+        $page_title = 'За мен | Деси Наумова';
+        $meta_description = 'Научете повече за Деси Наумова, моята история, ценности и преследване на качество. Discover what makes us a trusted source for hand-crafted paintings, candles, and wooden articles.';
+        $meta_keywords = 'Деси Наумова, за Деси Наумова, моето изкуство, моята мисия, ръчно изработени продукти, картини, свещи, изкуство с дръво';
 
         return view('front.about', compact('page_title', 'meta_description', 'meta_keywords'));
     })->name('about');
 
 
     Route::get('/contact-me', static function() {
-        $page_title = 'Contact Me | Desi Naumova';
-        $meta_description = 'Get in touch with Desi Naumova for inquiries, custom orders, or collaborations. I am are here to help you with any questions you may have about my products or services.';
-        $meta_keywords = 'contact me, Desi Naumova contact, Desi Naumova location, get in touch';
+        $page_title = 'Контакти | Деси Наумова';
+        $meta_description = 'Свържете се с Деси Наумова за запитвания, изработка по поръчка или сътрудничество.';
+        $meta_keywords = 'пишете ми, Деси Наумова контакт';
 
         return view('front.contacts', compact('page_title', 'meta_description', 'meta_keywords'));
     })->name('contact');
 
     Route::get('/cookies-policy', static function() {
-        $page_title = 'Cookies Policy | Desi Naumova';
+        $page_title = 'Бисквитки | Деси Наумова';
         $meta_description = 'Read ' . config('app.name') . '\'s Cookies Policy to learn how we interact with cookies.';
-        $meta_keywords = 'cookies policy, Desi Naumova cookies policy';
+        $meta_keywords = 'cookies policy, Деси Наумова cookies policy';
 
         return view('front.cookies-policy', compact('page_title', 'meta_description', 'meta_keywords'));
     })->name('cookies_policy');
 
     Route::get('/privacy-policy', static function() {
-        $page_title = 'Privacy Policy | Desi Naumova';
-        $meta_description = 'Read ' . config('app.name') . '\'s Privacy Policy to learn how we handle your personal information.';
-        $meta_keywords = 'privacy policy, Desi Naumova legal policy';
+        $page_title = 'Политика за поверителност | Деси Наумова';
+        $meta_description = 'Прочетете Политика за поверителност на Деси Наумова, за да разберете какво правим с вашата информация.';
+        $meta_keywords = 'Политика за поверителност, Деси Наумова правна политика';
 
         return view('front.privacy-policy', compact('page_title', 'meta_description', 'meta_keywords'));
     })->name('privacy_policy');
 
     Route::get('/terms-of-use', static function() {
-        $page_title = 'Terms Of Use | Desi Naumova';
-        $meta_description = 'Understand the Terms of Use for shopping at ' . config('app.name');
-        $meta_keywords = 'terms of use, Desi Naumova tos';
+        $page_title = 'Условия за ползване | Деси Наумова';
+        $meta_description = 'Разберете Условия за ползване на Деси Наумова';
+        $meta_keywords = 'Условия за ползване, Деси Наумова узп';
 
         return view('front.tos', compact('page_title', 'meta_description', 'meta_keywords'));
     })->name('terms_of_use');
 
     Route::get('/return-policy', static function() {
-        $page_title = 'Return Policy | Desi Naumova';
-        $meta_description = 'Learn about ' . config('app.name') . '\'s Return Policy for hassle-free shopping';
-        $meta_keywords = 'return policy, Desi Naumova';
+        $page_title = 'Политика на връщане | Деси Наумова';
+        $meta_description = 'Научете повече за политиката на връщане на продукти на Деси Наумова';
+        $meta_keywords = 'политика на връщане, Деси Наумова';
 
         return view('front.return-policy', compact('page_title', 'meta_description', 'meta_keywords'));
     })->name('return_policy');
 
+    Route::post('/cart', [Front\AddToCartController::class, 'store'])->name('cart.add');
     Route::get('/tags', [Front\TagsController::class, 'index'])->name('tags');
     Route::get('/tag/{tag}', [Front\TagsController::class, 'show'])->name('by_tag');
 
@@ -61,20 +62,14 @@ Route::name('front.')->middleware('web')->group(function () {
 
     Route::get('/cart', Front\CartIndexController::class)->name('cart.index');
 
-    Route::post('/cart/remove-product', [Front\CartController::class, 'removeFromCart'])->name('remove_product_from_cart');
+    Route::post('/cart/remove-product/{id}', [Front\CartController::class, 'removeFromCart'])->name('remove_product_from_cart');
+    Route::post('/cart/update-quantity/{id}', [Front\CartController::class, 'updateQuantity'])->name('update_quantity');
 
-    Route::get('/order/success', [Front\OrdersController::class, 'captureAndComplete'])->name('payment.order.success');
-    Route::get('/order/cancel', [Front\OrdersController::class, 'captureAndCancel'])->name('payment.order.cancel');
-    Route::get('/order/test', [Front\OrdersController::class, 'test']);
+    Route::post('/order/create', [Front\OrdersController::class, 'createOrder'])->name('order_create');
+    Route::get('/order/completed', [Front\OrdersController::class, 'completed'])->name('order_completed');
 
-    Route::post('/api/order/create', [Front\OrdersController::class, 'createOrder'])->name('payment.api.order.create');
-    Route::post('/api/order/update', [Front\OrdersController::class, 'updateOrder'])->name('payment.api.order.update');
-    Route::post('/api/order/cancel', [Front\OrdersController::class, 'cancelOrder'])->name('payment.api.order.cancel');
-    // Payments
 
     Route::get('/cart/checkout/delivery-information', [Front\DeliveryInformationController::class, 'deliveryForm'])->name('delivery_form');
-    Route::post('/cart/checkout/delivery-information', [Front\DeliveryInformationController::class, 'saveDeliveryInformation'])->name('saveDeliveryInformation');
-
 
     Route::get('/{category}', [Front\ProductsController::class, 'byCategory'])
         ->where('category', '^(?!cart$)[\w-]+$') // Exclude 'cart' and allow word characters and hyphens
@@ -84,5 +79,4 @@ Route::name('front.')->middleware('web')->group(function () {
         ->where(['category_slug' => '^(?!cart$)[\w-]+$', 'product_slug' => '^(?!cart$)[\w-]+$'])
         ->name('product_view');
 
-    Route::get('/cart/checkout/payment', [Front\PaymentController::class, 'index'])->name('checkout_cart_index_payment');
 });

@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'default_title' => 'Buy Paintings, Handmade Candles & Wooden Articles | Desi Naumova',
-    'default_keywords' => 'paintings, watercolor, candles, wooden articles, handmade products, home decor, wall art, artisan candles, handcrafted wooden items, Desi Naumova',
-    'default_description' => 'Discover a unique collection of hand-crafted paintings, aromatic candles, and artisanal wooden articles at Desi Naumova. Perfect for home decor and gifting. Shop now for quality, elegance, and originality.',
+    'default_title' => 'Купи картини, ръчно направени свещи & дървени изработки | Деси Наумова',
+    'default_keywords' => 'картини, акварел, свещи, wooden articles, ръчно изработени продукти, стенно изкуство, ръчно изработени дървени продукти, Деси Наумова',
+    'default_description' => 'Открийте уникална колекция от картини, ароматни свещи и артистични дървени продукти на Деси Наумова. Перфектни за подаръци и обзавеждане.',
     'tags' => [
         'ttl' => 604800
     ]

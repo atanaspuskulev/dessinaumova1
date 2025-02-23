@@ -11,6 +11,6 @@ readonly class CartItemsComposer
 {
     public function compose(View $view)
     {
-        $view->with('cart_items', Cart::getCartFromSession());
+        $view->with('cart_items', session()->get('cart', []));
     }
 }

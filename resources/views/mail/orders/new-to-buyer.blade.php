@@ -1,9 +1,9 @@
 <x-mail::message>
-# Your new order has been created
+# Вашата поръчка е приета
 
-Thank you for purchasing from my website. Your order <b>{{ $order->order_id }}</b> has been created.<br /><br />
-After you complete your payment, another confirmation email will be sent with full detailed information.
+Благодарим Ви за покупката от <a href="http://desinaumova.com">desinaumova.com</a>.<br />
+Вашата поръчка <b>{{ $order->order_id }}</b> е успешно създадена и приета и ще бъде обработена в най-кратък срок.<br /><br />
 
-Regards,<br />
-{{ config('app.name') }}
+Поздрави,<br />
+Деси Наумова
 </x-mail::message>

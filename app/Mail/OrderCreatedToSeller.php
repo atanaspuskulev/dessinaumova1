@@ -26,7 +26,7 @@ class OrderCreatedToSeller extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: config('app.name') . ' - New order placed',
+            subject: config('app.name') . ' - Нова поръчка',
         );
     }
 

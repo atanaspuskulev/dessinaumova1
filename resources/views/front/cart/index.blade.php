@@ -1,24 +1,18 @@
 @extends('layouts.front')
 
 @section('head_js')
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script>
-        let removeFromCartUrl = '{{ route("front.remove_product_from_cart") }}';
-    </script>
-@endsection
-
-@section('js_files')
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('assets/js/cart.js') }}"></script>
 @endsection
 
+
+
 @section('content')
     <div class="container-fluid mt-5">
         <div class="row">
             <div class="col">
-                <h1>{{ __('site.shopping_cart_lbl') }}</h1>
-                <hr>
+                <h1 class="display-6 text-center">{{ __('site.shopping_cart_lbl') }}</h1>
             </div>
         </div>
         <div class="row">

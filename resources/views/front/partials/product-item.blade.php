@@ -7,13 +7,8 @@
         <div class="card-body">
             <p class="card-title">{{ $productItem->title }}</p>
             <p class="card-text">{!! $productItem->short_description !!}</p>
-            @if(!$productItem->sold)
-                <p>{{ __('site.price') }}: @price($productItem->price, $productItem->currency)</p>
-                <p>
-                    {{ __('site.shipping_cost_label') }}:
-                    @shipping_cost($productItem->shipping_cost)
-                </p>
-            @else
+            <p class="card-text"><b>{{ __('strings.price') }}:</b> @price($productItem->price, $productItem->currency)</p>
+            @if($productItem->sold)
                 <h5 class="p-3 bg-warning">{{ __('site.product_is_sold') }}</h5>
             @endif
             <br>

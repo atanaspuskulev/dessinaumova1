@@ -71,6 +71,15 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
+                                    <label for="tax">{{ __('strings.tax') }} %</label>
+                                    <select name="tax" id="tax" class="form-control">
+                                        <option value="">{{ __('form.choose') }}</option>
+                                        @foreach([9,20] as $tax)
+                                            <option  @selected(old('tax') == $tax) value="{{ $tax }}">{{ $tax }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label for="shipping_cost">{{ __('strings.shipping_cost') }}</label>
                                     <input
                                         type="text"

@@ -18,25 +18,20 @@ class CartAddRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_id' => 'required|numeric|gt:0'
+            'product_id' => 'required|numeric|gt:0',
+            'quantity' => 'required|numeric|gt:0',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'product_id.required' => 'The product ID is required.',
-            'product_id.numeric' => 'The product ID must be a numeric value.',
-            'product_id.gt' => 'The product ID is not valid.',
+            'product_id.required' => trans('errors.product_required'),
+            'product_id.numeric' => trans('errors.product_numeric'),
+            'product_id.gt' => trans('errors.product_gt'),
+            'quantity.required' => trans('errors.quantity_required'),
+            'quantity.numeric' => trans('errors.quantity_numeric'),
+            'quantity.gt' => trans('errors.quantity_gt'),
         ];
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        if ($this->expectsJson()) {
-            throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 422));
-        }
-
-        parent::failedValidation($validator);
     }
 }

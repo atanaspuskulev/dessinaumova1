@@ -1,85 +1,105 @@
 @if($products->count())
-    <table class="table text-start">
-        <thead>
-        <tr>
-            <th scope="col">{{ __('cart.num') }}</th>
-            <th scope="col">{{ __('cart.product') }}</th>
-            <th scope="col">{{ __('cart.category') }}</th>
-            <th scope="col">{{ __('site.price') }}</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($products as $product)
-            <tr id="prow-{{ $product->id }}">
-                <td>{{ $loop->iteration }}</td>
-                <td>
-                    <img
-                        src="{{ displayImage($product->id, $product->thumbnail?->path, true) }}"
-                        width="50"
-                    />
-                    <a
-                        target="_new"
-                        href="{{ route('front.product_view', [
-                            'category_slug' => $product->category->slug,
-                            'product_slug' => $product->slug
-                        ]) }}"
-                        class="text-black-50"
-                    >
-                        {!! $product->title !!}
-                    </a>
-                </td>
-                <td>{!! $product->category->title !!}</td>
-                <td>{!! number_format($product->price, 2, '.', '') !!}&euro;</td>
-                <td>
-                    <a href="javascript:void(0);"
-                       onclick="confirmRemove({{ $product->id }});">{{ __('cart.remove') }}</a>
-                </td>
-            </tr>
-        @endforeach
-        <tr>
-            <td colspan="5" class="text-end total-price">
-                {{ __('site.shipping_cost_label') }}:
-                @shipping_cost($product->shipping_cost)
-            </td>
-        </tr>
-        <tr>
-            <td colspan="5" class="text-end total-price">
-                {{ __('cart.tax_lbl') }} {{ config('payment.default_tax_percent') }}%:
-                @price($taxAmount)
-            </td>
-        </tr>
-        <tr>
-            <td colspan="5" class="text-end total-price">
-                {{ __('cart.total') }}:
-                @price($totalPrice)
-            </td>
-        </tr>
-        <tr id="btn-checkout-container">
-            <td colspan="5" class="text-end">
-                <a
-                    href="{{ route('front.delivery_form', compact('cart_reference_key')) }}"
-                    class="btn btn-success"
-                >
-                    {{ __('cart.to_checkout') }}
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="row mt-5 p-4">
+        <div class="col-md-8 bg-light border">
+            @foreach($products as $product)
+                @php
+                    $qty = 0;
+                    $totalProductPrice = 0;
+                @endphp
+
+                @foreach($cart as $item)
+                    @if($item['product_id'] == $product->id)
+                        @php
+                            $qty = $item['quantity'];
+                            $totalProductPrice = $item['price'];
+                        @endphp
+                    @endif
+                @endforeach
+                <div class="row">
+                    <div class="col">
+                        <img
+                            src="{{ displayImage($product->id, $product->thumbnail?->path, true) }}"
+                            width="150"
+                        />
+                    </div>
+                    <div class="col pt-5">
+                        <div class="fs-5 fw-bold w-100">{{ $product->title }}</div>
+                        <div>Единична цена:  @price($product->price, $product->currency)</div>
+                    </div>
+                    <div class="col pt-3">
+                        <div class="text-end w-100 mb-3">
+                            <a href="{{ route('front.remove_product_from_cart', ['id' => $product->id]) }}" class="text-danger remove-product">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
+                        </div>
+                        <div class="text-end w-100 d-flex justify-content-end">
+                            <div class="form-group col-3 col-sm-3 col-md-3">
+                                <input
+                                    @if(!$product->has_qty)
+                                        disabled
+                                    @endif
+                                    min="0"
+                                    type="number"
+                                    value="{{ $qty }}"
+                                    class="form-control qty-input"
+                                    data-product-id="{{ $product->id }}"
+                                    data-url="{{ route('front.update_quantity', ['id' => $product->id]) }}"
+                                />
+                            </div>
+                        </div>
+                        <div class="text-end w-100 mt-3 fs-4 text-danger">
+                            {{ $totalProductPrice }}
+                        </div>
+                    </div>
+                    @if(!$loop->last)
+                        <hr />
+                    @endif
+                </div>
+            @endforeach
+        </div>
+        <div class="col-md bg-light  ms-md-3 pt-4 border">
+            <p>
+                Забележка: без цена за доставка
+            </p>
+
+            <p>
+                Обща сума: {{ $totalPrice }}
+            </p>
+            <div class="d-flex justify-content-center gap-2">
+                <a href="{{ route('front.index') }}" class="btn btn-outline-secondary rounded-0">Разгледай още</a>
+                <a href="{{ route('front.delivery_form') }}" class="btn btn-danger rounded-0">Завърши поръчката</a>
+            </div>
+        </div>
+    </div>
 @else
-    <p>{{ __('messages.empty_cart') }}</p>
-    <p>
-        {{ __('messages.browse_artwork_msg') }}
-        @foreach($categories as $category)
-            <a
-                href="{{ route('front.to_category', [
-                    'category' => $category->slug
-                ]) }}"
-            >
-                {!! $category->title !!}
-            </a>
-            @if($loop->remaining > 1), @elseif($loop->remaining === 1) or @endif
-        @endforeach
-    </p>
+    <div class="row mt-5 p-4 justify-content-center">
+        <div class="col-md-8 bg-light border fs-4 p-5">
+            {{ __('messages.empty_cart') }}
+        </div>
+    </div>
 @endif
+
+<script>
+    $(function() {
+        if($('.remove-product').length > 0) {
+            $('.remove-product').on('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                $.post($(this).attr('href'), {_token: $('meta[name="csrf-token"]').attr('content')}, function(response) {
+                    $('.cart-list').empty().html(response.html);
+                });
+            });
+        }
+
+        if($('.qty-input').length > 0 && $('#myInput').attr('disabled') == undefined) {
+            $('.qty-input').on('input', function() {
+                let url = $(this).data('url');
+
+                $.post(url, {_token: $('meta[name="csrf-token"]').attr('content'), qty: $(this).val()}, function(response) {
+                    $('.cart-list').empty().html(response.html);
+                });
+            });
+        }
+    });
+</script>

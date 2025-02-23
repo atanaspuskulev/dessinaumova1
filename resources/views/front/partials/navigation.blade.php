@@ -1,25 +1,28 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
         <div class="navbar-logo">
-            <a class="navbar-brand" href="{{ route('front.index') }}">Desi Naumova</a>
+            <a class="navbar-brand" href="{{ route('front.index') }}">Деси Наумова</a>
         </div>
 
         <div class="navbar-cart">
             <div class="cart-dropdown">
                 <i class="fas fa-shopping-cart" id="cart-icon" data-bs-toggle="dropdown" role="button"
                    aria-expanded="false">
-                    <span class="cart-badge" id="cart-items-num">{{ $cart_items['total_count'] }}</span>
+                    <span class="cart-badge" id="cart-items-num">{{ count($cart_items) }}</span>
                 </i>
-                @if($cart_items['total_count'])
+                @if(count($cart_items))
                     <ul class="dropdown-menu dropdown-cart" role="menu">
-                        @foreach($cart_items['cart_products'] as $item)
+                        @foreach($cart_items as $item)
+                            @php
+                                $title = getTitle($item['product_id']);
+                            @endphp
                             <li>
                                   <span class="item">
                                     <span class="item-left">
-                                        <img style="width:60px;" src="{{ displayImage($item['id'], $item['thumbnail']?->path, true) }}" alt=""/>
+                                        <img style="width:60px;" src="{{ displayImage($item['product_id'], getThumbnail($item['product_id']), true) }}" alt=" {!! $title !!}"/>
                                         <span class="item-info">
-                                            <span>{!! $item['title'] !!}</span><br>
-                                            <span class="fw-bolder">{{ $item['price'] }}&euro;</span>
+                                            <span>{!! $title !!}</span><br>
+                                            <span class="fw-bolder">{{ $item['price'] }}</span>
                                         </span>
                                     </span>
                                 </span>

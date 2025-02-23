@@ -10,16 +10,13 @@ class Orders extends Model
 {
     protected $fillable = [
         'order_id',
+        'order_num',
         'status',
         'amount',
-        'shipping_cost',
         'currency',
         'payer_name',
         'payer_email',
         'payer_phone',
-        'payer_country',
-        'payer_country_code',
-        'payer_state',
         'payer_city',
         'payer_address',
         'payer_zip',

@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'MyCustomFont';
+    src: url('1314-font.ttf') format('opentype'); /* Make sure the path is correct */
+    font-weight: normal;
+}
+
 html, body {
     height: 100%;
     margin: 0;
@@ -36,7 +42,12 @@ footer {
     margin-right: 20px;
 }
 .navbar-brand {
-    font-family: 'Grey Qo', sans-serif;
+    font-family: 'MyCustomFont', sans-serif;
+    font-size: 30pt;
+    font-weight: bold;
+}
+.custom-font {
+    font-family: 'MyCustomFont', sans-serif;
     font-size: 30pt;
 }
 div, p {
@@ -332,7 +343,7 @@ ul.dropdown-cart li .item-right button {
 }
 
 .desi-title {
-   font-family: 'Grey Qo', sans-serif;;
+   font-family: 'MyCustomFont';
 }
 
 header p {

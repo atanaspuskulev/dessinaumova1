@@ -3,6 +3,13 @@
 namespace App\Http\Services;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\App;
+use InvalidArgumentException;
+use Money\Currencies\ISOCurrencies;
+use Money\Currency;
+use Money\Formatter\IntlMoneyFormatter;
+use Money\Money;
+use NumberFormatter;
 
 class PriceService
 {
@@ -31,5 +38,20 @@ class PriceService
         }
 
         return (float) $prices->max();
+    }
+
+    public function formatPrice(float $price, ?string $currency = null)
+    {
+        $currency = $currentCurrency ?? config('currencies')[App::getLocale()];
+
+        $money = new Money(((int) round($price * 100)), new Currency($currency));
+        $currencies = new ISOCurrencies();
+
+        if (!$currencies->contains(new Currency($currency))) {
+            throw new InvalidArgumentException("Currency not supported: $currency");
+        }
+
+        $nf = new NumberFormatter(config('locale-mapper')[App::getLocale()], NumberFormatter::CURRENCY);
+        return (new IntlMoneyFormatter($nf, $currencies))->format($money);
     }
 }

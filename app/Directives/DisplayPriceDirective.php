@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Directives;
 
+use Illuminate\Support\Facades\App;
 use InvalidArgumentException;
 use Money\Currencies\ISOCurrencies;
 use Money\Currency;
@@ -15,7 +16,7 @@ class DisplayPriceDirective
 {
     public static function displayPrice($price, $currentCurrency = null): string
     {
-        $currency = $currentCurrency ?? config('payment.currency');
+        $currency = $currentCurrency ?? config('currencies')[App::getLocale()];
 
         $money = new Money(((int) round($price * 100)), new Currency($currency));
         $currencies = new ISOCurrencies();
@@ -24,7 +25,7 @@ class DisplayPriceDirective
             throw new InvalidArgumentException("Currency not supported: $currency");
         }
 
-        $nf = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
+        $nf = new NumberFormatter(config('locale-mapper')[App::getLocale()], NumberFormatter::CURRENCY);
         return (new IntlMoneyFormatter($nf, $currencies))->format($money);
     }
 }

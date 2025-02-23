@@ -15,10 +15,14 @@ class Cart
         $products = null;
         $cart = session()->get('cart');
 
-        if($cart) {
+        if(!empty($cart)) {
             $total = count($cart);
+            $ids = [];
+            foreach($cart as $item) {
+                $ids[] = $item['product_id'];
+            }
             $products = Product::with('thumbnail')
-                ->whereIn('id', $cart)
+                ->whereIn('id', $ids)
                 ->get();
         }
 
