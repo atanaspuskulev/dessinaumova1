@@ -4,6 +4,7 @@ namespace App\Mail;
 
 use App\Models\Orders;
 use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailables\Address;
 use Symfony\Component\Mime\Email;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -24,8 +25,8 @@ class OrderCreatedToBuyer extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: ['info@desinaumova.com' => 'Деси Наумова'],
-            replyTo: ['info@desinaumova.com' => 'No Reply'],
+            from: new Address('info@desinaumova.com', 'Деси Наумова'),
+            replyTo: [new Address('info@desinaumova.com', 'No Reply')],
             subject: 'Поръчка #' . $this->order->order_id . ' - Деси Наумова'
         );
     }
