@@ -5,10 +5,10 @@
 Вашата поръчка <b>{{ $order->order_id }}</b> е успешно създадена и приета и ще бъде обработена в най-кратък срок.<br /><br />
 
 <x-mail::table>
-    | Product       | Price         | Currency  |
-    | ------------- |:-------------:| --------:|
+    | Артикул       | Количество    | Цена         | Валута  |
+    | ------------- |:-------------:|:-------------:| --------:|
     @foreach($order->items as $item)
-        | {{ $item->product->title }} | {{ $item->product->price }} | {{ $order->currency }} |
+        | {{ $item->product->title }} | {{ $item->quantity }} | {{ $item->price }} | {{ $item->currency }} |
     @endforeach
     | Total      | {{ $totalPrice }} | {{ $order->currency }} |
 </x-mail::table>

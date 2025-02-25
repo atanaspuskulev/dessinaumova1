@@ -58,7 +58,7 @@ class OrdersController extends Controller
         $totalPrice = 0;
         foreach($cart as $item) {
             $product = Product::find($item['product_id']);
-            $totalPrice += $product->price;
+            $totalPrice += $item['quantity'] * $product->price;
 
             if(!$product->has_qty) {
                 $product->update(['sold' => true]);
