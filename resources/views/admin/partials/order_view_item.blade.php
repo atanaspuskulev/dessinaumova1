@@ -6,12 +6,12 @@
             </div>
             <div class="row mb-3">
                 <div class="col order_id_col">
-                    <a target="_blank" href="{{ route('front.product_view', ['category_slug' => $item->category()->first()->slug, 'product_slug' => $item->slug]) }}">{{ $item->title }}</a>
+                    <a target="_blank" href="{{ route('front.product_view', ['category_slug' => $item->product->category->first()->slug, 'product_slug' => $item->product->slug]) }}">{{ $item->product->title }}</a>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col">
-                    <img src="{{ displayImage($item->id, $item->thumbnail?->path, true) }}" class="card-img-top" alt="Product 1">
+                    <img src="{{ displayImage($item->product->id, $item->product->thumbnail?->path, true) }}" class="card-img-top" alt="Product 1">
                 </div>
             </div>
             <hr />
@@ -19,7 +19,7 @@
                 <div class="col"><b>Price</b></div>
             </div>
             <div class="row mb-3">
-                <div class="col order_id_col">{{ $item->price }} {{ $item->currency ?? config('paypal.currency') }}</div>
+                <div class="col order_id_col">{{$item->quantity}} x {{ $item->price }} {{ $item->currency ?? config('paypal.currency') }}</div>
             </div>
         </div>
     @empty

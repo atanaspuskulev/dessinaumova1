@@ -307,15 +307,15 @@ function viewOrder(id, orderId, url) {
             order_id: orderId
         },
         success: function (response) {
-            console.log(response.priceWithoutTax);
             $('.order_id_col').text(response.order.order_id);
             $('.total_amount_col').text(`${response.totalPrice} ${response.order.currency}`);
             $('.customer_name_col').text(response.order.payer_name);
             $('.customer_email_col').text(response.order.payer_email);
             $('.status_col').text(response.order.status);
             $('.country_col').text(response.order.payer_country);
-            $(".updated_date_col").text(formatDateString(new Date(response.order.updated_at)));
-            $('.amount_col').text(`${response.priceWithoutTax} ${response.order.currency}`);
+            $('.amount_col').text(`${response.order.amount} ${response.order.currency}`);
+            $('.invoice_col').html(`<a href="https://desinaumova.com/storage/invoices/${response.order.order_id}.pdf" target="new">View invoice</a>`);
+
             // Render items
             $('.items-container').html(response.items);
 

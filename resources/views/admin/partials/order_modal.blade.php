@@ -26,20 +26,6 @@
                                 <div class="row mb-3">
                                     <div class="col amount_col"></div>
                                 </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col"><b>Tax</b></div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col tax_col">20%</div>
-                                </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col"><b>Total Amount</b></div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col total_amount_col"></div>
-                                </div>
                                 <hr>
                                 <div class="row">
                                     <div class="col"><b>Customer</b></div>
@@ -63,17 +49,10 @@
                                 </div>
                                 <hr>
                                 <div class="row">
-                                    <div class="col"><b>Country</b></div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col country_col"></div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col"><b>Updated</b></div>
+                                    <div class="col"><b>Invoice</b></div>
                                 </div>
                                 <div class="row">
-                                    <div class="col updated_date_col"></div>
+                                    <div class="col invoice_col"></div>
                                 </div>
                             </div>
                         </div>

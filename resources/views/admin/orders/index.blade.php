@@ -9,12 +9,12 @@
 @endsection
 
 @section('content')
-    <h1 class="h3 mb-12 text-gray-800">List Products</h1>
+    <h1 class="h3 mb-12 text-gray-800">List Orders</h1>
     <div class="row">
         <div class="col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <b class="m-0 font-weight-bold text-primary">List of all products</b>
+                    <b class="m-0 font-weight-bold text-primary">List of all orders</b>
                 </div>
                 <div class="card-body">
                     <div class="container">
@@ -35,7 +35,7 @@
                                                     <div class="col"><b>Amount</b></div>
                                                 </div>
                                                 <div class="row mb-3">
-                                                    <div class="col">{{ $order->totalPrice }} {{ $order->currency }}</div>
+                                                    <div class="col">{{ $order->amount }} {{ $order->currency }}</div>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
@@ -61,9 +61,6 @@
                                                 <hr>
                                                 <div class="row">
                                                     <div class="col"><b>Country</b></div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <div class="col">{{ $order->payer_country }}</div>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
@@ -95,11 +92,10 @@
                                         @forelse($orders as $order)
                                             <tr>
                                                 <td><a href="javascript:viewOrder({{ $order->id }}, '{{ $order->order_id }}', '{{ route("admin.view_order") }}');">{{ $order->order_id }}</a></td>
-                                                <th>{{ $order->totalPrice }} {{ $order->currency }}</th>
+                                                <th>{{ $order->amount }} {{ $order->currency }}</th>
                                                 <td>{{ $order->payer_name }}</td>
                                                 <td>{{ $order->payer_email }}</td>
                                                 <td>{{ $order->status }}</td>
-                                                <td>{{ $order->payer_country }}</td>
                                                 <td>{{ $order->updated_at->format('d/m/Y H:i') }}</td>
                                             </tr>
                                         @empty

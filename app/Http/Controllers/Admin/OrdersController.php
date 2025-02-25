@@ -20,15 +20,6 @@ class OrdersController extends Controller
     {
         $orders = Orders::orderBy('updated_at', 'desc')->paginate(12);
 
-        $orders->each(function($order) {
-            $amount = $order->amount;
-            $taxRate = 0.20;
-            $taxAmount = $amount * $taxRate;
-            $totalAmount = $amount + $taxAmount;
-
-            $order->totalPrice = round($totalAmount, 2);
-        });
-
         return view('admin.orders.index', compact('orders'));
     }
 
@@ -39,27 +30,16 @@ class OrdersController extends Controller
         $order = Orders::with([
             'items',
             'items.product',
+            'items.product.category',
             'items.product.thumbnail'
         ])
         ->where('order_id', $validated['order_id'])
         ->where('id', $validated['id'])
         ->firstOrFail();
 
-        $items = collect([]);
-        $prices = collect([]);
-        $order->items->each(function($item) use (&$items, &$prices) {
-            $items->push($item->product);
-            $prices->push($item->product->price);
-        });
-
-        $totalPrice = $this->priceService->calculatePrice($prices, true, 0.20);
-        $priceWithoutTax = $this->priceService->calculatePrice($prices, false);
-
         return response()->json([
             'order' => $order,
-            'items' => $this->productsService->getProductItemsWithTemplate($items),
-            'priceWithoutTax' => $priceWithoutTax,
-            'totalPrice' => $totalPrice,
+            'items' => $this->productsService->getProductItemsWithTemplate($order->items),
         ]);
     }
 }
