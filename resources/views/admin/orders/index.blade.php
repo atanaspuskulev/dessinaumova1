@@ -85,7 +85,7 @@
                                             <th scope="col">Email</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Country</th>
-                                            <th scope="col">Updated</th>
+                                            <th scope="col">Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -96,7 +96,9 @@
                                                 <td>{{ $order->payer_name }}</td>
                                                 <td>{{ $order->payer_email }}</td>
                                                 <td>{{ $order->status }}</td>
-                                                <td>{{ $order->updated_at->format('d/m/Y H:i') }}</td>
+                                                <td>
+                                                    <a href="{{ route('admin.regenerate_invoice', ['id' => $order->id]) }}">Regenerate Invoice</a>
+                                                </td>
                                             </tr>
                                         @empty
                                             <tr>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminViewOrderRequest;
+use App\Http\Services\OrderService;
 use App\Http\Services\PriceService;
 use App\Http\Services\ProductsService;
 use App\Models\Orders;
@@ -41,5 +42,15 @@ class OrdersController extends Controller
             'order' => $order,
             'items' => $this->productsService->getProductItemsWithTemplate($order->items),
         ]);
+    }
+
+    public function regenerateInvoice(int $id)
+    {
+        $order = Orders::with('items')->find($id);
+
+        $orderService = new OrderService();
+        $invoice = $orderService->makeInvoice($order);
+
+        return redirect()->back();
     }
 }

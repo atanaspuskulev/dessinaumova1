@@ -55,6 +55,7 @@
                                 <div class="form-group">
                                     <label for="slug">{{ __('form.slug') }}</label>
                                     <input
+                                        disabled
                                         type="text"
                                         class="form-control" id="slug" name="slug"
                                         value="{{ old('slug', $product->slug) }}">
@@ -98,24 +99,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <label for="tax">{{ __('strings.tax') }} %</label>
-                                    <select name="tax" id="tax" class="form-control">
-                                        <option value="">{{ __('form.choose') }}</option>
-                                        @foreach([9,20] as $tax)
-                                            <option  @selected(old('tax', $product->tax ?? $tax) == $tax) value="{{ $tax }}">{{ $tax }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="shipping_cost">{{ __('strings.shipping_cost') }}</label>
-                                    <input
-                                        type="text"
-                                        name="shipping_cost"
-                                        class="form-control"
-                                        id="shipping_cost"
-                                        value="{{ old('shipping_cost', $product->shipping_cost) }}">
-                                </div>
+
                                 <div class="form-group">
                                     <label for="delivery">{{ __('strings.delivery_information') }}</label>
                                     <input type="text" class="form-control" id="delivery" name="delivery"

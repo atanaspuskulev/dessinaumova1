@@ -81,7 +81,7 @@ class OrderService implements CleanupContractInterface
 
         $client = new Party([
             'name'          => 'Десислава Наумова',
-            'phone'         => '(359) 318-9486',
+            'phone'         => '(359) 897357760',
         ]);
 
         $order->load('items');

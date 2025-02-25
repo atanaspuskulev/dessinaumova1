@@ -14,6 +14,7 @@ Route::prefix('admin')->group(function () {
 
         Route::get('logout', [Admin\AuthController::class, 'logout'])->name('admin.logout');
         Route::get('/', [Admin\IndexController::class, 'index'])->name('admin.home');
+        Route::get('/order/regenerate-invoce/{id}', [Admin\OrdersController::class, 'regenerateInvoice'])->name('admin.regenerate_invoice');
 
         Route::post('/products/reorder-images', [Admin\ImagesController::class, 'reorderImages'])->name('admin.product.reorder_images');
 
