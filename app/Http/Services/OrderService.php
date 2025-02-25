@@ -21,16 +21,6 @@ use LaravelDaily\Invoices\Invoice;
 
 class OrderService implements CleanupContractInterface
 {
-    public function __construct(
-        private SessionStorageService $sessionStorageService,
-        private CartService $cartService
-    ) {}
-
-    public function getPaymentGateway(string $gateway): PaymentGatewayInterface
-    {
-        return (new PaymentGateway($gateway))->make();
-    }
-
     public function cancelOrder(int $orderId, string $paymentOrderId): Orders
     {
         $order = Orders::find($orderId);
@@ -90,12 +80,8 @@ class OrderService implements CleanupContractInterface
         $items = [];
 
         $client = new Party([
-            'name'          => 'Desislava Naumova',
+            'name'          => 'Десислава Наумова',
             'phone'         => '(359) 318-9486',
-            'custom_fields' => [
-                'note'        => 'IDDQD',
-                'business id' => '365#GG',
-            ],
         ]);
 
         $order->load('items');
@@ -103,14 +89,12 @@ class OrderService implements CleanupContractInterface
         $customer = new Buyer([
             'name' => $order->payer_name,
             'custom_fields' => [
-                'order number' => '> ' . OrderHelper::generateInvoiceNumber($order->id) . ' <',
-                'email' => $order->payer_email,
-                'phone' => $order->payer_phone,
-                'country' => $order->payer_country,
-                'state' => $order->payer_state,
-                'city' => $order->payer_city,
-                'zip' => $order->payer_zip,
-                'address' => $order->payer_address,
+                'Номер на поръчка' => '> ' . $order->order_id . ' <',
+                'Е-Mail адрес' => $order->payer_email,
+                'Телефон' => $order->payer_phone,
+                'Нас. място' => $order->payer_city,
+                'Пощенски код' => $order->payer_zip,
+                'Адрес' => $order->payer_address,
             ],
         ]);
 
@@ -124,7 +108,8 @@ class OrderService implements CleanupContractInterface
                 ->pricePerUnit((float)$orderItem->product->price);
         }
 
-        $invoice = Invoice::make('receipt')
+        $invoice = Invoice::make('фактура')
+            ->name('Фактура')
             ->series('BIG')
             ->sequence(667)
             ->serialNumberFormat('{SEQUENCE}/{SERIES}')
@@ -133,15 +118,14 @@ class OrderService implements CleanupContractInterface
             ->date(now())
             ->dateFormat('m/d/Y')
             ->payUntilDays(5)
-            ->currencySymbol('€')
-            ->currencyCode('EUR')
-            ->currencyFormat('{SYMBOL}{VALUE}')
+            ->currencyCode('лева')
+            ->currencySymbol('лв')
+            ->currencyFormat('{VALUE}{SYMBOL}')
             ->currencyThousandsSeparator(',')
             ->currencyDecimalPoint('.')
             ->filename($order->order_id)
-            ->shipping((float)$order->shipping_cost)
-            ->taxRate(20)
             ->addItems($items)
+            ->notes($order->additional_information)
             ->save('invoices')
             ->logo(public_path('vendor/invoices/sample-logo.png'));
 

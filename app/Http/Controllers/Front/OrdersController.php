@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
+use App\Http\Services\OrderService;
 use App\Http\Services\Payment\Interface\PaymentGatewayInterface;
 use App\Http\Services\PriceService;
 use App\Http\Traits\CartTrait;
@@ -54,8 +55,10 @@ class OrdersController extends Controller
 
         $order = Orders::create($data);
 
+        $totalPrice = 0;
         foreach($cart as $item) {
             $product = Product::find($item['product_id']);
+            $totalPrice += $product->price;
 
             if(!$product->has_qty) {
                 $product->update(['sold' => true]);
@@ -71,7 +74,10 @@ class OrdersController extends Controller
 
         $order->load(['items', 'items.product', 'items.product.category']);
 
-        Mail::to($data['payer_email'])->send(new OrderCreatedToBuyer($order));
+        $orderService = new OrderService();
+        $invoice = $orderService->makeInvoice($order);
+
+        Mail::to($data['payer_email'])->send(new OrderCreatedToBuyer($order,(string) $totalPrice, $invoice));
         Mail::to(config('mail.to_admin_email'))->send(new OrderCreatedToSeller($order));
 
         session()->forget('cart');
