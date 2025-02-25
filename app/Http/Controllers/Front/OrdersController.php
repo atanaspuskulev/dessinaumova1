@@ -12,6 +12,7 @@ use App\Http\Traits\CartTrait;
 use App\Mail\OrderCreatedToBuyer;
 use App\Mail\OrderCreatedToSeller;
 use App\Models\Orders;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
@@ -54,6 +55,12 @@ class OrdersController extends Controller
         $order = Orders::create($data);
 
         foreach($cart as $item) {
+            $product = Product::find($item['product_id']);
+
+            if(!$product->has_qty) {
+                $product->update(['sold' => true]);
+            }
+
             $order->items()->create([
                 'product_id' => $item['product_id'],
                 'quantity' => $item['quantity'],
