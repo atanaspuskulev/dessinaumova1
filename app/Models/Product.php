@@ -29,8 +29,6 @@ class Product extends Model
         'dimentions2',
         'dimentions3',
         'price',
-        'tax',
-        'shipping_cost',
         'currency',
         'delivery',
         'sold',

@@ -125,7 +125,7 @@ class OrderService implements CleanupContractInterface
             ->currencyDecimalPoint('.')
             ->filename($order->order_id)
             ->addItems($items)
-            ->notes($order->additional_information)
+            ->notes($order->additional_information ?? 'N/a')
             ->save('invoices')
             ->logo(public_path('vendor/invoices/sample-logo.png'));
 
