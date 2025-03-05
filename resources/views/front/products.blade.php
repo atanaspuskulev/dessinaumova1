@@ -1,13 +1,20 @@
 @extends('layouts.front')
 
 @section('content')
-    <header class="bg-heading py-5 align-content-start">
+    <header class="py-5 align-content-start">
         <div class="container ">
+            <div class="row">
+                <div class="col">
+                    <h1 class="display-6 text-center">{{ $categoryData?->title }}</h1>
+                    <p class="fw-normal text-dark text-center mb-0">
+                        {!! $categoryData->description !!}
+                    </p>
+                    <hr />
+                </div>
+            </div>
             <div class="text-white">
-                <h1 class="display-6 fw-bolder">{{ $categoryData?->title }}</h1>
-                <p class="fw-normal text-white mb-0">
-                    {!! $categoryData->description !!}
-                </p>
+                <h1 class="display-6 fw-bolder"></h1>
+
             </div>
         </div>
     </header>
