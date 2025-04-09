@@ -25,7 +25,7 @@ class ProductRequest extends FormRequest
         return [
             'category_id' => 'required',
             'title' => 'required|unique:products,title' . (request()->has('product_id') ? ',' . request()->product_id : ''),
-            'short_description' => 'required',
+            'short_description' => 'required|min:5,max:250',
             'description' =>'required',
             'price' =>'required',
             'currency' =>'required',
