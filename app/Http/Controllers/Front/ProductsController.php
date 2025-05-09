@@ -37,9 +37,7 @@ class ProductsController extends Controller
     public function view(string $categorySlug, string $productSlug): View
     {
         $categoryData = Category::with([
-            'products' => function($query) use ($productSlug) {
-                $query->where('slug', $productSlug)->firstOrFail();
-            },
+            'products' => static fn($query) => $query->where('slug', $productSlug)->firstOrFail(),
             'products.thumbnail',
             'products.gallery',
             'products.tags'
@@ -47,9 +45,11 @@ class ProductsController extends Controller
         ->where('slug', $categorySlug)
         ->firstOrFail();
 
-        $page_title = $categoryData->meta_title;
-        $meta_description = $categoryData->meta_description;
-        $meta_keywords = $categoryData->meta_keywords;
+        $product = $categoryData->products->first();
+
+        $page_title = $product->meta_title;
+        $meta_description = $product->meta_description;
+        $meta_keywords = $product->meta_keywords;
 
         return view('front.product_view', compact(
             'categoryData',
