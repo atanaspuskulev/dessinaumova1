@@ -3,8 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front;
 
-Route::name('front.')->middleware('web')->group(function () {
-
+Route::name('front.')->middleware(['web', 'locale'])->group(function () {
     Route::get('/about-me', static function () {
         $page_title = 'За мен | Деси Наумова';
         $meta_description = 'Научете повече за Деси Наумова, моята история, ценности и преследване на качество. Discover what makes us a trusted source for hand-crafted paintings, candles, and wooden articles.';
@@ -78,5 +77,4 @@ Route::name('front.')->middleware('web')->group(function () {
     Route::get('/{category_slug}/{product_slug}', [Front\ProductsController::class, 'view'])
         ->where(['category_slug' => '^(?!cart$)[\w-]+$', 'product_slug' => '^(?!cart$)[\w-]+$'])
         ->name('product_view');
-
 });

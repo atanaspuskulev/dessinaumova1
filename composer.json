@@ -9,17 +9,18 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "ext-intl": "*",
         "doctrine/dbal": "^3.5.1",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
-        "laravel/framework": "^10.10",
-        "laravel/sanctum": "^3.2",
+        "laravel/framework": "^12.0",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.8",
         "laraveldaily/laravel-invoices": "^4.0",
         "livewire/livewire": "^3.2",
         "moneyphp/money": "^4.5",
         "spatie/laravel-sitemap": "^7.1",
-        "ext-intl": "*"
+        "stevebauman/location": "^7.6"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",
@@ -27,9 +28,9 @@
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^7.0",
+        "nunomaduro/collision": "^8.3",
         "phpstan/phpstan": "^1.10",
-        "phpunit/phpunit": "^10.1",
+        "phpunit/phpunit": "^11.0",
         "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
