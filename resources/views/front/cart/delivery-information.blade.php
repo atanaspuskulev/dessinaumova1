@@ -12,9 +12,6 @@
     <div class="col col-md-d-flex align-items-center justify-content-center mt-3 mb-4">
         <div class="row justify-content-center">
             <div class="col-md-5">
-                <div class="alert alert-primary rounded-0 mb-5" role="alert">
-                    За момента работим само с наложен платеж.
-                </div>
                 <form method="post" action="{{ route('front.order_create') }}">
                     @csrf
                     <div class="mb-3">
@@ -130,8 +127,8 @@
                             autocomplete="off"
                         >{{ old('additional_information', $deliveryInformation['additional_information'] ?? '') }}</textarea>
                     </div>
-
-                    <button type="submit" class="btn btn-danger rounded-0">Завърши поръчката</button>
+                    <a type="button" href="{{ route('front.cart.index') }}" class="btn btn-warning rounded-0">Назад</a>
+                    <button type="submit" class="btn btn-success rounded-0">Завърши поръчката</button>
                 </form>
             </div>
         </div>

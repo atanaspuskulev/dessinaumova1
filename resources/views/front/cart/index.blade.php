@@ -6,8 +6,6 @@
     <script src="{{ asset('assets/js/cart.js') }}"></script>
 @endsection
 
-
-
 @section('content')
     <div class="container-fluid mt-5">
         <div class="row">

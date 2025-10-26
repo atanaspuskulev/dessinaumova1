@@ -51,7 +51,7 @@ class OrdersController extends Controller
             $data['amount'] += $item['real_price'];
         }
 
-        $data['currency'] = config('currencies')[App::getLocale()];
+        $data['currency'] = 'EUR';
 
         $order = Orders::create($data);
 
@@ -68,21 +68,23 @@ class OrdersController extends Controller
                 'product_id' => $item['product_id'],
                 'quantity' => $item['quantity'],
                 'price' => $item['real_price'],
-                'currency' => $order->currency,
+                'currency' => 'EUR',
             ]);
         }
 
-        $order->load(['items', 'items.product', 'items.product.category']);
+        session()->put('current_order', $data);
 
-        $orderService = new OrderService();
-        $invoice = $orderService->makeInvoice($order);
+        //$order->load(['items', 'items.product', 'items.product.category']);
 
-        Mail::to($data['payer_email'])->send(new OrderCreatedToBuyer($order,(string) $totalPrice, $invoice));
-        Mail::to(config('mail.to_admin_email'))->send(new OrderCreatedToSeller($order));
+//        $orderService = new OrderService();
+//        $invoice = $orderService->makeInvoice($order);
+//
+//        Mail::to($data['payer_email'])->send(new OrderCreatedToBuyer($order,(string) $totalPrice, $invoice));
+//        Mail::to(config('mail.to_admin_email'))->send(new OrderCreatedToSeller($order));
 
-        session()->forget('cart');
+        //session()->forget('cart');
 
-        return redirect()->route('front.order_completed');
+        return redirect()->route('front.payment.choose');
     }
 
     public function completed()

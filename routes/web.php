@@ -62,7 +62,10 @@ Route::name('front.')->middleware('web')->group(function () {
 
     Route::get('/cart', Front\CartIndexController::class)->name('cart.index');
 
+    Route::get('/choose-payment', [Front\PaymentController::class, 'index'])->name('payment.choose');
+
     Route::post('/cart/remove-product/{id}', [Front\CartController::class, 'removeFromCart'])->name('remove_product_from_cart');
+
     Route::post('/cart/update-quantity/{id}', [Front\CartController::class, 'updateQuantity'])->name('update_quantity');
 
     Route::post('/order/create', [Front\OrdersController::class, 'createOrder'])->name('order_create');
@@ -70,6 +73,13 @@ Route::name('front.')->middleware('web')->group(function () {
 
 
     Route::get('/cart/checkout/delivery-information', [Front\DeliveryInformationController::class, 'deliveryForm'])->name('delivery_form');
+
+    Route::get('/order/success', [Front\OrdersController::class, 'captureAndComplete'])->name('payment.order.success');
+    Route::get('/order/cancel', [Front\OrdersController::class, 'captureAndCancel'])->name('payment.order.cancel');
+
+    Route::post('/api/order/create', [Front\OrdersController::class, 'createOrder'])->name('payment.api.order.create');
+    Route::post('/api/order/update', [Front\OrdersController::class, 'updateOrder'])->name('payment.api.order.update');
+    Route::post('/api/order/cancel', [Front\OrdersController::class, 'cancelOrder'])->name('payment.api.order.cancel');
 
     Route::get('/{category}', [Front\ProductsController::class, 'byCategory'])
         ->where('category', '^(?!cart$)[\w-]+$') // Exclude 'cart' and allow word characters and hyphens

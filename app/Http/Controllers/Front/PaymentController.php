@@ -22,8 +22,6 @@ class PaymentController extends Controller
 
     public function __construct(
         private readonly PaymentService $paymentService,
-        private readonly SessionStorageService $sessionStorageService,
-        private readonly CartService $cartService,
         private readonly PriceService $priceService,
         private OrderService $orderService
     )
@@ -37,20 +35,10 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        if(
-            !$this->sessionStorageService->check('cart')
-            || !$this->sessionStorageService->check('delivery-information')
-        ) {
-            return redirect()->to(route('front.index'));
-        }
+        $orderSession = session()->get('current_order');
+        $cart = session()->get('cart');
 
-        $cart = $this->cartService->getCart();
-        $deliveryInformation = $this->sessionStorageService->get('delivery-information');
-
-        if(empty($cart) || empty($deliveryInformation)) {
-            $this->cartService->cleanupForSession();
-            $this->orderService->cleanupForSession();
-
+        if(!$orderSession || !$cart) {
             return redirect()->to(route('front.index'));
         }
 
@@ -62,7 +50,7 @@ class PaymentController extends Controller
         $purchases = [];
         $shippingCost = 0.00;
 
-        $pq = Product::whereIn('id', $cart)->get();
+        $pq = Product::whereIn('id', collect($cart)->pluck('product_id'))->get();
         $pq->map(static function ($item) use (&$purchases, $paypalCurrency) {
                 $purchases[] = [
                     'reference_id' => $item->id,
@@ -75,6 +63,18 @@ class PaymentController extends Controller
             });
 
         $shippingCost = $this->priceService->calculateShippingPrice($pq->pluck('shipping_cost'));
+//        dd($orderSession);
+        $deliveryInformation = [
+            'name' => $orderSession['payer_name'],
+            'delivery_address' => $orderSession['payer_address'],
+            'country' => '',
+            'zip' => $orderSession['payer_zip'],
+            'city' => $orderSession['payer_city'],
+            'phone' => $orderSession['payer_phone'],
+            'email' => $orderSession['payer_email'],
+            'additional_information' => $orderSession['additional_information'],
+            'state' => null
+        ];
 
         $purchaseUnits = $this->paymentService->assemblePurchaseUnitsForPaypal($purchases, $deliveryInformation);
 

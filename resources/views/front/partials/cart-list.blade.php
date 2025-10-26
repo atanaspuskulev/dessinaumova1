@@ -67,7 +67,7 @@
             </p>
             <div class="d-flex justify-content-center gap-2">
                 <a href="{{ route('front.index') }}" class="btn btn-outline-secondary rounded-0">Разгледай още</a>
-                <a href="{{ route('front.delivery_form') }}" class="btn btn-danger rounded-0">Завърши поръчката</a>
+                <a href="{{ route('front.delivery_form') }}" class="btn btn-danger rounded-0">Данни за доставка</a>
             </div>
         </div>
     </div>
