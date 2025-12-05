@@ -72,17 +72,19 @@ class OrdersController extends Controller
             ]);
         }
 
-        $order->load(['items', 'items.product', 'items.product.category']);
+        //$order->load(['items', 'items.product', 'items.product.category']);
 
-        $orderService = new OrderService();
-        $invoice = $orderService->makeInvoice($order);
+        //$orderService = new OrderService();
+        //$invoice = $orderService->makeInvoice($order);
 
-        Mail::to($data['payer_email'])->send(new OrderCreatedToBuyer($order,(string) $totalPrice, $invoice));
-        Mail::to(config('mail.to_admin_email'))->send(new OrderCreatedToSeller($order));
+//        Mail::to($data['payer_email'])->send(new OrderCreatedToBuyer($order,(string) $totalPrice, $invoice));
+//        Mail::to(config('mail.to_admin_email'))->send(new OrderCreatedToSeller($order));
 
         session()->forget('cart');
 
-        return redirect()->route('front.order_completed');
+        session()->put('myOrder', $order->id);
+
+        return redirect()->route('front.payment_choose');
     }
 
     public function completed()
