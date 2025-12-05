@@ -22,6 +22,7 @@ class OrderRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'payer_country' => 'required',
             'payer_city' => 'required',
             'payer_zip' => 'required|numeric',
             'payer_address' => 'required',
@@ -35,12 +36,13 @@ class OrderRequest extends FormRequest
     public function messages()
     {
         return [
-            'payer_city.required' => 'Населено място е задължително.',
-            'payer_zip.required' => 'Пощенски код е задължителен.',
+            'payer_country.required' => 'Моля, изберете държава',
+            'payer_city.required' => 'Моля, въведете населено място',
+            'payer_zip.required' => 'Моля, въведете пощенски код',
             'payer_zip.numeric' => 'Пощенски код трябва да е само от числа.',
-            'payer_address.required' => 'Адрес за доставка е задължителен.',
-            'payer_name.required' => 'Не сте попълнили име.',
-            'payer_email.required' => 'Email адресът е задължителен.',
+            'payer_address.required' => 'Моля въведете адрес за доставка',
+            'payer_name.required' => 'Моля, попълнете вашето име',
+            'payer_email.required' => 'Моля, попълете вашият e-mail адрес',
             'payer_email.email' => 'Email адресът не е валиден.',
             'payer_phone.required' => 'Телефон е задължително поле.',
             'payer_phone.numeric' => 'Телефона трябва да е само от числа.',

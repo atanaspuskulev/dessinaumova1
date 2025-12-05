@@ -12,11 +12,22 @@
     <div class="col col-md-d-flex align-items-center justify-content-center mt-3 mb-4">
         <div class="row justify-content-center">
             <div class="col-md-5">
-                <div class="alert alert-primary rounded-0 mb-5" role="alert">
-                    За момента работим само с наложен платеж.
-                </div>
                 <form method="post" action="{{ route('front.order_create') }}">
                     @csrf
+                    <div class="form-group mb-3">
+                        <label for="payer_country" class="form-label">* Държава</label>
+                        <select id="payer_country" name="payer_country" class="form-control rounded-0">
+                            <option value="">Избери</option>
+                            @foreach(config('countries') as $country)
+                                <option value="{{ $country['short_name'] }}" @selected(old('payer_country') == $country['short_name'])>{{ $country['name'] }}</option>
+                            @endforeach
+                        </select>
+                        @error('payer_country')
+                        <div class="alert alert-danger mt-2 p-1">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
                     <div class="mb-3">
                         <label for="payer_city" class="form-label">* Населено място</label>
                         <input
@@ -131,7 +142,7 @@
                         >{{ old('additional_information', $deliveryInformation['additional_information'] ?? '') }}</textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-danger rounded-0">Завърши поръчката</button>
+                    <button type="submit" class="btn btn-danger rounded-0">Плащане</button>
                 </form>
             </div>
         </div>

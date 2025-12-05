@@ -22,12 +22,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(OrderService::class, function($app) {
-            return new OrderService(
-                $app->make(SessionStorageService::class),
-                $app->make(CartService::class)
-            );
-        });
     }
 
     /**

@@ -22,12 +22,15 @@ class PaymentController extends Controller
 
     public function __construct(
         private readonly PaymentService $paymentService,
-        private readonly SessionStorageService $sessionStorageService,
-        private readonly CartService $cartService,
         private readonly PriceService $priceService,
         private OrderService $orderService
     )
     {
+    }
+
+    public function paymentChoose()
+    {
+        return view('front.checkout.choose-payment');
     }
 
     /**
