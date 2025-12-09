@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\PhoneValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
 class OrderRequest extends FormRequest
@@ -24,11 +25,11 @@ class OrderRequest extends FormRequest
         return [
             'payer_country' => 'required',
             'payer_city' => 'required',
-            'payer_zip' => 'required|numeric',
+            'payer_zip' => 'required',
             'payer_address' => 'required',
             'payer_name' => 'required',
             'payer_email' => 'required|email',
-            'payer_phone' => 'nullable|numeric',
+            'payer_phone' => ['required', new PhoneValidation()],
             'additional_information' => 'nullable|string',
         ];
     }

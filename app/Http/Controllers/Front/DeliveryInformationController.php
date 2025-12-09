@@ -23,6 +23,8 @@ class DeliveryInformationController extends Controller
             return redirect()->route('front.index');
         }
 
-        return view('front.cart.delivery-information');
+        $countries = trans('countries');
+
+        return view('front.cart.delivery-information', compact('countries'));
     }
 }
