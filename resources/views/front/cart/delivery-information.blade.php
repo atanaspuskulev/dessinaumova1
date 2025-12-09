@@ -14,22 +14,21 @@
             <div class="col-md-5">
                 <form method="post" action="{{ route('front.order_create') }}">
                     @csrf
-                    <div class="form-group mb-3">
-                        <label for="payer_country" class="form-label">* Държава</label>
-                        <select id="payer_country" name="payer_country" class="form-control rounded-0">
+                    <div class="form-floating mb-3">
+                        <select class="form-select rounded-0" id="payer_country" name="payer_country">
                             <option value="">Избери</option>
-                            @foreach(config('countries') as $country)
+                            @foreach($countries as $country)
                                 <option value="{{ $country['short_name'] }}" @selected(old('payer_country') == $country['short_name'])>{{ $country['name'] }}</option>
                             @endforeach
                         </select>
+                        <label for="floatingSelect">* Държава</label>
                         @error('payer_country')
                         <div class="alert alert-danger mt-2 p-1">
                             {{ $message }}
                         </div>
                         @enderror
                     </div>
-                    <div class="mb-3">
-                        <label for="payer_city" class="form-label">* Населено място</label>
+                    <div class="form-floating mb-3">
                         <input
                             name="payer_city"
                             type="text"
@@ -38,6 +37,8 @@
                             autocomplete="off"
                             value="{{ old('payer_city') }}"
                         >
+                        <label for="payer_city" class="form-label">* Населено място</label>
+
                         @error('payer_city')
                         <div class="alert alert-danger mt-2 p-1">
                             {{ $message }}
@@ -45,8 +46,7 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label for="payer_zip">* Пощенски код</label>
+                    <div class="form-floating mb-3">
                         <input
                             name="payer_zip"
                             type="text"
@@ -55,6 +55,7 @@
                             autocomplete="off"
                             value="{{ old('payer_zip') }}"
                         >
+                        <label for="payer_zip">* Пощенски код</label>
 
                         @error('payer_zip')
                         <div class="alert alert-danger mt-2 p-1">
@@ -63,8 +64,7 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label for="payer_address">* Адрес</label>
+                    <div class="form-floating mb-3">
                         <input
                             type="text"
                             name="payer_address"
@@ -73,6 +73,8 @@
                             autocomplete="off"
                             value="{{ old('payer_address') }}"
                         >
+                        <label for="payer_address">* Адрес</label>
+
                         @error('payer_address')
                         <div class="alert alert-danger mt-2 p-1">
                             {{ $message }}
@@ -80,8 +82,7 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label for="payer_name">* Вашите имена</label>
+                    <div class="form-floating mb-3">
                         <input
                             name="payer_name"
                             type="text"
@@ -90,6 +91,8 @@
                             autocomplete="off"
                             value="{{ old('payer_name') }}"
                         >
+                        <label for="payer_name">* Вашите имена</label>
+
                         @error('payer_name')
                         <div class="alert alert-danger mt-2 p-1">
                             {{ $message }}
@@ -97,8 +100,7 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label for="payer_email">* E-mail адрес</label>
+                    <div class="form-floating mb-3">
                         <input
                             name="payer_email"
                             type="email"
@@ -107,6 +109,8 @@
                             autocomplete="off"
                             value="{{ old('payer_email') }}"
                         >
+                        <label for="payer_email">* E-mail адрес</label>
+
                         @error('payer_email')
                         <div class="alert alert-danger mt-2 p-1">
                             {{ $message }}
@@ -114,25 +118,43 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label for="phone">* Телефон за връзка</label>
-                        <input
-                            name="payer_phone"
-                            type="tel"
-                            class="form-control rounded-0"
-                            id="phone"
-                            autocomplete="off"
-                            value="{{ old('payer_phone') }}"
-                        >
-                        @error('payer_phone')
-                        <div class="alert alert-danger mt-2 p-1">
-                            {{ $message }}
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <div class="form-floating">
+                                <select class="form-select rounded-0" id="phone_code" name="phone_code">
+                                    <option value="">*Избери</option>
+                                    @foreach($countries as $country)
+                                        <option
+                                            data-flag="{{ asset('assets/images/flags/'.$country['short_name']) }}.svg"
+                                            value="{{ $country['country_code'] }}">{{ $country['country_code'] }}</option>
+                                    @endforeach
+                                </select>
+                                <label for="phone_code">Код</label>
+                            </div>
                         </div>
-                        @enderror
+
+                        <div class="col-md-9">
+                            <div class="form-floating">
+                                <input
+                                    name="payer_phone"
+                                    type="tel"
+                                    class="form-control rounded-0"
+                                    id="payer_phone"
+                                    autocomplete="off"
+                                    value="{{ old('payer_phone') }}"
+                                >
+                                <label for="payer_phone">* Телефон за връзка</label>
+                            </div>
+
+                            @error('payer_phone')
+                            <div class="alert alert-danger mt-2 p-1">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="additional_information" class="form-label">Допълнителна информация</label>
+                    <div class="mb-3 form-floating">
                         <textarea
                             name="additional_information"
                             rows="5"
@@ -140,6 +162,7 @@
                             id="additional_information"
                             autocomplete="off"
                         >{{ old('additional_information', $deliveryInformation['additional_information'] ?? '') }}</textarea>
+                        <label for="additional_information" class="form-label">Допълнителна информация</label>
                     </div>
 
                     <button type="submit" class="btn btn-danger rounded-0">Плащане</button>
