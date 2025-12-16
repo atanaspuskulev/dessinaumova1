@@ -1,5 +1,33 @@
 @extends('layouts.front')
 
+@section('head_additional_js')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@endsection
+
+@section('head_js')
+<script>
+    $(document).ready(function() {
+        $('#payer_country').on('change', function () {
+            const countryIso = $(this).val(); // BG, DE, etc.
+            console.log(countryIso);
+            if (!countryIso) {
+                $('#phone_code').val('');
+                return;
+            }
+
+            // Find matching option by data-id
+            const $option = $('#phone_code option[data-id="' + countryIso + '"]');
+
+            if ($option.length) {
+                $('#phone_code').val($option.val());
+            } else {
+                $('#phone_code').val('');
+            }
+        });
+    })
+</script>
+@endsection
+
 @section('content')
     <div class="container-fluid mt-5">
         <div class="row">
@@ -119,13 +147,16 @@
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-md-3">
+                        <div class="col-3 col-sm-5 col-md-3">
                             <div class="form-floating">
-                                <select class="form-select rounded-0" id="phone_code" name="phone_code">
+                                <select
+                                    style="pointer-events: none; background-color: #e9ecef;"
+                                    class="form-select rounded-0" id="phone_code" name="phone_code">
                                     <option value="">*Избери</option>
                                     @foreach($countries as $country)
                                         <option
-                                            data-flag="{{ asset('assets/images/flags/'.$country['short_name']) }}.svg"
+                                            @selected(old('phone_code') == $country['country_code'])
+                                            data-id="{{$country['short_name']}}"
                                             value="{{ $country['country_code'] }}">{{ $country['country_code'] }}</option>
                                     @endforeach
                                 </select>
@@ -133,11 +164,11 @@
                             </div>
                         </div>
 
-                        <div class="col-md-9">
+                        <div class="col-9 col-sm-7 col-md-9">
                             <div class="form-floating">
                                 <input
                                     name="payer_phone"
-                                    type="tel"
+                                    type="number"
                                     class="form-control rounded-0"
                                     id="payer_phone"
                                     autocomplete="off"
@@ -145,13 +176,17 @@
                                 >
                                 <label for="payer_phone">* Телефон за връзка</label>
                             </div>
-
-                            @error('payer_phone')
-                            <div class="alert alert-danger mt-2 p-1">
-                                {{ $message }}
-                            </div>
-                            @enderror
                         </div>
+                        @error('payer_phone')
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="alert alert-danger mt-2 p-1">
+                                    {{ $message }}
+                                </div>
+                            </div>
+                        </div>
+
+                        @enderror
                     </div>
 
                     <div class="mb-3 form-floating">

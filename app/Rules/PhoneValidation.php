@@ -8,28 +8,30 @@ use libphonenumber\PhoneNumberUtil;
 
 class PhoneValidation implements ValidationRule
 {
+    protected string|null $region;
+
+    public function __construct(string|null $region)
+    {
+        $this->region = $region !== null ? strtoupper($region) : null;
+    }
+
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (! str_starts_with($value, '+')) {
-            $fail('The :attribute must include an international country code (start with +).');
+        $util = PhoneNumberUtil::getInstance();
+
+        if($this->region === null) {
+            $fail('Невалиден код.');
             return;
         }
-        $util = PhoneNumberUtil::getInstance();
-        $regions = array_column(config('countries'), 'short_name');
 
-        foreach ($regions as $region) {
-            try {
-                $number = $util->parse($value, $region);
+        try {
+            $number = $util->parse($value, $this->region);
 
-                if ($util->isValidNumber($number)) {
-                    return; // VALID → stop validation without failing
-                }
-            } catch (\Exception $e) {
-                // ignore parse errors and continue checking next region
+            if (! $util->isValidNumber($number)) {
+                $fail('Невалиден телефонен номер.');
             }
+        } catch (\Exception $e) {
+            $fail('Невалиден телефонен номер.');
         }
-
-        // If we reach here → no region matched
-        $fail('The :attribute number is invalid.');
     }
 }

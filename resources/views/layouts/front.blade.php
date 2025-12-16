@@ -15,6 +15,7 @@
     <link href="{{ asset('assets/css/front/style.css') }}" type="text/css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">    <link rel="stylesheet" href="{{ asset('assets/fontawesome-free-6.4.2-web/css/all.min.css') }}"/>
     <link href="{{ asset('assets/css/custom.css') }}" type="text/css" rel="stylesheet"/>
+    @yield('head_additional_js')
     @yield('css_files')
     @yield('head_js')
 </head>

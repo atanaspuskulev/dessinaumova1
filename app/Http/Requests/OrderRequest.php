@@ -29,9 +29,18 @@ class OrderRequest extends FormRequest
             'payer_address' => 'required',
             'payer_name' => 'required',
             'payer_email' => 'required|email',
-            'payer_phone' => ['required', new PhoneValidation()],
+            'payer_phone' => ['required', new PhoneValidation($this->payer_country),],
             'additional_information' => 'nullable|string',
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        if ($this->phone_code && $this->payer_phone) {
+            $this->merge([
+                'payer_phone' => $this->phone_code . $this->payer_phone,
+            ]);
+        }
     }
 
     public function messages()
