@@ -16,7 +16,7 @@ class DisplayPriceDirective
 {
     public static function displayPrice($price, $currentCurrency = null): string
     {
-        $currency = $currentCurrency ?? config('currencies')[App::getLocale()];
+        $currency = 'EUR';//$currentCurrency ?? config('currencies')[App::getLocale()];
 
         $money = new Money(((int) round($price * 100)), new Currency($currency));
         $currencies = new ISOCurrencies();
