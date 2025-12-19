@@ -30,7 +30,7 @@ class CartIndexController extends Controller
             $totalPrice += $cartItem['real_price'];
         }
 
-        $totalPrice = $this->priceService->formatPrice($totalPrice, config('currencies')[App::getLocale()]);
+        $totalPrice = $this->priceService->formatPrice($totalPrice, 'EUR');
 
         return view('front.cart.index', compact('products', 'cart', 'totalPrice'));
     }
