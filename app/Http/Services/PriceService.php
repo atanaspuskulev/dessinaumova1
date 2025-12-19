@@ -42,7 +42,7 @@ class PriceService
 
     public function formatPrice(float $price, ?string $currency = null)
     {
-        $currency = $currentCurrency ?? config('currencies')[App::getLocale()];
+        $currency = 'EUR';//$currentCurrency ?? config('currencies')[App::getLocale()];
 
         $money = new Money(((int) round($price * 100)), new Currency($currency));
         $currencies = new ISOCurrencies();
