@@ -8,9 +8,9 @@
     | Артикул       | Количество    | Цена         | Валута  |
     | ------------- |:-------------:|:-------------:| --------:|
     @foreach($order->items as $item)
-        | {{ $item->product->title }} | {{ $item->quantity }} | {{ $item->price }} | {{ $item->currency }} |
+        | {{ $item->product->title }} | {{ $item->quantity }} | {{ $item->price }} | EUR |
     @endforeach
-    | Total      | {{ $totalPrice }} | {{ $order->currency }} |
+    | Total      | {{ $totalPrice }} | EUR |
 </x-mail::table>
 <br /><br />
 Може да свалите вашата фактура <a target="_new" href="{{ $invoice['url'] }}">от тук</a>.<br/><br/>
