@@ -14,9 +14,9 @@ completed. Below you will find detailed information for your order.
     @foreach($order->items as $item)
         | {{ $item->product->title }} | {{ $item->product->price }} | {{ $order->currency }} |
     @endforeach
-    | Tax Amount | {{ $taxAmount }}  | {{ $order->currency }} |
-    | Shipping Cost | {{ $shippingCost }}  | {{ $order->currency }} |
-    | Total      | {{ $totalPrice }} | {{ $order->currency }} |
+    | Tax Amount | {{ $taxAmount }}  | EUR |
+    | Shipping Cost | {{ $shippingCost }}  | EUR |
+    | Total      | {{ $totalPrice }} | EUR |
 </x-mail::table>
 
 <br /><br />
