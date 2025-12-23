@@ -32,7 +32,7 @@
     <div class="container-fluid mt-5">
         <div class="row">
             <div class="col">
-                <h1 class="display-6 text-center">Информация за доставка</h1>
+                <h1 class="display-6 text-center">{{ __('cart.delivery_information') }}</h1>
                 <hr>
             </div>
         </div>
@@ -43,17 +43,21 @@
                 <form method="post" action="{{ route('front.order_create') }}">
                     @csrf
                     <div class="form-floating mb-3">
-                        <select class="form-select rounded-0" id="payer_country" name="payer_country">
-                            <option value="">Избери</option>
+                        <select
+                            class="form-select rounded-0" id="payer_country"
+                            name="payer_country"
+                        >
+                            <option value="">{{ __('form.choose') }}</option>
                             @foreach($countries as $country)
-                                <option value="{{ $country['short_name'] }}" @selected(old('payer_country') == $country['short_name'])>{{ $country['name'] }}</option>
+                                <option
+                                    value="{{ $country['short_name'] }}"
+                                    @selected(old('payer_country') == $country['short_name'])
+                                >{{ $country['name'] }}</option>
                             @endforeach
                         </select>
-                        <label for="floatingSelect">* Държава</label>
+                        <label for="floatingSelect">* {{ __('form.country') }}</label>
                         @error('payer_country')
-                        <div class="alert alert-danger mt-2 p-1">
-                            {{ $message }}
-                        </div>
+                            <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-floating mb-3">
@@ -65,12 +69,9 @@
                             autocomplete="off"
                             value="{{ old('payer_city') }}"
                         >
-                        <label for="payer_city" class="form-label">* Населено място</label>
-
+                        <label for="payer_city" class="form-label">* {{ __('form.residence') }}</label>
                         @error('payer_city')
-                        <div class="alert alert-danger mt-2 p-1">
-                            {{ $message }}
-                        </div>
+                            <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -83,12 +84,9 @@
                             autocomplete="off"
                             value="{{ old('payer_zip') }}"
                         >
-                        <label for="payer_zip">* Пощенски код</label>
-
+                        <label for="payer_zip">* {{ __('form.zip') }}</label>
                         @error('payer_zip')
-                        <div class="alert alert-danger mt-2 p-1">
-                            {{ $message }}
-                        </div>
+                            <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -101,12 +99,9 @@
                             autocomplete="off"
                             value="{{ old('payer_address') }}"
                         >
-                        <label for="payer_address">* Адрес</label>
-
+                        <label for="payer_address">* {{ __('form.address') }}</label>
                         @error('payer_address')
-                        <div class="alert alert-danger mt-2 p-1">
-                            {{ $message }}
-                        </div>
+                            <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -119,12 +114,9 @@
                             autocomplete="off"
                             value="{{ old('payer_name') }}"
                         >
-                        <label for="payer_name">* Вашите имена</label>
-
+                        <label for="payer_name">* {{ __('form.your_name') }}</label>
                         @error('payer_name')
-                        <div class="alert alert-danger mt-2 p-1">
-                            {{ $message }}
-                        </div>
+                            <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -137,12 +129,9 @@
                             autocomplete="off"
                             value="{{ old('payer_email') }}"
                         >
-                        <label for="payer_email">* E-mail адрес</label>
-
+                        <label for="payer_email">* {{ __('form.e_mail') }}</label>
                         @error('payer_email')
-                        <div class="alert alert-danger mt-2 p-1">
-                            {{ $message }}
-                        </div>
+                            <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -151,8 +140,11 @@
                             <div class="form-floating">
                                 <select
                                     style="pointer-events: none; background-color: #e9ecef;"
-                                    class="form-select rounded-0" id="phone_code" name="phone_code">
-                                    <option value="">*Избери</option>
+                                    class="form-select rounded-0"
+                                    id="phone_code"
+                                    name="phone_code"
+                                >
+                                    <option value="">* {{ __('form.choose') }}</option>
                                     @foreach($countries as $country)
                                         <option
                                             @selected(old('phone_code') == $country['country_code'])
@@ -160,7 +152,7 @@
                                             value="{{ $country['country_code'] }}">{{ $country['country_code'] }}</option>
                                     @endforeach
                                 </select>
-                                <label for="phone_code">Код</label>
+                                <label for="phone_code">{{ __('form.phone_code') }}</label>
                             </div>
                         </div>
 
@@ -174,15 +166,13 @@
                                     autocomplete="off"
                                     value="{{ old('payer_phone') }}"
                                 >
-                                <label for="payer_phone">* Телефон за връзка</label>
+                                <label for="payer_phone">* {{ __('form.phone') }}</label>
                             </div>
                         </div>
                         @error('payer_phone')
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="alert alert-danger mt-2 p-1">
-                                    {{ $message }}
-                                </div>
+                                <div class="alert alert-danger mt-2 p-1">{{ $message }}</div>
                             </div>
                         </div>
 
@@ -197,10 +187,16 @@
                             id="additional_information"
                             autocomplete="off"
                         >{{ old('additional_information', $deliveryInformation['additional_information'] ?? '') }}</textarea>
-                        <label for="additional_information" class="form-label">Допълнителна информация</label>
+                        <label for="additional_information" class="form-label">{{ __('form.additional_info') }}</label>
                     </div>
-
-                    <button type="submit" class="btn btn-danger rounded-0">Плащане</button>
+                    <hr />
+                    <div class="d-flex justify-content-center col-12">
+                        <a href="#" class="btn btn-warning">{{ __('nav.front.back_to_cart') }}</a>
+                        <button
+                            style="margin-left:10px;"
+                            type="submit"
+                            class="btn btn-danger rounded-0">{{ __('nav.front.to_payment') }}</button>
+                    </div>
                 </form>
             </div>
         </div>

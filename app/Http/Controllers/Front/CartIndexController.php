@@ -24,13 +24,13 @@ class CartIndexController extends Controller
     {
         $products = Product::with('thumbnail')->whereIn('id', $this->getIdsFromCart())->get();
         $cart = session()->get('cart', []);
-
+//dd($cart);
         $totalPrice = 0;
         foreach($cart as $cartItem) {
             $totalPrice += $cartItem['real_price'];
         }
 
-        $totalPrice = $this->priceService->formatPrice($totalPrice, config('currencies')[App::getLocale()]);
+        $totalPrice = $this->priceService->formatPrice($totalPrice);
 
         return view('front.cart.index', compact('products', 'cart', 'totalPrice'));
     }

@@ -28,5 +28,14 @@ return [
     'sold' => 'Продадено',
     'has_qty' => 'Опция за бройка',
     'choose_files' => 'Избери файлове',
-    'quantity' => 'Брой'
+    'quantity' => 'Брой',
+    'country' => 'Държава',
+    'residence' => 'Населено място',
+    'zip' => 'Пощенски код',
+    'address' => 'Адрес',
+    'your_name' => 'Вашите имена',
+    'e_mail' => 'E-mail адрес',
+    'phone_code' => 'Код',
+    'phone' => 'Телефон за връзка',
+    'additional_info' => 'Допълнителна информация'
 ];

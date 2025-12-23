@@ -14,9 +14,9 @@ use NumberFormatter;
 
 class DisplayPriceDirective
 {
-    public static function displayPrice($price, $currentCurrency = null): string
+    public static function displayPrice(float $price, string|null $currentCurrency = null): string
     {
-        $currency = $currentCurrency ?? config('currencies')[App::getLocale()];
+        $currency = $currentCurrency ?? config('paypal.currency');
 
         $money = new Money(((int) round($price * 100)), new Currency($currency));
         $currencies = new ISOCurrencies();

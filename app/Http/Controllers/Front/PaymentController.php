@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Front;
 
+use App\Helpers\Order;
 use App\Http\Controllers\Controller;
 use App\Http\Services\CartService;
 use App\Http\Services\OrderService;
@@ -11,6 +12,7 @@ use App\Http\Services\Payment\PaymentService;
 use App\Http\Services\PriceService;
 use App\Http\Services\SessionStorageService;
 use App\Http\Traits\CartTrait;
+use App\Models\Orders;
 use App\Models\Product;
 use JsonException;
 use Psr\Container\ContainerExceptionInterface;
@@ -23,13 +25,19 @@ class PaymentController extends Controller
     public function __construct(
         private readonly PaymentService $paymentService,
         private readonly PriceService $priceService,
-        private OrderService $orderService
+        private readonly OrderService $orderService
     )
     {
     }
 
     public function paymentChoose()
     {
+        $order = Orders::with('items')->find(session()->get('myOrder'));
+
+        if(empty($order) || $order->items->isEmpty()) {
+            return redirect()->route('front.index');
+        }
+
         return view('front.checkout.choose-payment');
     }
 

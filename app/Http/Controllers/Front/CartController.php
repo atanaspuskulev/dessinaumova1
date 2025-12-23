@@ -46,7 +46,7 @@ class CartController extends Controller
             $totalPrice += $cartItem['real_price'];
         }
 
-        $totalPrice = $this->priceService->formatPrice($totalPrice, config('currencies')[App::getLocale()]);
+        $totalPrice = $this->priceService->formatPrice($totalPrice);
 
         $html = view('front.partials.cart-list', compact('products', 'cart', 'totalPrice'))->render();
 
@@ -92,7 +92,7 @@ class CartController extends Controller
             $totalPrice += $cartItem['real_price'];
         }
 
-        $totalPrice = $this->priceService->formatPrice($totalPrice, config('currencies')[App::getLocale()]);
+        $totalPrice = $this->priceService->formatPrice($totalPrice);
 
         $html = view('front.partials.cart-list', compact('products', 'cart', 'totalPrice'))->render();
 
