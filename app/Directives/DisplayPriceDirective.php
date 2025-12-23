@@ -14,9 +14,9 @@ use NumberFormatter;
 
 class DisplayPriceDirective
 {
-    public static function displayPrice($price, $currentCurrency = null): string
+    public static function displayPrice(float $price, string|null $currentCurrency = null): string
     {
-        $currency = 'EUR';//$currentCurrency ?? config('currencies')[App::getLocale()];
+        $currency = 'EUR';
 
         $money = new Money(((int) round($price * 100)), new Currency($currency));
         $currencies = new ISOCurrencies();

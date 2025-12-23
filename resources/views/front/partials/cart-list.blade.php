@@ -1,6 +1,6 @@
 @if($products->count())
     <div class="row mt-5 p-4">
-        <div class="col-md-8 bg-light border">
+        <div class="col-md-8">
             @foreach($products as $product)
                 @php
                     $qty = 0;
@@ -15,16 +15,17 @@
                         @endphp
                     @endif
                 @endforeach
-                <div class="row">
+                <div class="row bg-light border mb-1">
                     <div class="col">
                         <img
                             src="{{ displayImage($product->id, $product->thumbnail?->path, true) }}"
                             width="150"
+                            alt=""
                         />
                     </div>
                     <div class="col pt-5">
                         <div class="fs-5 fw-bold w-100">{{ $product->title }}</div>
-                        <div>Единична цена:  @price($product->price, $product->currency)</div>
+                        <div>{{ __('cart.single_price') }}:  @price($product->price, $product->currency)</div>
                     </div>
                     <div class="col pt-3">
                         <div class="text-end w-100 mb-3">
@@ -51,23 +52,15 @@
                             {{ $totalProductPrice }}
                         </div>
                     </div>
-                    @if(!$loop->last)
-                        <hr />
-                    @endif
                 </div>
             @endforeach
         </div>
         <div class="col-md bg-light  ms-md-3 pt-4 border">
-            <p>
-                Забележка: без цена за доставка
-            </p>
-
-            <p>
-                Обща сума: {{ $totalPrice }}
-            </p>
+            <p>{{ __('cart.notice_free_delivery') }}</p>
+            <p>{{ __('cart.total_price') }}: {{ $totalPrice }}</p>
             <div class="d-flex justify-content-center gap-2">
-                <a href="{{ route('front.index') }}" class="btn btn-outline-secondary rounded-0">Разгледай още</a>
-                <a href="{{ route('front.delivery_form') }}" class="btn btn-danger rounded-0">Завърши поръчката</a>
+                <a href="{{ route('front.index') }}" class="btn btn-outline-secondary rounded-0">{{ __('nav.front.view_more') }}</a>
+                <a href="{{ route('front.delivery_form') }}" class="btn btn-danger rounded-0">{{ __('nav.front.order_info') }}</a>
             </div>
         </div>
     </div>
