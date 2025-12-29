@@ -38,7 +38,19 @@ class PaymentController extends Controller
             return redirect()->route('front.index');
         }
 
-        return view('front.checkout.choose-payment');
+        $countries = trans('countries');
+        $payerCountry = array_values(
+            array_filter($countries, static fn($country) => $country['short_name'] === $order->payer_country)
+        )[0] ?? null;
+
+        $addressArray = implode(', ', [
+            $payerCountry['name'],
+            $order['payer_city'],
+            $order['payer_zip'],
+            $order['payer_address']
+        ]);
+
+        return view('front.checkout.payment-and-delivery', compact('addressArray'));
     }
 
     /**

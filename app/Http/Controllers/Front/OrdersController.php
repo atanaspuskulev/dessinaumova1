@@ -84,7 +84,7 @@ class OrdersController extends Controller
 
         session()->put('myOrder', $order->id);
 
-        return redirect()->route('front.payment_choose');
+        return redirect()->route('front.payment_and_delivery');
     }
 
     public function completed()

@@ -20,26 +20,26 @@
     </header>
     <section class="py-5">
         <div class="container">
-        <div class="row equal-height">
-            @forelse($products as $product)
-                @include('front.partials.product-item', ['productItem' => $product])
-            @empty
-                <div class="col-md-6">
-                    <div class="card mb-4">
-                        <div class="card-body">{{ __('messages.no_products') }}</div>
+            <div class="row equal-height">
+                @forelse($products as $product)
+                    @include('front.partials.product-item', ['productItem' => $product])
+                @empty
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body">{{ __('messages.no_products') }}</div>
+                        </div>
                     </div>
+                @endforelse
+            </div>
+            <div class="row mb-4">
+                <div class="col text-center">
+                    <nav>
+                        <ul class="pagination justify-content-center">
+                            {{ $products->links() }}
+                        </ul>
+                    </nav>
                 </div>
-            @endforelse
-        </div>
-        <div class="row mb-4">
-            <div class="col text-center">
-                <nav>
-                    <ul class="pagination justify-content-center">
-                        {{ $products->links() }}
-                    </ul>
-                </nav>
             </div>
         </div>
-    </div>
     </section>
 @endsection
