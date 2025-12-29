@@ -71,7 +71,7 @@ Route::name('front.')->middleware('web')->group(function () {
 
     Route::get('/cart/checkout/delivery-information', [Front\DeliveryInformationController::class, 'deliveryForm'])->name('delivery_form');
 
-    Route::get('/cart/payment-choose', [Front\PaymentController::class, 'paymentChoose'])->name('payment_choose');
+    Route::get('/cart/payment-and-delivery', [Front\PaymentController::class, 'paymentChoose'])->name('payment_and_delivery');
 
     Route::get('/{category}', [Front\ProductsController::class, 'byCategory'])
         ->where('category', '^(?!cart$)[\w-]+$') // Exclude 'cart' and allow word characters and hyphens

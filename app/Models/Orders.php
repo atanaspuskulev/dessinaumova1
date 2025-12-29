@@ -18,6 +18,7 @@ class Orders extends Model
         'payer_email',
         'payer_phone',
         'payer_city',
+        'payer_country',
         'payer_address',
         'payer_zip',
         'additional_information',

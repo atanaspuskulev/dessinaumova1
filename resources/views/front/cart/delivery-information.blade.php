@@ -8,14 +8,13 @@
 <script>
     $(document).ready(function() {
         $('#payer_country').on('change', function () {
-            const countryIso = $(this).val(); // BG, DE, etc.
+            const countryIso = $(this).val();
             console.log(countryIso);
             if (!countryIso) {
                 $('#phone_code').val('');
                 return;
             }
 
-            // Find matching option by data-id
             const $option = $('#phone_code option[data-id="' + countryIso + '"]');
 
             if ($option.length) {
