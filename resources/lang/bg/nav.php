@@ -16,6 +16,7 @@ return [
         'about' => 'За мен',
         'contacts' => 'Контакти',
         'back_to_cart' => 'Обратно в количката',
+        'back_to_delivery' => 'Към данни за доставка',
         'to_payment' => 'Към плащане',
         'order_info' => 'Данни за поръчка',
         'view_more' => 'Разгледай още',

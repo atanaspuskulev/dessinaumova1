@@ -80,9 +80,9 @@ class OrdersController extends Controller
 //        Mail::to($data['payer_email'])->send(new OrderCreatedToBuyer($order,(string) $totalPrice, $invoice));
 //        Mail::to(config('mail.to_admin_email'))->send(new OrderCreatedToSeller($order));
 
-        session()->forget('cart');
+        //session()->forget('cart');
 
-        session()->put('myOrder', $order->id);
+        //session()->put('myOrder', $order->id);
 
         return redirect()->route('front.payment_and_delivery');
     }
