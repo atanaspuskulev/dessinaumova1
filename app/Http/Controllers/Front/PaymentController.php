@@ -50,7 +50,7 @@ class PaymentController extends Controller
             $order['payer_address']
         ]);
 
-        return view('front.checkout.payment-and-delivery', compact('addressArray'));
+        return view('front.checkout.payment-and-delivery', compact('addressArray', 'order'));
     }
 
     /**

@@ -48,6 +48,15 @@
                     </div>
                 </div>
             </div>
+            <hr />
+            <div class="d-flex justify-content-center col-12 mb-3">
+                <a href="{{ route('front.delivery_form') }}" class="btn btn-warning">{{ __('nav.front.back_to_delivery') }}</a>
+
+                <button
+                    style="margin-left:10px;"
+                    type="submit"
+                    class="btn btn-danger rounded-0">{{ __('nav.front.to_payment') }}</button>
+            </div>
         </div>
     </section>
 @endsection
