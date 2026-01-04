@@ -50,7 +50,7 @@
                             @foreach($countries as $country)
                                 <option
                                     value="{{ $country['short_name'] }}"
-                                    @selected(old('payer_country') == $country['short_name'])
+                                    @selected(old('payer_country', $order->payer_country ?? null) == $country['short_name'])
                                 >{{ $country['name'] }}</option>
                             @endforeach
                         </select>
@@ -66,7 +66,7 @@
                             class="form-control rounded-0"
                             id="payer_city"
                             autocomplete="off"
-                            value="{{ old('payer_city') }}"
+                            value="{{ old('payer_city', $order?->payer_city ?? null) }}"
                         >
                         <label for="payer_city" class="form-label">* {{ __('form.residence') }}</label>
                         @error('payer_city')
@@ -81,7 +81,7 @@
                             class="form-control rounded-0"
                             id="payer_zip"
                             autocomplete="off"
-                            value="{{ old('payer_zip') }}"
+                            value="{{ old('payer_zip', $order?->payer_zip ?? null) }}"
                         >
                         <label for="payer_zip">* {{ __('form.zip') }}</label>
                         @error('payer_zip')
@@ -96,7 +96,7 @@
                             class="form-control rounded-0"
                             id="payer_address"
                             autocomplete="off"
-                            value="{{ old('payer_address') }}"
+                            value="{{ old('payer_address', $order->payer_address ?? null) }}"
                         >
                         <label for="payer_address">* {{ __('form.address') }}</label>
                         @error('payer_address')
@@ -111,7 +111,7 @@
                             class="form-control rounded-0"
                             id="payer_name"
                             autocomplete="off"
-                            value="{{ old('payer_name') }}"
+                            value="{{ old('payer_name', $order->payer_name ?? null) }}"
                         >
                         <label for="payer_name">* {{ __('form.your_name') }}</label>
                         @error('payer_name')
@@ -126,7 +126,7 @@
                             class="form-control rounded-0"
                             id="payer_email"
                             autocomplete="off"
-                            value="{{ old('payer_email') }}"
+                            value="{{ old('payer_email', $order->payer_email ?? null) }}"
                         >
                         <label for="payer_email">* {{ __('form.e_mail') }}</label>
                         @error('payer_email')
@@ -146,7 +146,7 @@
                                     <option value="">* {{ __('form.choose') }}</option>
                                     @foreach($countries as $country)
                                         <option
-                                            @selected(old('phone_code') == $country['country_code'])
+                                            @selected(old('phone_code', $order?->phone_code ?? null) == $country['country_code'])
                                             data-id="{{$country['short_name']}}"
                                             value="{{ $country['country_code'] }}">{{ $country['country_code'] }}</option>
                                     @endforeach
@@ -163,7 +163,7 @@
                                     class="form-control rounded-0"
                                     id="payer_phone"
                                     autocomplete="off"
-                                    value="{{ old('payer_phone') }}"
+                                    value="{{ old('payer_phone', $order?->payer_phone ?? null) }}"
                                 >
                                 <label for="payer_phone">* {{ __('form.phone') }}</label>
                             </div>
@@ -190,7 +190,7 @@
                     </div>
                     <hr />
                     <div class="d-flex justify-content-center col-12">
-                        <a href="#" class="btn btn-warning">{{ __('nav.front.back_to_cart') }}</a>
+                        <a href="{{ route('front.cart.index') }}" class="btn btn-warning">{{ __('nav.front.back_to_cart') }}</a>
                         <button
                             style="margin-left:10px;"
                             type="submit"
