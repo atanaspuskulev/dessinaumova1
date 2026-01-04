@@ -30,7 +30,7 @@ class OrdersController extends Controller
         private readonly PriceService $priceService
     ) {}
 
-    public function createOrder(OrderRequest $request)//: JsonResponse
+    public function createOrder(OrderRequest $request)
     {
         $cart = session()->get('cart', []);
 
@@ -82,7 +82,7 @@ class OrdersController extends Controller
 
         //session()->forget('cart');
 
-        //session()->put('myOrder', $order->id);
+        session()->put('myOrder', $order->id);
 
         return redirect()->route('front.payment_and_delivery');
     }

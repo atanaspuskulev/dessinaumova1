@@ -19,5 +19,14 @@ return [
     'notice_free_delivery' => 'Забележка: без цена за доставка',
     'total_price' => 'Обща сума',
     'complete_order' => 'Завърши поръчката',
-    'delivery_information' => 'Информация за доставка'
+    'delivery_information' => 'Информация за доставка',
+    'payer_country' => 'Държава',
+    'payer_zip' => 'Пощенски код',
+    'payer_city' => 'Населено място',
+    'payer_address' => 'Адрес',
+    'information' => 'Допълнителна информация',
+    'payer_phone' => 'Телефон за контакт',
+    'payer_email' => 'Е-мейл за контакт',
+    'payer_name' => 'Лице за контакт',
+    'delivery_data' => 'Данни за доставка'
 ];

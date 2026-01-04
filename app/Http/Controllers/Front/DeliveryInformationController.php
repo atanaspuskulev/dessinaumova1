@@ -16,25 +16,27 @@ class DeliveryInformationController extends Controller
 {
     use CartTrait;
 
-    public function deliveryForm(Request $request): View|RedirectResponse
+    public function deliveryForm(): View|RedirectResponse
     {
-        $cart = session()->get('cart', false);
-
-        $order = [];
-
-        if($request->has('order_id')) {
-            $orderId = $request->get('order_id');
-            $order = Orders::find($orderId);
-
-            if($order) {
-                $cart = true;
-            }
-        }
+        $cart = session()->get('cart');
 
         if(!$cart) {
             return redirect()->route('front.index');
         }
-dd(session()->all());
+
+        $order = new \stdClass();
+
+        if(session()->has('myOrder')) {
+            $order = Orders::find(session()->get('myOrder'));
+
+            $phone = array_values(
+                array_filter(trans('countries'), static fn($country) => $country['short_name'] === $order->payer_country)
+            )[0] ?? null;
+
+            $order->payer_phone = ltrim($order->payer_phone, $phone['country_code']);
+            $order->phone_code = $phone['country_code'];
+        }
+
         $countries = trans('countries');
 
         return view('front.cart.delivery-information', compact('countries', 'order'));

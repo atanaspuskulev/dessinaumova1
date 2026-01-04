@@ -38,17 +38,20 @@ class PaymentController extends Controller
             return redirect()->route('front.index');
         }
 
-        $countries = trans('countries');
         $payerCountry = array_values(
-            array_filter($countries, static fn($country) => $country['short_name'] === $order->payer_country)
+            array_filter(trans('countries'), static fn($country) => $country['short_name'] === $order->payer_country)
         )[0] ?? null;
 
-        $addressArray = implode(', ', [
-            $payerCountry['name'],
-            $order['payer_city'],
-            $order['payer_zip'],
-            $order['payer_address']
-        ]);
+        $addressArray = [
+            trans('cart.payer_country') => $payerCountry['name'],
+            trans('cart.payer_zip') => $order['payer_zip'],
+            trans('cart.payer_city') => $order['payer_city'],
+            trans('cart.payer_address') => $order['payer_address'],
+            trans('cart.payer_name') => $order['payer_name'],
+            trans('cart.payer_email') => $order['payer_email'],
+            trans('cart.payer_phone') => $order['payer_phone'],
+            trans('cart.information') => $order['additional_information'] ?? 'N/A',
+        ];
 
         return view('front.checkout.payment-and-delivery', compact('addressArray', 'order'));
     }
