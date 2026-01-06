@@ -28,5 +28,7 @@ return [
     'payer_phone' => 'Телефон за контакт',
     'payer_email' => 'Е-мейл за контакт',
     'payer_name' => 'Лице за контакт',
-    'delivery_data' => 'Данни за доставка'
+    'delivery_data' => 'Данни за доставка',
+    'delivery_and_payment' => 'Доставка и плащане',
+    'delivery_provider_choose' => 'Изберете начин на доставка'
 ];

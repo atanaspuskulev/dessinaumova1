@@ -14,6 +14,7 @@ use App\Http\Services\SessionStorageService;
 use App\Http\Traits\CartTrait;
 use App\Models\Orders;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use JsonException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -30,8 +31,17 @@ class PaymentController extends Controller
     {
     }
 
-    public function paymentChoose()
+    public function paymentChoose(Request $request)
     {
+        $deliveryMethod = null;
+        if($request->isMethod('POST')) {
+            $deliveryMethod = $request->get('order_by');
+
+            if(!in_array($deliveryMethod, ['speedy', 'econt'])) {
+                return redirect()->back();
+            }
+        }
+
         $order = Orders::with('items')->find(session()->get('myOrder'));
 
         if(empty($order) || $order->items->isEmpty()) {
@@ -53,7 +63,7 @@ class PaymentController extends Controller
             trans('cart.information') => $order['additional_information'] ?? 'N/A',
         ];
 
-        return view('front.checkout.payment-and-delivery', compact('addressArray', 'order'));
+        return view('front.checkout.payment-and-delivery', compact('addressArray', 'order', 'deliveryMethod'));
     }
 
     /**
