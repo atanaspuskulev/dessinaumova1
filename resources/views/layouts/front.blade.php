@@ -17,6 +17,15 @@
     <link href="{{ asset('assets/css/custom.css') }}" type="text/css" rel="stylesheet"/>
     @yield('css_files')
     @yield('head_js')
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q5CM57ECZD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Q5CM57ECZD');
+    </script>
 </head>
 <body>
     @include('front.partials.navigation')
