@@ -71,8 +71,8 @@ Route::name('front.')->middleware('web')->group(function () {
 
     Route::get('/cart/checkout/delivery-information', [Front\DeliveryInformationController::class, 'deliveryForm'])->name('delivery_form');
 
-    Route::match(['GET', 'POST'], '/cart/payment-and-delivery', [Front\PaymentController::class, 'paymentChoose'])->name('payment_and_delivery');
-
+    Route::match(['GET', 'POST'], '/cart/delivery-method', [Front\PaymentController::class, 'paymentChoose'])->name('payment_and_delivery');
+    Route::post('/car/payment', [Front\PaymentController::class, 'payment'])->name('payment');
     Route::get('/{category}', [Front\ProductsController::class, 'byCategory'])
         ->where('category', '^(?!cart$)[\w-]+$') // Exclude 'cart' and allow word characters and hyphens
         ->name('to_category');

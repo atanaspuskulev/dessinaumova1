@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Helpers\Order;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PaymentRequest;
 use App\Http\Services\CartService;
 use App\Http\Services\OrderService;
 use App\Http\Services\Payment\PaymentService;
@@ -71,24 +72,24 @@ class PaymentController extends Controller
      * @throws ContainerExceptionInterface
      * @throws JsonException
      */
-    public function index()
+    public function payment(PaymentRequest $request)
     {
-        if(
-            !$this->sessionStorageService->check('cart')
-            || !$this->sessionStorageService->check('delivery-information')
-        ) {
-            return redirect()->to(route('front.index'));
-        }
+//        if(
+//            !$this->sessionStorageService->check('cart')
+//            || !$this->sessionStorageService->check('delivery-information')
+//        ) {
+//            return redirect()->to(route('front.index'));
+//        }
 
-        $cart = $this->cartService->getCart();
-        $deliveryInformation = $this->sessionStorageService->get('delivery-information');
-
-        if(empty($cart) || empty($deliveryInformation)) {
-            $this->cartService->cleanupForSession();
-            $this->orderService->cleanupForSession();
-
-            return redirect()->to(route('front.index'));
-        }
+//        $cart = $this->cartService->getCart();
+//        $deliveryInformation = $this->sessionStorageService->get('delivery-information');
+//
+//        if(empty($cart) || empty($deliveryInformation)) {
+//            $this->cartService->cleanupForSession();
+//            $this->orderService->cleanupForSession();
+//
+//            return redirect()->to(route('front.index'));
+//        }
 
         $paypalClientId = $this->paymentService->getPaypalClientId();
         $paypalCurrency = $this->paymentService->getPaymentConfigKey('paypal', 'currency');
