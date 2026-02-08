@@ -52,7 +52,7 @@
             </div>
             <form
                 method="post"
-                action=""
+                action="{{ route('front.payment') }}"
                 class="row justify-content-center g-4 payment-next-step"
             >
                 @csrf
@@ -84,17 +84,18 @@
                         <img src="{{ asset('assets/images/econt.png') }}" width=160 height=50 alt="Speedy" />
                     </label>
                 </div>
-            </form>
-            <hr />
-            <div class="d-flex justify-content-center col-12 mb-3">
-                <a href="{{ route('front.delivery_form') }}" class="btn btn-warning">{{ __('nav.front.back_to_delivery') }}</a>
+                <hr />
+                <div class="d-flex justify-content-center col-12 mb-3">
+                    <a href="{{ route('front.delivery_form') }}" class="btn btn-warning">{{ __('nav.front.back_to_delivery') }}</a>
 
-                <button
-                    disabled
-                    style="margin-left:10px;"
-                    type="submit"
-                    class="btn btn-danger payment-next rounded-0">{{ __('nav.front.to_payment') }}</button>
-            </div>
+                    <button
+                        disabled
+                        style="margin-left:10px;"
+                        type="submit"
+                        class="btn btn-danger payment-next rounded-0">{{ __('nav.front.to_payment') }}</button>
+                </div>
+            </form>
+
         </div>
     </section>
 @endsection
