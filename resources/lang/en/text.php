@@ -22,25 +22,26 @@ return [
                 process, I’m here to help.<br />Please don\'t hesitate to reach out to me via
                 email at <a href="mailto:info@desinaumova.com">info@desinaumova.com</a>.<br />
                 I will be excited to assist you and explore new artistic possibilities together.',
-    'payment_page_content' => '<h3>Payment Options</h3>
-                <p>We offer secure and convenient payment options through PayPal. Choose the method that best suits you:</p>
+    'payment_page_content' => '<h3>Опции за плащане</h3>
+                <p>Предлагаме сигурни и удобни опции за плащане чрез PayPal. Изберете метода, който е най-подходящ за Вас:</p>
                 <div class="payment-option">
-                    <h5>PayPal Fast Payment</h5>
-                    <p>Quickly and securely make payments using your PayPal account. Simply click the PayPal button to proceed with your payment.</p>
+                    <h5>Бързо плащане с PayPal</h5>
+                    <p>Извършете бързо и сигурно плащане чрез Вашия PayPal акаунт. Просто натиснете бутона PayPal, за да продължите с плащането.</p>
                 </div>
                 <div class="payment-option">
-                    <h5>Use Your Credit or Debit Card</h5>
-                    <p>Don\'t have a PayPal account? No problem! You can still use your credit or debit card to make payments.
-                        Just select the PayPal option and follow the instructions to pay with your card.
-                        PayPal ensures that your card details are kept safe and secure.
+                    <h5>Използвайте Вашата кредитна или дебитна карта</h5>
+                    <p>Нямате PayPal акаунт? Няма проблем! Все пак можете да използвате Вашата кредитна или дебитна карта за извършване на плащането.
+                        Просто изберете опцията PayPal и следвайте инструкциите, за да платите с Вашата карта.
+                        PayPal гарантира, че данните на Вашата карта са защитени и се съхраняват сигурно.
                     </p>
                 </div>
                 <div class="payment-option">
-                    <h5>Benefits of Using PayPal</h5>
+                    <h5>Предимства на PayPal</h5>
                     <ul>
-                        <li><strong>Security:</strong> PayPal uses advanced encryption and fraud prevention tools to keep your financial information secure.</li>
-                        <li><strong>Speed:</strong> Make payments quickly without the need to enter your card details each time.</li>
-                        <li><strong>Flexibility:</strong> PayPal accepts a wide range of payment methods, including credit cards, debit cards, and bank transfers.</li>
+                        <li><strong>Сигурност:</strong> PayPal използва усъвършенствано криптиране и инструменти за предотвратяване на измами, за да защити Вашата финансова информация.</li>
+                        <li><strong>Бързина:</strong> Извършвайте плащания бързо, без да е необходимо всеки път да въвеждате данните на картата си.</li>
+                        <li><strong>Гъвкавост:</strong> PayPal поддържа широк набор от методи за плащане, включително кредитни карти, дебитни карти и банкови преводи.</li>
                     </ul>
-                </div>',
+                </div>
+',
 ];

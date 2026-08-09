@@ -21,5 +21,5 @@ return [
     'phone_optional_lbl' => 'Your Phone (Optional)',
     'additional_information_optional_lbl' => 'Additional Information (Optional)',
     'continue' => 'Continue',
-    'cart_payment_title' => 'Cart Payment'
+    'cart_payment_title' => 'Плащане (PayPal/CreditCard)'
 ];

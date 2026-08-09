@@ -4,6 +4,18 @@ namespace App\Http\Services\Payment;
 
 class PaymentService
 {
+    /**
+     * Fixed BGN/EUR currency board peg (Bulgarian National Bank, unchanged since 1997).
+     * PayPal does not support BGN as a transaction currency, so amounts are converted
+     * to EUR using this fixed rate rather than a floating exchange rate.
+     */
+    private const BGN_TO_EUR_RATE = 1.95583;
+
+    public function convertBgnToEur(float $amountInBgn): float
+    {
+        return round($amountInBgn / self::BGN_TO_EUR_RATE, 2);
+    }
+
     public function getPaypalClientId(): string|null
     {
         return config('paypal.mode') === 'sandbox'

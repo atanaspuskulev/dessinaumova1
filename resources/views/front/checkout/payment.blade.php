@@ -5,12 +5,11 @@
     </script>
     <script>
         let paypalBrandName = '{!! $paypalBrandName !!}';
-        let paypalSuccessUrl = '{{ route("front.payment.order.success") }}';
+        let paypalSuccessUrl = '{{ route("front.order_completed") }}';
         let paypalCancelUrl = '{{ route("front.payment.order.cancel") }}';
         let orderCreateUrl = '{{ route("front.payment.api.order.create") }}';
         let orderUpdateUrl = '{{ route("front.payment.api.order.update") }}';
-        let apiCancelUrl = '{{ route("front.payment.api.order.cancel") }}';
-        let orderInfo = JSON.parse('{!! $order !!}');
+        let orderInfo = {!! $order !!};
         let shippingCost = {{ $shippingCost }};
         let paypalDefaultLocale = '{{ $paypalLocale }}';
     </script>
@@ -26,14 +25,17 @@
     <div id="overlay" class="d-flex justify-content-center align-items-center d-none">
         <div class="spinner-border text-primary" role="status"></div>
     </div>
-    <div class="container-fluid mt-5">
-        <div class="row">
-            <div class="col">
-                <h1>{{ __('cart.cart_payment_title') }}</h1>
-                <hr>
+    <header class="py-5 align-content-start">
+        <div class="container ">
+            <div class="row">
+                <div class="col">
+                    <h1 class="display-6 text-center">{{ __('cart.cart_payment_title') }}</h1>
+                    <hr />
+                </div>
             </div>
         </div>
-    </div>
+    </header>
+
     <div class="container-fluid mt-3 mb-4">
         <div class="row justify-content-center mb-3">
             <div class="col-md-10">{!! __('text.payment_page_content') !!}</div>

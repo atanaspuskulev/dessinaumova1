@@ -12,6 +12,12 @@
 <b>Zip/Postal code:</b> {{ $order->payer_zip }}<br />
 <b>Address:</b> {{ $order->payer_address }}<br />
 <b>Additional information:</b> {{ $order->additional_information ?? 'N/A' }}
+@if($order->delivery_method)
+<br /><b>Delivery method:</b> {{ ucfirst($order->delivery_method) }}
+@endif
+@if($order->payment_method)
+<br /><b>Payment method:</b> {{ $order->payment_method === 'cod' ? 'Cash on Delivery' : 'PayPal' }}
+@endif
 <hr>
 <h2>Order Items:</h2>
 <table class="table table-striped" style="width:100%;">

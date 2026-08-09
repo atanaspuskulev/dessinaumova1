@@ -51,7 +51,17 @@ class Product extends Model
             if($item->shipping_cost === null) {
                 $item->shipping_cost = 0;
             }
-            $item->slug = Str::lower(Str::slug($item->title));
+
+            $baseSlug = Str::lower(Str::slug($item->title));
+            $slug = $baseSlug;
+            $suffix = 2;
+
+            while(static::withTrashed()->where('slug', $slug)->exists()) {
+                $slug = "{$baseSlug}-{$suffix}";
+                $suffix++;
+            }
+
+            $item->slug = $slug;
             $item->created_at = now()->toDateString();
         });
 

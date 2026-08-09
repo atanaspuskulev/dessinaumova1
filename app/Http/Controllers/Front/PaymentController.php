@@ -4,26 +4,20 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Front;
 
-use App\Helpers\Order;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PaymentRequest;
-use App\Http\Services\CartService;
+use App\Http\Enums\DeliveryMethodEnum;
+use App\Http\Enums\OrderEnum;
 use App\Http\Services\OrderService;
 use App\Http\Services\Payment\PaymentService;
 use App\Http\Services\PriceService;
-use App\Http\Services\SessionStorageService;
-use App\Http\Traits\CartTrait;
 use App\Models\Orders;
-use App\Models\Product;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use JsonException;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
+use RuntimeException;
 
 class PaymentController extends Controller
 {
-    use CartTrait;
-
     public function __construct(
         private readonly PaymentService $paymentService,
         private readonly PriceService $priceService,
@@ -34,20 +28,26 @@ class PaymentController extends Controller
 
     public function paymentChoose(Request $request)
     {
-        $deliveryMethod = null;
-        if($request->isMethod('POST')) {
-            $deliveryMethod = $request->get('order_by');
-
-            if(!in_array($deliveryMethod, ['speedy', 'econt'])) {
-                return redirect()->back();
-            }
-        }
-
         $order = Orders::with('items')->find(session()->get('myOrder'));
 
         if(empty($order) || $order->items->isEmpty()) {
             return redirect()->route('front.index');
         }
+
+        if($request->isMethod('POST')) {
+            $deliveryMethod = DeliveryMethodEnum::tryFrom((string) $request->get('order_by'));
+
+            if($deliveryMethod === null) {
+                return redirect()->back();
+            }
+
+            $order->update(['delivery_method' => $deliveryMethod->value]);
+            session()->put('delivery_method', $deliveryMethod->value);
+
+            return redirect()->route('front.payment_method_choose');
+        }
+
+        $deliveryMethod = session('delivery_method', $order->delivery_method);
 
         $payerCountry = array_values(
             array_filter(trans('countries'), static fn($country) => $country['short_name'] === $order->payer_country)
@@ -67,51 +67,64 @@ class PaymentController extends Controller
         return view('front.checkout.payment-and-delivery', compact('addressArray', 'order', 'deliveryMethod'));
     }
 
+    public function paymentMethodChoose(Request $request)
+    {
+        $order = Orders::with('items')->find(session()->get('myOrder'));
+
+        if(empty($order) || $order->items->isEmpty() || !session()->has('delivery_method')) {
+            return redirect()->route('front.index');
+        }
+
+        if($request->isMethod('POST')) {
+            $request->validate(['payment_method' => 'required|in:cod,paypal']);
+
+            $paymentMethod = $request->get('payment_method');
+
+            $order->update(['payment_method' => $paymentMethod]);
+            session()->put('payment_method', $paymentMethod);
+
+            if($paymentMethod === 'cod') {
+                $order->update([
+                    'status' => OrderEnum::COMPLETED->value,
+                    'confirmed_at' => now()->toDateString(),
+                ]);
+
+                $this->orderService->sendOrderCompletedEmail($order);
+
+                $this->orderService->cleanupForSession();
+
+                return redirect()->route('front.order_completed');
+            }
+
+            return redirect()->route('front.payment');
+        }
+
+        $paymentMethod = session('payment_method');
+
+        return view('front.checkout.payment-method', compact('paymentMethod'));
+    }
+
     /**
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
      * @throws JsonException
      */
-    public function payment(PaymentRequest $request)
+    public function payment()
     {
-//        if(
-//            !$this->sessionStorageService->check('cart')
-//            || !$this->sessionStorageService->check('delivery-information')
-//        ) {
-//            return redirect()->to(route('front.index'));
-//        }
+        $order = Orders::with('items.product')->find(session()->get('myOrder'));
 
-//        $cart = $this->cartService->getCart();
-//        $deliveryInformation = $this->sessionStorageService->get('delivery-information');
-//
-//        if(empty($cart) || empty($deliveryInformation)) {
-//            $this->cartService->cleanupForSession();
-//            $this->orderService->cleanupForSession();
-//
-//            return redirect()->to(route('front.index'));
-//        }
+        if(empty($order) || $order->items->isEmpty() || session('payment_method') !== 'paypal') {
+            return redirect()->route('front.payment_method_choose');
+        }
 
         $paypalClientId = $this->paymentService->getPaypalClientId();
         $paypalCurrency = $this->paymentService->getPaymentConfigKey('paypal', 'currency');
         $paypalBrandName = $this->paymentService->getPaymentConfigKey('paypal', 'brand_name');
         $paypalLocale = $this->paymentService->getPaymentConfigKey('paypal', 'locale');
 
-        $purchases = [];
-        $shippingCost = 0.00;
+        $purchases = $this->assemblePurchasesFromOrder($order, $paypalCurrency);
 
-        $pq = Product::whereIn('id', $cart)->get();
-        $pq->map(static function ($item) use (&$purchases, $paypalCurrency) {
-                $purchases[] = [
-                    'reference_id' => $item->id,
-                    'description' => $item->title,
-                    'amount' => [
-                        'value' => $item->price,
-                        'currency_code' => $item->currency ?? $paypalCurrency
-                    ]
-                ];
-            });
+        $shippingCost = $this->priceService->calculateShippingPrice($order->items->pluck('product.shipping_cost'));
 
-        $shippingCost = $this->priceService->calculateShippingPrice($pq->pluck('shipping_cost'));
+        $deliveryInformation = $this->assembleDeliveryInformationFromOrder($order);
 
         $purchaseUnits = $this->paymentService->assemblePurchaseUnitsForPaypal($purchases, $deliveryInformation);
 
@@ -123,8 +136,114 @@ class PaymentController extends Controller
             'paypalCurrency',
             'paypalBrandName',
             'paypalLocale',
-            'deliveryInformation',
             'shippingCost'
         ));
+    }
+
+    public function createPaypalOrder(): JsonResponse
+    {
+        $order = Orders::with('items.product')->find(session()->get('myOrder'));
+
+        if(empty($order) || $order->items->isEmpty() || session('payment_method') !== 'paypal') {
+            return response()->json(['status' => false, 'message' => 'Invalid order.'], 422);
+        }
+
+        $paypalCurrency = $this->paymentService->getPaymentConfigKey('paypal', 'currency');
+        $purchases = $this->assemblePurchasesFromOrder($order, $paypalCurrency);
+
+        try {
+            $gateway = $this->orderService->getPaymentGateway('paypal');
+            $accessToken = $gateway->getAuthToken();
+
+            $paypalOrder = $gateway->createOrder(['purchase_units' => $purchases], $accessToken);
+
+            $order->update(['order_id' => $paypalOrder['id']]);
+
+            return response()->json(['status' => true, 'data' => $paypalOrder]);
+        } catch(RuntimeException $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()], 422);
+        }
+    }
+
+    public function capturePaypalOrder(Request $request): JsonResponse
+    {
+        $order = Orders::find(session()->get('myOrder'));
+
+        if(empty($order) || session('payment_method') !== 'paypal') {
+            return response()->json(['status' => false, 'message' => 'Invalid order.'], 422);
+        }
+
+        try {
+            $currentOrder = $this->orderService->findOrderByIdAndPaymentId($order->id, (string) $request->get('orderId'));
+
+            $gateway = $this->orderService->getPaymentGateway('paypal');
+            $accessToken = $gateway->getAuthToken();
+
+            $payResult = $gateway->captureAndPay(['orderId' => $request->get('orderId')], $accessToken);
+
+            if(isset($payResult['status']) && $payResult['status'] === 'COMPLETED') {
+                $completedOrder = $this->orderService->updateOrderPaymentSuccess($currentOrder, $payResult['id']);
+
+                $this->orderService->sendOrderCompletedEmail($completedOrder);
+
+                $this->orderService->cleanupForSession();
+
+                return response()->json($payResult, 200);
+            }
+
+            return response()->json($payResult, 417);
+        } catch(RuntimeException $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()], 417);
+        }
+    }
+
+    public function cancelPaypal(Request $request)
+    {
+        $orderId = session()->get('myOrder');
+
+        if($orderId && session('payment_method') === 'paypal') {
+            $order = Orders::find($orderId);
+
+            if($order && $order->status === OrderEnum::PENDING->value) {
+                $this->orderService->cancelOrder($orderId, (string) $request->get('orderID'));
+            }
+        }
+
+        $this->orderService->cleanupForSession();
+
+        return view('front.orders.cancel');
+    }
+
+    private function assemblePurchasesFromOrder(Orders $order, string $paypalCurrency): array
+    {
+        $purchases = [];
+
+        foreach($order->items as $item) {
+            $purchases[] = [
+                'reference_id' => (string) $item->product_id,
+                'description' => $item->product->title,
+                'amount' => [
+                    'value' => $this->paymentService->convertBgnToEur((float) $item->price),
+                    'currency_code' => $paypalCurrency,
+                ],
+            ];
+        }
+
+        return $purchases;
+    }
+
+    private function assembleDeliveryInformationFromOrder(Orders $order): array
+    {
+        return [
+            'name' => $order->payer_name,
+            'delivery_address' => $order->payer_address,
+            'country' => $order->payer_country,
+            'zip' => $order->payer_zip,
+            'state' => $order->payer_city,
+            'city' => $order->payer_city,
+            'email' => $order->payer_email,
+            'phone' => $order->payer_phone,
+            'additional_information' => $order->additional_information,
+        ];
     }
 }

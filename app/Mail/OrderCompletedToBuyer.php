@@ -6,13 +6,11 @@ namespace App\Mail;
 
 use App\Models\Orders;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Attachment;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Storage;
 
 class OrderCompletedToBuyer extends Mailable
 {
@@ -23,10 +21,8 @@ class OrderCompletedToBuyer extends Mailable
      */
     public function __construct(
         public Orders $order,
-        public array $invoice,
         public string $totalPrice,
-        public float $taxAmount,
-        public string $shippingCost
+        public array $invoice,
     )
     {}
 

@@ -2,9 +2,6 @@
 
 namespace App\Providers;
 
-use App\Http\Services\CartService;
-use App\Http\Services\OrderService;
-use App\Http\Services\SessionStorageService;
 use App\Http\View\Composers\CartCurrentContentComposer;
 use App\Http\View\Composers\CartItemsComposer;
 use App\Http\View\Composers\CategoriesComposer;

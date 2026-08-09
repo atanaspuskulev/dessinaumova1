@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace App\Http\Services;
 
-use App\Helpers\Cart;
-use App\Helpers\Order as OrderHelper;
 use App\Http\Contracts\CleanupContractInterface;
 use App\Http\Enums\OrderEnum;
 use App\Http\Services\Payment\Gateway\PaymentGateway;
 use App\Http\Services\Payment\Interface\PaymentGatewayInterface;
+use App\Mail\OrderCompletedToBuyer;
 use App\Models\Orders;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 use LaravelDaily\Invoices\Classes\Party;
 use LaravelDaily\Invoices\Invoice;
+use Throwable;
 
 class OrderService implements CleanupContractInterface
 {
@@ -67,9 +68,9 @@ class OrderService implements CleanupContractInterface
         return $order;
     }
 
-    public function clearOrderSession(string $key): void
+    public function getPaymentGateway(string $method): PaymentGatewayInterface
     {
-        $this->sessionStorageService->invalidate($key);
+        return (new PaymentGateway($method))->make();
     }
 
     /**
@@ -103,7 +104,7 @@ class OrderService implements CleanupContractInterface
             }
 
             $items[] = InvoiceItem::make($orderItem->product->title)
-                ->quantity(1)
+                ->quantity((int) $orderItem->quantity)
                 ->pricePerUnit((float)$orderItem->product->price);
         }
 
@@ -136,7 +137,30 @@ class OrderService implements CleanupContractInterface
 
     public function cleanupForSession(): void
     {
-        $this->cartService->cleanupForSession();
-        $this->sessionStorageService->invalidate('delivery-informationjk');
+        session()->forget(['cart', 'myOrder', 'delivery_method', 'payment_method']);
+    }
+
+    /**
+     * Generates the invoice and emails the buyer that their order is complete.
+     * The invoice must exist before the email is sent, so a failure to generate
+     * it must not result in a success email with a missing attachment/link.
+     */
+    public function sendOrderCompletedEmail(Orders $order): void
+    {
+        $order->load('items.product');
+
+        try {
+            $invoice = $this->makeInvoice($order);
+        } catch (Throwable $e) {
+            report($e);
+
+            return;
+        }
+
+        try {
+            Mail::to($order->payer_email)->send(new OrderCompletedToBuyer($order, (string) $order->amount, $invoice));
+        } catch (Throwable $e) {
+            report($e);
+        }
     }
 }
