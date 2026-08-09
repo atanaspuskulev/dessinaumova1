@@ -17,6 +17,7 @@ return [
         'contacts' => 'Контакти',
         'back_to_cart' => 'Обратно в количката',
         'back_to_delivery' => 'Към данни за доставка',
+        'back_to_delivery_method' => 'Към начин на доставка',
         'to_payment' => 'Към плащане',
         'order_info' => 'Данни за поръчка',
         'view_more' => 'Разгледай още',

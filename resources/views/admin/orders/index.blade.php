@@ -60,7 +60,28 @@
                                                 </div>
                                                 <hr>
                                                 <div class="row">
+                                                    <div class="col"><b>Payment</b></div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col">{{ $order->payment_method === 'cod' ? 'COD' : ($order->payment_method === 'paypal' ? 'PayPal' : 'N/A') }}</div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col"><b>Delivery</b></div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col">{{ match($order->delivery_method) {
+                                                        \App\Http\Enums\DeliveryMethodEnum::ECONT->value => 'Econt',
+                                                        \App\Http\Enums\DeliveryMethodEnum::SPEEDY->value => 'Speedy',
+                                                        default => 'N/A',
+                                                    } }}</div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
                                                     <div class="col"><b>Country</b></div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col">{{ $order->payer_country }}</div>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
@@ -84,6 +105,8 @@
                                             <th scope="col">Customer</th>
                                             <th scope="col">Email</th>
                                             <th scope="col">Status</th>
+                                            <th scope="col">Payment</th>
+                                            <th scope="col">Delivery</th>
                                             <th scope="col">Country</th>
                                             <th scope="col">Actions</th>
                                         </tr>
@@ -96,13 +119,20 @@
                                                 <td>{{ $order->payer_name }}</td>
                                                 <td>{{ $order->payer_email }}</td>
                                                 <td>{{ $order->status }}</td>
+                                                <td>{{ $order->payment_method === 'cod' ? 'COD' : ($order->payment_method === 'paypal' ? 'PayPal' : 'N/A') }}</td>
+                                                <td>{{ match($order->delivery_method) {
+                                                    \App\Http\Enums\DeliveryMethodEnum::ECONT->value => 'Econt',
+                                                    \App\Http\Enums\DeliveryMethodEnum::SPEEDY->value => 'Speedy',
+                                                    default => 'N/A',
+                                                } }}</td>
+                                                <td>{{ $order->payer_country }}</td>
                                                 <td>
                                                     <a href="{{ route('admin.regenerate_invoice', ['id' => $order->id]) }}">Regenerate Invoice</a>
                                                 </td>
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="7">There are no orders yet</td>
+                                                <td colspan="9">There are no orders yet</td>
                                             </tr>
                                         @endforelse
                                         </tbody>

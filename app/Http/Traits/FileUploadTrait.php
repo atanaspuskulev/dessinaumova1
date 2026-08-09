@@ -6,7 +6,6 @@ use App\Models\Images;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -31,21 +30,6 @@ trait FileUploadTrait
             foreach ($files as $file) {
                 if ($file->isValid()) {
                     $path = sprintf("%s/%d", $uploadPath, $model->id);
-
-                    $temp_path = storage_path($path);
-                    $public_path = public_path("storage/".$path);
-
-                    if (!File::exists($public_path)) {
-                        File::makeDirectory($public_path, 0777, true);
-                    } else {
-                        File::chmod($public_path, 0777);
-                    }
-
-                    if (!File::exists($temp_path)) {
-                        File::makeDirectory($temp_path, 0777, true);
-                    } else {
-                        File::chmod($temp_path, 0777);
-                    }
 
                     $extension = $file->getClientOriginalExtension();
                     $fileName = Str::random(20);

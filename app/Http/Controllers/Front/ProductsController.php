@@ -20,7 +20,7 @@ class ProductsController extends Controller
             abort(404);
         }
 
-        $products = $categoryData->products()->with(['thumbnail', 'category'])->paginate(10);
+        $products = $categoryData->products()->with(['thumbnail', 'category'])->paginate(9);
         $page_title = $categoryData->title;
         $meta_description = $categoryData->meta_description;
         $meta_keywords = $categoryData->meta_keywords;

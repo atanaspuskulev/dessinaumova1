@@ -22,6 +22,8 @@ class Orders extends Model
         'payer_address',
         'payer_zip',
         'additional_information',
+        'payment_method',
+        'delivery_method',
         'confirmed_at',
         'cancelled_at',
         'resended_at'

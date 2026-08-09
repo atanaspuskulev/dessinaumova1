@@ -58,10 +58,34 @@ class ProductsController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @throws \JsonException
      */
     public function store(ProductRequest $request): RedirectResponse
     {
-        $product = Product::create($request->all());
+        $data = $request->all();
+
+        $tags = collect();
+
+        if(!empty($data['tags'])) {
+            $requestTags = json_decode($data['tags'], true, 512, JSON_THROW_ON_ERROR);
+
+            foreach($requestTags as $tag) {
+                if(!$this->tagService->exists($tag['value'])) {
+                    $newTag = $this->tagService->create(['name' => $tag['value']]);
+                    $tags->push($newTag);
+                } else {
+                    $existingTag = $this->tagService->getOneBy(['name' => $tag['value']]);
+                    $tags->push($existingTag);
+                }
+            }
+        }
+
+        $product = Product::create($data);
+
+        if(!$tags->isEmpty()) {
+            $product->tags()->sync($tags->pluck('id'));
+        }
 
         $this->uploadFiles($request, 'images', $product);
 

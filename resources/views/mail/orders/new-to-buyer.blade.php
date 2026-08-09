@@ -13,8 +13,12 @@
     | Total      | {{ $totalPrice }} | EUR |
 </x-mail::table>
 <br /><br />
-Може да свалите вашата фактура <a target="_new" href="{{ $invoice['url'] }}">от тук</a>.<br/><br/>
-Също, може да я намерите, като прикачен файл в този e-mail.<br /><br />
+@if($order->delivery_method)
+Начин на доставка: <b>{{ ucfirst($order->delivery_method) }}</b><br />
+@endif
+@if($order->payment_method)
+Начин на плащане: <b>{{ $order->payment_method === 'cod' ? __('cart.cash_on_delivery') : __('cart.pay_with_paypal') }}</b><br /><br />
+@endif
 Поздрави,<br />
 Деси Наумова
 </x-mail::message>

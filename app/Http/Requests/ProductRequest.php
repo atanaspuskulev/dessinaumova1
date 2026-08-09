@@ -23,9 +23,9 @@ class ProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => 'required',
+            'category_id' => 'required|exists:categories,id',
             'title' => 'required|unique:products,title' . (request()->has('product_id') ? ',' . request()->product_id : ''),
-            'short_description' => 'required|min:5,max:250',
+            'short_description' => 'required|min:5|max:250',
             'description' =>'required',
             'price' =>'required',
             'currency' =>'required',
@@ -37,7 +37,7 @@ class ProductRequest extends FormRequest
             'meta_title' => 'present',
             'meta_keywords' => 'present',
             'meta_description' => 'present',
-            'images.*' => 'file|mimes:jpeg,png,webp',
+            'images.*' => 'file|mimes:jpeg,png,webp|max:8192',
             'tags' => 'sometimes'
         ];
     }
@@ -46,6 +46,8 @@ class ProductRequest extends FormRequest
     {
         return [
             'category_id.required' => 'Category is required',
+            'category_id.exists' => 'Selected category does not exist',
+            'images.*.max' => 'Each image must not be larger than 8MB',
             'title.required' => 'Title is required',
             'title.unique' => 'There is already a product with that name',
             'short_description.required' => 'Short description is required',

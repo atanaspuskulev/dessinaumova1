@@ -30,5 +30,8 @@ return [
     'payer_name' => 'Лице за контакт',
     'delivery_data' => 'Данни за доставка',
     'delivery_and_payment' => 'Доставка и плащане',
-    'delivery_provider_choose' => 'Изберете начин на доставка'
+    'delivery_provider_choose' => 'Изберете начин на доставка',
+    'payment_method_choose' => 'Изберете начин на плащане',
+    'cash_on_delivery' => 'Наложен платеж',
+    'pay_with_paypal' => 'Плащане с PayPal'
 ];

@@ -72,7 +72,12 @@ Route::name('front.')->middleware('web')->group(function () {
     Route::get('/cart/checkout/delivery-information', [Front\DeliveryInformationController::class, 'deliveryForm'])->name('delivery_form');
 
     Route::match(['GET', 'POST'], '/cart/delivery-method', [Front\PaymentController::class, 'paymentChoose'])->name('payment_and_delivery');
-    Route::post('/car/payment', [Front\PaymentController::class, 'payment'])->name('payment');
+    Route::match(['GET', 'POST'], '/cart/payment-method', [Front\PaymentController::class, 'paymentMethodChoose'])->name('payment_method_choose');
+    Route::get('/cart/payment', [Front\PaymentController::class, 'payment'])->name('payment');
+
+    Route::post('/cart/payment/paypal/create-order', [Front\PaymentController::class, 'createPaypalOrder'])->name('payment.api.order.create');
+    Route::post('/cart/payment/paypal/capture-order', [Front\PaymentController::class, 'capturePaypalOrder'])->name('payment.api.order.update');
+    Route::get('/cart/payment/cancel', [Front\PaymentController::class, 'cancelPaypal'])->name('payment.order.cancel');
     Route::get('/{category}', [Front\ProductsController::class, 'byCategory'])
         ->where('category', '^(?!cart$)[\w-]+$') // Exclude 'cart' and allow word characters and hyphens
         ->name('to_category');

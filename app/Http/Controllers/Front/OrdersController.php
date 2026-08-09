@@ -6,29 +6,18 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
-use App\Http\Services\OrderService;
-use App\Http\Services\Payment\Interface\PaymentGatewayInterface;
-use App\Http\Services\PriceService;
 use App\Http\Traits\CartTrait;
 use App\Mail\OrderCreatedToBuyer;
 use App\Mail\OrderCreatedToSeller;
 use App\Models\Orders;
 use App\Models\Product;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
+use Throwable;
 
 
 class OrdersController extends Controller
 {
     use CartTrait;
-
-    private string $accessToken;
-    private PaymentGatewayInterface $gateway;
-
-    public function __construct(
-        private readonly PriceService $priceService
-    ) {}
 
     public function createOrder(OrderRequest $request)
     {
@@ -51,7 +40,7 @@ class OrdersController extends Controller
             $data['amount'] += $item['real_price'];
         }
 
-        $data['currency'] = config('currencies')[App::getLocale()];
+        $data['currency'] = 'EUR';
 
         $order = Orders::create($data);
 
@@ -68,19 +57,23 @@ class OrdersController extends Controller
                 'product_id' => $item['product_id'],
                 'quantity' => $item['quantity'],
                 'price' => $item['real_price'],
-                'currency' => $order->currency,
+                'currency' => 'EUR',
             ]);
         }
 
-        //$order->load(['items', 'items.product', 'items.product.category']);
+        $order->load(['items', 'items.product', 'items.product.category']);
 
-        //$orderService = new OrderService();
-        //$invoice = $orderService->makeInvoice($order);
+        try {
+            Mail::to($order->payer_email)->send(new OrderCreatedToBuyer($order, (string) $totalPrice));
+        } catch (Throwable $e) {
+            report($e);
+        }
 
-//        Mail::to($data['payer_email'])->send(new OrderCreatedToBuyer($order,(string) $totalPrice, $invoice));
-//        Mail::to(config('mail.to_admin_email'))->send(new OrderCreatedToSeller($order));
-
-        //session()->forget('cart');
+        try {
+            Mail::to(config('mail.to_admin_email'))->send(new OrderCreatedToSeller($order));
+        } catch (Throwable $e) {
+            report($e);
+        }
 
         session()->put('myOrder', $order->id);
 
@@ -90,39 +83,5 @@ class OrdersController extends Controller
     public function completed()
     {
         return view('front.orders.complete');
-    }
-
-    public function updateOrder(Request $request)
-    {
-        $status = 417;
-
-        if ($this->sessionStorageService->check('current_payment_order_id')) {
-            $currentOrder = $this->orderService->findOrderByIdAndPaymentId(
-                $this->sessionStorageService->get('current_payment_order_id'),
-                $request->orderId
-            );
-
-            $this->gateway = $this->orderService->getPaymentGateway($request->paymentMethod);
-            $this->accessToken = $this->gateway->getAuthToken();
-
-            try {
-                $payResult = $this->gateway->captureAndPay(['orderId' => $request->orderId], $this->accessToken);
-
-                if(isset($payResult['status']) && $payResult['status'] === 'COMPLETED') {
-                    $order = $this->orderService->updateOrderPaymentSuccess($currentOrder, $payResult['id']);
-                    $this->sessionStorageService->store('payment_id', $payResult['id']);
-
-                    $status = 200;
-                    Mail::to(config('mail.to_admin_email'))->send(new OrderCreatedToSeller($order));
-                }
-
-                $this->cartService->cleanupForSession();
-                $this->orderService->cleanupForSession();
-
-                return response()->json($payResult, $status);
-            } catch(\RuntimeException $e) {
-                throw $e;
-            }
-        }
     }
 }

@@ -2,20 +2,13 @@
 
 namespace App\Http\Services\Payment\Gateway\Factory;
 
-use App\Http\Services\CartService;
 use App\Http\Services\Payment\Gateway\AbstractPaymentGateway;
 use App\Http\Services\Payment\Interface\PaymentGatewayInterface;
-use App\Http\Services\PriceService;
-use App\Http\Services\ProductsService;
-use App\Http\Services\SessionStorageService;
-use App\Http\Traits\CartTrait;
 use RuntimeException;
 use Illuminate\Support\Facades\Http;
 
 class PaypalFactory extends AbstractPaymentGateway implements PaymentGatewayInterface
 {
-    use CartTrait;
-
     private bool $isSandbox = true;
 
     public function make(): PaymentGatewayInterface
@@ -57,21 +50,6 @@ class PaypalFactory extends AbstractPaymentGateway implements PaymentGatewayInte
 
     public function createOrder(array $orderInfo, #[\SensitiveParameter] string|null $accessToken = null)
     {
-        $purchaseUnits = [];
-
-        $this->getProductsFromCart()->each(static function($product) use (&$purchaseUnits) {
-            $purchaseUnits[] = [
-                'custom_id' => $product->id,
-                'reference_id' => $product->id,
-                'description' => $product->short_description,
-                'amount' => [
-                    'currency_code' => config('paypal.currency'),
-                    'value' => $product->price
-                ],
-            ];
-        });
-
-
         $paypalApi = $this->isSandbox ? config('paypal.sandbox.paypal_api_url') : config('paypal.live.paypal_api_url');
 
         try {
@@ -80,7 +58,7 @@ class PaypalFactory extends AbstractPaymentGateway implements PaymentGatewayInte
                 'Authorization' => 'Bearer ' . $accessToken
             ])->post($paypalApi . '/orders/', [
                 'intent' => 'CAPTURE',
-                'purchase_units' => $purchaseUnits
+                'purchase_units' => $orderInfo['purchase_units']
             ]);
 
             if ($response->successful()) {

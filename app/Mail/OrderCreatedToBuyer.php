@@ -4,7 +4,6 @@ namespace App\Mail;
 
 use App\Models\Orders;
 use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Attachment;
 use Illuminate\Mail\Mailables\Address;
 use Symfony\Component\Mime\Email;
 use Illuminate\Mail\Mailable;
@@ -19,7 +18,6 @@ class OrderCreatedToBuyer extends Mailable
     public function __construct(
         public readonly Orders $order,
         public string $totalPrice,
-        public array $invoice,
     )
     {
     }
@@ -52,18 +50,5 @@ class OrderCreatedToBuyer extends Mailable
             $message->getHeaders()->addTextHeader('X-Mailer', 'PHP/' . phpversion());
             $message->getHeaders()->addTextHeader('X-Entity-Ref-ID', time());
         });
-    }
-
-    public function attachments(): array
-    {
-        if (!file_exists($this->invoice['filepath'])) {
-            throw new \RuntimeException('Attachment file does not exist: ' . $this->invoice['filepath']);
-        }
-
-        return [
-            Attachment::fromPath($this->invoice['filepath'])
-                ->as($this->order->order_id . '.pdf')
-                ->withMime('application/pdf')
-        ];
     }
 }

@@ -52,7 +52,7 @@
             </div>
             <form
                 method="post"
-                action="{{ route('front.payment') }}"
+                action="{{ route('front.payment_and_delivery') }}"
                 class="row justify-content-center g-4 payment-next-step"
             >
                 @csrf
