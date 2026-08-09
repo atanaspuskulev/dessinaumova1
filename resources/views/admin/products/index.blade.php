@@ -32,7 +32,7 @@
                                                 class="mb-2 img-fluid">
                                             <p>
                                                 <b>{{ __('strings.category') }}: </b><br />
-                                                {{ $product->category->title }}
+                                                {!! $product->category?->title ?? '<b style="color:red;">No category</b>' !!}
                                             </p>
                                             <p>
                                                 <b>{{ __('strings.short_description') }}: </b><br />
