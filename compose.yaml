@@ -41,7 +41,6 @@ services:
       - db_data:/var/lib/mysql
     networks:
       - lrv
-    command: '--default-authentication-plugin=mysql_native_password'
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 5s

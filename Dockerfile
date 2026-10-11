@@ -1,7 +1,7 @@
 #-------------------------- Initial Stage ----------------------
 FROM php:8.4-fpm AS source
 
-ENV DEBIAN_INTERACTIVE=noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
 
 RUN apt-get -y update \
@@ -45,8 +45,6 @@ COPY .dockerfiles/php-fpm.conf \
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
 USER app
-
-RUN /usr/local/bin/composer install --no-interaction --prefer-dist
 
 EXPOSE 9000
 

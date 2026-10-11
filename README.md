@@ -23,8 +23,8 @@ If, on build stage you have no 'composer install' executed, do it now first:
 
 After the images are pulled and up, you have to migrate and seed the database:
 
-```docker compose exec php php migrate```
+```docker compose exec php php artisan migrate```
 and
-```docker compose exec php php db:seed```
+```docker compose exec php php artisan db:seed```
 
 
