@@ -34,7 +34,7 @@ jobs:
           php artisan key:generate
 
       - name: PHPStan
-        run: vendor/bin/phpstan analyse --no-progress
+        run: vendor/bin/phpstan analyse --memory-limit=1G --no-progress
 
       - name: PHPUnit
         run: php artisan test
