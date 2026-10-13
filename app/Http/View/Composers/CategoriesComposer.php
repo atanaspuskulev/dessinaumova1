@@ -13,7 +13,6 @@ readonly class CategoriesComposer
     {
         $categories = cache()->remember('cached_categories', config('seo.tags.ttl'), function() {
             return Category::where('is_active', true)
-                ->get()
                 ->pluck('title', 'slug');
         });
 

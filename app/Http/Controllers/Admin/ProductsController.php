@@ -51,7 +51,7 @@ class ProductsController extends Controller
     {
         $categories = Category::all();
 
-        $tags = Tag::orderBy('name', 'asc')->get()->pluck('name')->toArray();
+        $tags = Tag::orderBy('name', 'asc')->pluck('name')->toArray();
 
         return view('admin.products.create', compact('categories', 'tags'));
     }
@@ -102,7 +102,7 @@ class ProductsController extends Controller
             ->first();
 
         $categories = Category::all();
-        $tags = Tag::orderBy('name', 'asc')->get()->pluck('name')->toArray();
+        $tags = Tag::orderBy('name', 'asc')->pluck('name')->toArray();
 
         return view('admin.products.edit', compact('product', 'categories', 'tags'));
     }

@@ -3,8 +3,8 @@
 namespace App\Http\Traits;
 
 use App\Models\Images;
-use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -13,7 +13,7 @@ use Intervention\Image\Facades\Image;
 trait FileUploadTrait
 {
     public function uploadFiles(
-        ValidatesWhenResolved $request,
+        Request $request,
         string $keyName,
         Model $model,
         string $uploadPath = 'uploads',
@@ -29,7 +29,7 @@ trait FileUploadTrait
 
             foreach ($files as $file) {
                 if ($file->isValid()) {
-                    $path = sprintf("%s/%d", $uploadPath, $model->id);
+                    $path = sprintf("%s/%d", $uploadPath, $model->getKey());
 
                     $extension = $file->getClientOriginalExtension();
                     $fileName = Str::random(20);
@@ -54,14 +54,14 @@ trait FileUploadTrait
         $configThumbnail = config('images.resize.thumbnail');
         $image = Image::make($file);
         $image->fit($configThumbnail['max_width'], $configThumbnail['max_height']); // Adjust the dimensions for your thumbnails
-        Storage::disk('public')->put($thumbnailPath, $image->encode());
+        Storage::disk('public')->put($thumbnailPath, (string) $image->encode());
 
         return $thumbnailPath;
     }
 
     public function deleteImage(Model $model, Images $imageObject, $uploadPath = 'uploads'): void
     {
-        $path = sprintf("%s/%d", $uploadPath, $model->id);
+        $path = sprintf("%s/%d", $uploadPath, $model->getKey());
 
         Storage::disk('public')->delete(sprintf("%s/original/%s", $path, $imageObject->path));
         Storage::disk('public')->delete(sprintf("%s/thumbnails/%s", $path, $imageObject->path));

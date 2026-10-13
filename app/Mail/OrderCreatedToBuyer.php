@@ -30,7 +30,11 @@ class OrderCreatedToBuyer extends Mailable
         return new Envelope(
             from: new Address('info@desinaumova.com', 'Деси Наумова'),
             replyTo: [new Address('info@desinaumova.com', 'No Reply')],
-            subject: 'Поръчка #' . $this->order->order_id . ' - Деси Наумова'
+            subject: 'Поръчка #' . $this->order->order_id . ' - Деси Наумова',
+            using: [static function (Email $message): void {
+                $message->getHeaders()->addTextHeader('X-Mailer', 'PHP/' . phpversion());
+                $message->getHeaders()->addTextHeader('X-Entity-Ref-ID', (string) time());
+            }]
         );
     }
 
@@ -42,13 +46,5 @@ class OrderCreatedToBuyer extends Mailable
         return new Content(
             markdown: 'mail.orders.new-to-buyer'
         );
-    }
-
-    public function withSymfonyMessage($callback)
-    {
-        $callback(function (Email $message) {
-            $message->getHeaders()->addTextHeader('X-Mailer', 'PHP/' . phpversion());
-            $message->getHeaders()->addTextHeader('X-Entity-Ref-ID', time());
-        });
     }
 }

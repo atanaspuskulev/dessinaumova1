@@ -1,5 +1,5 @@
-#-------------------------- Initial Stage ----------------------
-FROM php:8.4-fpm AS source
+#-------------------------- Base ----------------------
+FROM php:8.4-fpm AS base
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
@@ -22,38 +22,54 @@ RUN apt-get -y update \
 
 WORKDIR /var/www/html
 
-COPY . .
-
-#-------------------------------
-
-FROM source AS runtime
+#------------------------------------ PHP RUNTIME -------------------------
+FROM base AS php-runtime
 
 ARG APP_UID=1000
 ARG APP_GID=1000
 
 RUN groupadd --gid ${APP_GID} app \
     && useradd --uid ${APP_UID} --gid ${APP_GID} \
-    --create-home --shell /bin/bash app
-
-WORKDIR /var/www/html
-
-RUN chown -R app:app /var/www/html
+        --create-home --shell /bin/bash app
 
 COPY .dockerfiles/php-fpm.conf \
     /usr/local/etc/php-fpm.d/zz-app.conf
 
-COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
-
-USER app
+RUN chown -R app:app /var/www/html
 
 EXPOSE 9000
 
-#-----------------------------------
+#----------------------------------- DEV RUNNER ---------------------------
+FROM php-runtime AS development
+
+COPY --from=composer:2 \
+    /usr/bin/composer /usr/local/bin/composer
+
+USER app
+
+#---------------------------------- PRODUCTION RUNNER ---------------------
+FROM php-runtime AS production
+
+COPY --from=composer:2 \
+    /usr/bin/composer /usr/local/bin/composer
+
+COPY --chown=app:app . .
+
+USER app
+
+RUN composer install \
+    --no-dev \
+    --no-interaction \
+    --prefer-dist \
+    --optimize-autoloader
+
+
+#---------------------------------- NGINX ----------------------------------
 FROM nginx:stable-alpine-slim AS nginx
 
 WORKDIR /var/www/html
 
-COPY --from=source \
+COPY --from=production \
     /var/www/html/public \
     /var/www/html/public
 
@@ -61,5 +77,4 @@ COPY .dockerfiles/nginx.conf \
     /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
-
 
