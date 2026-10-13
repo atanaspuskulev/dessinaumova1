@@ -10,7 +10,7 @@ trait ProductsTrait
 {
     public function forceDeleteProduct(Product $product): void
     {
-        if($product->gallery && $product->gallery->count() > 0) {
+        if($product->gallery->isNotEmpty()) {
             foreach($product->gallery as $image) {
                 $this->deleteImage($product, $image);
                 $image->delete();

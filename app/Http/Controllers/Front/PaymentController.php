@@ -28,7 +28,7 @@ class PaymentController extends Controller
 
     public function paymentChoose(Request $request)
     {
-        $order = Orders::with('items')->find(session()->get('myOrder'));
+        $order = Orders::with('items')->find((int) session()->get('myOrder'));
 
         if(empty($order) || $order->items->isEmpty()) {
             return redirect()->route('front.index');
@@ -69,7 +69,7 @@ class PaymentController extends Controller
 
     public function paymentMethodChoose(Request $request)
     {
-        $order = Orders::with('items')->find(session()->get('myOrder'));
+        $order = Orders::with('items')->find((int) session()->get('myOrder'));
 
         if(empty($order) || $order->items->isEmpty() || !session()->has('delivery_method')) {
             return redirect()->route('front.index');
@@ -109,7 +109,7 @@ class PaymentController extends Controller
      */
     public function payment()
     {
-        $order = Orders::with('items.product')->find(session()->get('myOrder'));
+        $order = Orders::with('items.product')->find((int) session()->get('myOrder'));
 
         if(empty($order) || $order->items->isEmpty() || session('payment_method') !== 'paypal') {
             return redirect()->route('front.payment_method_choose');
@@ -142,7 +142,7 @@ class PaymentController extends Controller
 
     public function createPaypalOrder(): JsonResponse
     {
-        $order = Orders::with('items.product')->find(session()->get('myOrder'));
+        $order = Orders::with('items.product')->find((int) session()->get('myOrder'));
 
         if(empty($order) || $order->items->isEmpty() || session('payment_method') !== 'paypal') {
             return response()->json(['status' => false, 'message' => 'Invalid order.'], 422);
@@ -167,7 +167,7 @@ class PaymentController extends Controller
 
     public function capturePaypalOrder(Request $request): JsonResponse
     {
-        $order = Orders::find(session()->get('myOrder'));
+        $order = Orders::find((int) session()->get('myOrder'));
 
         if(empty($order) || session('payment_method') !== 'paypal') {
             return response()->json(['status' => false, 'message' => 'Invalid order.'], 422);

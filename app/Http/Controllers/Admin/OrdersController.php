@@ -5,14 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminViewOrderRequest;
 use App\Http\Services\OrderService;
-use App\Http\Services\PriceService;
 use App\Http\Services\ProductsService;
 use App\Models\Orders;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
 {
-    public function __construct(private readonly ProductsService $productsService, private readonly PriceService $priceService)
+    public function __construct(private readonly ProductsService $productsService)
     {
 
     }

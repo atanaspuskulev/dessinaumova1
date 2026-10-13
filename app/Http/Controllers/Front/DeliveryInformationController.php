@@ -27,14 +27,14 @@ class DeliveryInformationController extends Controller
         $order = new \stdClass();
 
         if(session()->has('myOrder')) {
-            $order = Orders::find(session()->get('myOrder'));
+            $order = Orders::findOrFail((int) session()->get('myOrder'));
 
             $phone = array_values(
                 array_filter(trans('countries'), static fn($country) => $country['short_name'] === $order->payer_country)
             )[0] ?? null;
 
             $order->payer_phone = ltrim($order->payer_phone, $phone['country_code']);
-            $order->phone_code = $phone['country_code'];
+            $order->setAttribute('phone_code', $phone['country_code']);
         }
 
         $countries = trans('countries');
