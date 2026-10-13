@@ -40,3 +40,13 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/laravel-app-php:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/laravel-app-php:${{ github.sha }}
 
+      - name: Build and push Nginx image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: nginx
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/laravel-app-nginx:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/laravel-app-nginx:${{ github.sha }}
+
